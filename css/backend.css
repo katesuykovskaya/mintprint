@@ -1,0 +1,12 @@
+.ui-datepicker-calendar {
+    /*display: none;*/
+}​
+ .table-equal-rows-width table {
+       table-layout: fixed;
+   }
+.table-equal-rows-width > table > td {
+    width: 2%;
+}
+.lowercase {
+    text-transform: lowercase;
+}
