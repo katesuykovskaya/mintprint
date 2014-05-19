@@ -37,7 +37,7 @@ class AttachmentBehavior extends CActiveRecordBehavior
      */
     protected function moveFiles($tmpPath,$uploadDir,$model)
     {
-        Yii::import('application.backend.modules.attach.models.Attachment');
+//        Yii::import('application.backend.modules.attach.models.Attachment');
         $allFiles = is_dir($tmpPath) ? scandir($tmpPath,1) : null;
         if($allFiles){
             foreach($allFiles as $file) {
@@ -56,6 +56,7 @@ class AttachmentBehavior extends CActiveRecordBehavior
                         mkdir($uploadDir,0777,true);
                         rename($tmpPath.$file,$newPath);
                     }
+                    Yii::import('application.backend.modules.attach.models.Attachment');
                     $modelExist = Attachment::model()->findByAttributes(array('path'=>$file,'entity_id'=>(int)$this->entity_id,'content_type'=>$test));
 
                     if(!$modelExist){
@@ -69,7 +70,7 @@ class AttachmentBehavior extends CActiveRecordBehavior
                         $attachment->file_name = $file;
                         $attachment->content_type = ($type === '' || $type === $file) ? 'attach' : $type;
 
-                        switch($fileExt){
+                        switch(strtolower($fileExt)){
                             case 'jpg':
                             case 'jpeg':
                             case 'png':

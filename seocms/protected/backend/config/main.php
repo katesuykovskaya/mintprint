@@ -11,7 +11,7 @@ return CMap::mergeArray(
 'viewPath'=>dirname(dirname(__FILE__)).'/views',
 'runtimePath'=>dirname(dirname(__FILE__)).'/runtime',
 'import'=>array(
-            'backend.models.*',
+        'backend.models.*',
         'backend.components.*',
 //        'application.models.*',
 //        'application.components.*',

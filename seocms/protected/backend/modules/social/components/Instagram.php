@@ -8,26 +8,47 @@
 
 class Instagram {
 
-    protected $token = null;
+    protected $token = false;
+    protected $conf = null;
+
 
     public function __construct()
     {
-        $conf = Yii::app()->getModule('social')->getConfig();
+        $this->conf = Yii::app()->getModule('social')->getConfig();
+    }
+
+    public function setToken()
+    {
         $instagram = new Guzzle\Http\Client();
         try {
-            $request = $instagram->post($conf['instagram']['tokenUrl']);
-            $request->addPostFields($conf['instagram']['token']);
+            $request = $instagram->post($this->conf['instagram']['tokenUrl']);
+            $request->addPostFields($this->conf['instagram']['token']);
             $instaToken = $request->send()->json();
             $this->token = $instaToken['access_token'];
         } catch(Exception $e) {
             echo $e->getMessage();
         }
-
     }
+
 
     public function getToken()
     {
+        $this->setToken();
         return $this->token;
     }
 
-} 
+    public function getPhotos($token)
+    {
+        $insta = new Guzzle\Http\Client();
+        $instaMediaUrl = 'https://api.instagram.com/v1/users/self/feed';
+
+        try {
+            $requestM = $insta->get($instaMediaUrl.'?access_token='.$token);
+            $data = $requestM->send()->json();
+            return $data;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+}

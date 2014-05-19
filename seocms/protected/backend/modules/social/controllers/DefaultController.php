@@ -9,13 +9,13 @@ class DefaultController extends Controller
 
     public function actionAuth($authprovider)
     {
-        echo CVarDumper::dump($_GET,5,true); die();
+        $scenario = Yii::app()->request->getParam('scenario');
 
         $authClass = ucfirst($authprovider);
         $auth = new $authClass();
         $token = $auth->getToken();
 
-        $this->redirect($this->createUrl('/backend?auth='.$authprovider.'&token='.$token));
+        $this->redirect($this->createUrl('/backend/social/default/photos?auth='.$authprovider.'&token='.$token.'&scenario='.$scenario));
     }
 
     public function actionAjaxAuth()
@@ -27,42 +27,32 @@ class DefaultController extends Controller
 
         $this->redirect($this->createUrl('/backend?auth='.$provider.'&token='.$token));
     }
-
-    public function actionTest()
+    public function actionPhotos()
     {
-        $provider = $_POST['provider'];
-        $providerUrl = $_POST['providerUrl'];
-
-        $conf = Yii::app()->getModule('social')->getConfig();
-        $vk = new Guzzle\Http\StaticClient();
-        $client = new Guzzle\Http\Client();
-//
-
-        $req = $client->get($conf['vk']['authUrl'] . '?' . urldecode(http_build_query($conf['vk']['auth'])));
-        echo CVarDumper::dump($req->send()->getBody(),5,true);
-//        try {
-//            $client->get($conf['vk']['authUrl'] . '?' . urldecode(http_build_query($conf['vk']['auth'])));
-//            echo CVarDumper::dump($client,5,true);
-//        } catch (RequestException $e) {
-//            echo $e->getRequest() . "\n";
-//            if ($e->hasResponse()) {
-//                echo $e->getResponse() . "\n";
-//            }
-//        }
-
-
-//        try {
-//            $test = $vk::post($conf['vk']['authUrl'] . '?' . urldecode(http_build_query($conf['vk']['auth'])));
-////            $vkToken = $test->json();
-////            $token = isset($vkToken['access_token']) ? $vkToken['access_token'] : null;
-//            echo CVarDumper::dump($test->json(),5,true);
-//        } catch(Exception $e) {
-//            echo $e->getMessage();
-////            $token =  null;
-//        }
-
-
+        //CAAVLxHgeUkYBAK2TZBk3jRKCUwVLyCAnYeNoAAbxZAqF1ZArBwQEWRmHfbrZCJAxMCcyUQPn1NnPR7fousgc6xGQb9QpjD0hZCL2nMrX5jFu2ptrZAe2nBm1a4Comv7PfZBQwGdDjuwvWGzs9pXlaELiyqg3GTjfyUKjEZCxCf2LuZAvaqUIkbxvm
+        //Yii::app()->session['fb_token'] = 'CAAVLxHgeUkYBAK2TZBk3jRKCUwVLyCAnYeNoAAbxZAqF1ZArBwQEWRmHfbrZCJAxMCcyUQPn1NnPR7fousgc6xGQb9QpjD0hZCL2nMrX5jFu2ptrZAe2nBm1a4Comv7PfZBQwGdDjuwvWGzs9pXlaELiyqg3GTjfyUKjEZCxCf2LuZAvaqUIkbxvm';
+        Yii::app()->clientScript->registerCssFile('/css/backend.css');
+        $this->render('index');
     }
 
+    /*
+     * this action is exceptionally for SocialPhotosWidget
+     */
+    public function actionPhotosFromAlbum() {
+        if(Yii::app()->request->isAjaxRequest) {
+            $provider = $_REQUEST['auth'];
+            $config = $this->module->config[$provider]['albums'];
+            $authClass = ucfirst($provider);
+            $auth = new $authClass();
+            $token = Yii::app()->session[$provider.'_token'];
+            $data = $auth->getPhotosFromAlbum($_GET[$config['album_id']], $token);
+//            $album = $auth->getAlbums($token, array('album_ids' => $_GET['aid']))[0];
+            $this->layout = false;
+            $this->render('application.backend.modules.social.widgets.views.photos', array(
+                'photos'=>$data,
+//                'album'=>$album
+            ));
+        }
 
+    }
 }

@@ -38,7 +38,22 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-        $this->render('index');
+        $socialArray = Yii::app()->getModule('social')->getConfig();
+
+        if(isset($_GET['auth'])) {
+            $token = $_GET['token'];
+            $authClass = ucfirst($_GET['auth']);
+            Yii::import(Yii::getPathOfAlias('application.backend.modules.social.components.'.$authClass));
+            $provider = new $authClass();
+            if($authClass !== 'Google')
+                $data = $provider->getPhotos($token);
+            else
+                $data = $provider->getInfo($token);
+
+            $this->renderPartial('_photos',['data'=>$data]);
+        }
+
+        $this->render('index',['socialArray'=>$socialArray]);
 	}
 
 

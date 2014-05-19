@@ -62,118 +62,140 @@ $tweets = CJSON::decode($myTweets);
 </div>
 
 <?php
-$socialArray = require_once(Yii::getPathOfAlias('application.backend.modules.social.config').'/config2.php');
+//$socialArray = require_once(Yii::getPathOfAlias('application.backend.modules.social.config').'/config.php');
 //////////////////// vkontakte ///////////
 
-if (isset($_GET['auth']) && $_GET['auth'] === 'vk') {
-    $vk = new Guzzle\Http\StaticClient();
+//if (isset($_GET['auth']) && $_GET['auth'] === 'vk') {
+//    $vk = new Guzzle\Http\StaticClient();
 
-    $vkToken = $_GET['token'];
+//    try {
+//        $test = $vk->post($socialArray['vk']['tokenUrl']);
+//        $test->addPostFields($socialArray['vk']['token']);
+//        $test = $vk::get($socialArray['vk']['tokenUrl'] . '?' . urldecode(http_build_query($socialArray['vk']['token'])));
+//        $vkToken = $test->send()->json();
+//        $vkToken = $_GET['token'];
+//        $vkToken = $test->json();
+//        echo 'access token: '.$vkToken['access_token'];
 
-    try {
-        $photoParams = [
-            'count'=>100
-        ];
-        $apiUrl = 'https://api.vk.com/method/';
-        $req = $vk::get($apiUrl.'photos.getUserPhotos?'.urldecode(http_build_query($photoParams)).'&access_token='.$vkToken);
-        $photos = $req->json()['response'];
-        $len = count($photos);
-        for($i=1; $i < $len; $i++) {
-                echo CHtml::image($photos[$i]['src_big'],$photos[$i]['text']);
-        }
-    } catch(Exception $e) {
-        echo $e->getMessage();
-    }
-}
-
-/////////////////// vkontakte end /////////////////
-
-
-///////////////////// instagram ////////////
-
-if(isset($_GET['auth']) && $_GET['auth'] === 'instagram') {
-    $instaMediaUrl = 'https://api.instagram.com/v1/users/self/feed';
-    $insta = new Guzzle\Http\Client();
-
-    $token = $_GET['token'];
-
-    try {
-        $requestM = $insta->get($instaMediaUrl.'?access_token='.$token);
-        $instaMedia = $requestM->send()->json();
-        if(!empty($instaMedia)) {
-            foreach($instaMedia['data'] as $key=>$image) {
-                if(!empty($image['images'])) {
-                    echo CHtml::image($image['images']['thumbnail']['url'],$image['caption']['text']);
-                }
-            }
-        }
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    }
-}
-////////// end of instagram //////////////
+//        try {
+//            $photoParams = [
+//                'count'=>100
+//            ];
+//            $apiUrl = 'https://api.vk.com/method/';
+//            $req = $vk::get($apiUrl.'photos.getUserPhotos?'.urldecode(http_build_query($photoParams)).'&access_token='.$vkToken);
+//            $photos = $req->json()['response'];
+//            $len = count($photos);
+//            for($i=1; $i < $len; $i++) {
+//                    echo CHtml::image($photos[$i]['src_big'],$photos[$i]['text']);
+//            }
+//        } catch(Exception $e) {
+//            echo $e->getMessage();
+//        }
+//
+//    } catch(Exception $e) {
+//        echo $e->getMessage();
+//    }
+//}
+//
+///////////////// vkontakte end /////////////////
 //
 //
-//////////////// facebook ////////////////
+/////////////////// instagram ////////////
+//
+//if(isset($_GET['auth']) && $_GET['auth'] === 'instagram') {
+//    $instaMediaUrl = 'https://api.instagram.com/v1/users/self/feed';
+//    $insta = new Guzzle\Http\Client();
+//
+//    try {
+//        $request = $insta->post($socialArray['instagram']['tokenUrl']);
+//        $request->addPostFields($socialArray['instagram']['token']);
+//        $instaToken = $request->send()->json();
+//        $token = $instaToken['access_token'];
+//        echo 'token is: '.$token;
+//
+//        try {
+//            $requestM = $insta->get($instaMediaUrl.'?access_token='.$token);
+//            $instaMedia = $requestM->send()->json();
+//            if(!empty($instaMedia)) {
+//                foreach($instaMedia['data'] as $key=>$image) {
+//                    if(!empty($image['images'])) {
+//                        echo CHtml::image($image['images']['thumbnail']['url'],$image['caption']['text']);
+//                    }
+//                }
+//            }
+//        } catch (Exception $e) {
+//            echo $e->getMessage();
+//        }
+//    } catch(Exception $e) {
+//        echo $e->getMessage();
+//    }
+//}
+//////// end of instagram //////////////
 
-if (isset($_GET['auth']) && $_GET['auth'] === 'fb') {
-    $fb = new Guzzle\Http\StaticClient();
-    $token = $_GET['token'];
 
-    try {
-        $apiUrl = 'https://graph.facebook.com/me/photos/uploaded';
-        $req = $fb::get($apiUrl.'?&access_token='.$token);
+////////////// facebook ////////////////
+//
+//if (isset($_GET['auth']) && $_GET['auth'] === 'fb') {
+//    $fb = new Guzzle\Http\StaticClient();
+//
+//    try {
+//        $test = $fb::get($socialArray['fb']['tokenUrl'] . '?' . urldecode(http_build_query($socialArray['fb']['token'])));
+//        $fbToken = $test->getBody(true); // as string
+//        $arr1 = [];
+//        parse_str($fbToken,$arr1);
+//        echo 'access token: '.$arr1['access_token'];
+//
+//        try {
+//            $apiUrl = 'https://graph.facebook.com/me/photos/uploaded';
+//            $req = $fb::get($apiUrl.'?&access_token='.$arr1['access_token']);
+//
+//            $photos = $req->json();
+//
+//            foreach($photos['data'] as $key=>$photo) {
+//                echo CHtml::image($photo['source']);
+//            }
+//        } catch(Exception $e) {
+//            echo $e->getMessage();
+//        }
+//    } catch(Exception $e) {
+//        echo $e->getMessage();
+//    }
+//}
+//
+///////////// end of facebook ////////////////
+//
+//
+///////////// google + ///////////////////////
+//
+//if (isset($_GET['auth']) && $_GET['auth'] === 'google') {
+//    $google = new Guzzle\Http\Client();
+//
+//    try {
+//        $request = $google->post($socialArray['google']['tokenUrl']);
+//        $request->addPostFields($socialArray['google']['token']);
+//        $googleToken = $request->send()->json();
+//        $token = $googleToken['access_token'];
+//
+//        try {
+//            $google2 = new Guzzle\Http\StaticClient();
+//            $apiUrl = 'https://www.googleapis.com/oauth2/v3/userinfo';
+//            $req = $google2::get($apiUrl.'?'.urldecode(http_build_query($socialArray['google']['token'])).'&access_token='.$token);
+//
+//            $data = $req->json();
+//            echo CVarDumper::dump($data,5,true);
+//        } catch(Exception $e) {
+//            echo $e->getMessage();
+//        }
+//
+//    } catch(Exception $e) {
+//        echo $e->getMessage();
+//    }
+//}
+//
+/////////////end of google + /////////////////
 
-        $photos = $req->json();
-
-        foreach($photos['data'] as $key=>$photo) {
-            echo CHtml::image($photo['source']);
-        }
-    } catch(Exception $e) {
-        echo $e->getMessage();
-    }
-}
-
-/////////////// end of facebook ////////////////
-
-
-/////////////// google + ///////////////////////
-
-if (isset($_GET['auth']) && $_GET['auth'] === 'google') {
-    $google = new Guzzle\Http\Client();
-    $token = $_GET['token'];
-
-    try {
-        $google2 = new Guzzle\Http\StaticClient();
-        $apiUrl = 'https://www.googleapis.com/oauth2/v3/userinfo';
-        $req = $google2::get($apiUrl.'?'.urldecode(http_build_query($socialArray['google']['token'])).'&access_token='.$token);
-
-        $data = $req->json();
-        echo CVarDumper::dump($data,5,true);
-    } catch(Exception $e) {
-        echo $e->getMessage();
-    }
-}
-
-///////////////end of google + /////////////////
-
-echo '<p><a href="' . $socialArray['instagram']['authUrl'] . '?' . urldecode(http_build_query($socialArray['instagram']['auth'])) . '">Аутентификация через Instagram</a></p>';
-echo '<p><a href="' . $socialArray['vk']['authUrl'] . '?' . urldecode(http_build_query($socialArray['vk']['auth'])) . '">Аутентификация через ВКонтакте</a></p>';
-echo '<p><a class="social" data-provider="vk" href="#">Аутентификация через ВКонтакте (ajax)</a></p>';
-echo '<p><a href="' . $socialArray['fb']['authUrl'] . '?' . urldecode(http_build_query($socialArray['fb']['auth'])) . '">Аутентификация через Facebook</a></p>';
-echo '<p><a href="' . $socialArray['google']['authUrl'] . '?' . urldecode(http_build_query($socialArray['google']['auth'])) . '">Аутентификация через Google</a></p>';
-?>
-
-<script>
-    $(".social").on("click",function(e){
-        e.preventDefault();
-        $.ajax({
-            type:"POST",
-            url:"/backend/social/default/test",
-            data:{
-                provider:$(this).data("provider"),
-                providerUrl:"<?=$socialArray['vk']['authUrl'] . '?' . urldecode(http_build_query($socialArray['vk']['auth']))?>"
-            }
-        });
-    });
-</script>
+$this->widget('backend.modules.social.widgets.SocialAuthWidget',[
+    'providers'=>['vk','fb','instagram','google'],
+    'socialArray'=>$socialArray,
+    'scenario'=>'photos'
+]);

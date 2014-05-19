@@ -8,32 +8,48 @@
 
 class Google {
 
-    protected $token = null;
+    protected $token = false;
+    protected $conf = null;
+
 
     public function __construct()
     {
-        $conf = Yii::app()->getModule('social')->getConfig();
+        $this->conf = Yii::app()->getModule('social')->getConfig();
+    }
+
+    public function setToken()
+    {
         $gplus = new Guzzle\Http\Client();
         try {
-            $request = $gplus->post($conf['google']['tokenUrl']);
-            $request->addPostFields($conf['google']['token']);
+            $request = $gplus->post($this->conf['google']['tokenUrl']);
+            $request->addPostFields($this->conf['google']['token']);
             $googleToken = $request->send()->json();
-//            $token = $googleToken['access_token'];
-
-
-//            $request = $gplus->post($conf['gplus']['tokenUrl']);
-//            $request->addPostFields($conf['gplus']['token']);
-//            $gplusToken = $request->send()->json();
             $this->token = $googleToken['access_token'];
         } catch(Exception $e) {
             echo $e->getMessage();
         }
-
     }
+
 
     public function getToken()
     {
+        $this->setToken();
         return $this->token;
     }
+
+    public function getInfo($token)
+    {
+        $google = new Guzzle\Http\StaticClient();
+        $apiUrl = 'https://www.googleapis.com/oauth2/v3/userinfo';
+        try {
+            $req = $google::get($apiUrl.'?'.urldecode(http_build_query($this->conf['google']['token'])).'&access_token='.$token);
+            $data = $req->json();
+            return $data;
+        } catch(Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+
 
 } 

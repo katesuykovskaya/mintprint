@@ -27,10 +27,10 @@ return array(
     'modules'=>require(dirname(__FILE__) . '/modules.php'),
     'components'=>array(
         'db'=>array(
-            'connectionString' => 'mysql:host=localhost;dbname=photo_servis',
+            'connectionString' => 'mysql:host=localhost;dbname=photo_service',
             'emulatePrepare' => true,
             'username' => 'root',
-            'password' => 'root',
+            'password' => '',
             'charset' => 'utf8',
 //            'tablePrefix'=>'', // needs to be set up for multilingual behavior, or we'll get an error which is in code of ext (usin table prefixes)
             'enableParamLogging'=>true,
@@ -76,7 +76,8 @@ return array(
             'connectionID'=>'db',
             'autoCreateSessionTable'=>false,
             'autoStart'=>true,
-            'timeout'=>'1440',
+//            'timeout'=>'1440',
+            'timeout'=>'7200',
         ),
         'errorHandler'=>array(
             // use 'site/error' action to display errors
