@@ -87,7 +87,7 @@ return CMap::mergeArray(
                 '<language:[a-zA-Z]{2}>/backend/rights'=>'rights/assignment/view',
                 'backend/rights/<controller:\w+>/<action:\w+>'=>'rights/<controller>/<action>',
                 '<language:[a-zA-Z]{2}>/backend/rights/<controller:\w+>/<action:\w+>'=>'rights/<controller>/<action>',
-                /*end of rights urls*/
+                /*end of rights urlsdfkgjdflkgfkg*/
 
                 /*modules section*/
                 '<language:[a-zA-Z]{2}>/backend/<module>/<controller:\w+>/<action:\w+>/<id:\d+>'=>'<module>/<controller>/view',
