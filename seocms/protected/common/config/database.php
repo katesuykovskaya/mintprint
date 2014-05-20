@@ -11,7 +11,7 @@ return array(
     'username' => 'root',
     'password' => '',
     'charset' => 'utf8',
-//            'tablePrefix'=>'', // needs to be set up for multilingual behavior, or we'll get an error which is in code of ext (usin table prefixes)
+//            'tablePrefix'=>'', // nekjkjkeds to be set up for multilingual behavior, or we'll get an error which is in code of ext (usin table prefixes)
     'enableParamLogging'=>true,
     'enableProfiling'=>true,
 );
