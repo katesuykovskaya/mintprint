@@ -6,10 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="stylesheet" href="/css/unicorn/css/unicorn.main.css" />
 	<link rel="stylesheet" href="/css/unicorn/css/unicorn.grey.css" class="skin-color" />
-    <link rel="stylesheet" href="/css/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css" />
     </head>
     <body>
-
 	<div id="header">
 	    <h2><?=CHtml::link('SeoTM CMS',Yii::app()->urlManager->createUrl('backend',array('language'=>Yii::app()->language)));?></h2>
 	</div>

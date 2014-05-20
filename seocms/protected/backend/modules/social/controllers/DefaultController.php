@@ -31,8 +31,17 @@ class DefaultController extends Controller
     {
         //CAAVLxHgeUkYBAK2TZBk3jRKCUwVLyCAnYeNoAAbxZAqF1ZArBwQEWRmHfbrZCJAxMCcyUQPn1NnPR7fousgc6xGQb9QpjD0hZCL2nMrX5jFu2ptrZAe2nBm1a4Comv7PfZBQwGdDjuwvWGzs9pXlaELiyqg3GTjfyUKjEZCxCf2LuZAvaqUIkbxvm
         //Yii::app()->session['fb_token'] = 'CAAVLxHgeUkYBAK2TZBk3jRKCUwVLyCAnYeNoAAbxZAqF1ZArBwQEWRmHfbrZCJAxMCcyUQPn1NnPR7fousgc6xGQb9QpjD0hZCL2nMrX5jFu2ptrZAe2nBm1a4Comv7PfZBQwGdDjuwvWGzs9pXlaELiyqg3GTjfyUKjEZCxCf2LuZAvaqUIkbxvm';
+        if(isset($_GET['token']) && isset($_GET['auth'])) {
+            Yii::app()->session[$_GET['auth'].'_token'] = $_GET['token'];
+        }
         Yii::app()->clientScript->registerCssFile('/css/backend.css');
-        $this->render('index');
+        $socials = array(
+            'vk',
+            'fb'
+        );
+        $this->render('index', array(
+            'socials'=>$socials
+        ));
     }
 
     /*
@@ -46,11 +55,13 @@ class DefaultController extends Controller
             $auth = new $authClass();
             $token = Yii::app()->session[$provider.'_token'];
             $data = $auth->getPhotosFromAlbum($_GET[$config['album_id']], $token);
-//            $album = $auth->getAlbums($token, array('album_ids' => $_GET['aid']))[0];
+            $album = $auth->getAlbums($token, array('album_ids' => $_GET[$config['album_id']]))[0];
             $this->layout = false;
             $this->render('application.backend.modules.social.widgets.views.photos', array(
                 'photos'=>$data,
-//                'album'=>$album
+                'provider'=>$provider,
+                'album'=>$album,
+                'album_config'=>$config
             ));
         }
 

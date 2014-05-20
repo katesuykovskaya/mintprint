@@ -1,0 +1,92 @@
+* {
+    box-sizing: border-box;
+}
+
+.stripe2 {
+    width: 810px;
+    height: 25px;
+    background-color: #e20105;
+    z-index: 100;
+    position: relative;
+    /*top: 20px;*/
+}
+
+.stripe2-triangle {
+    background: transparent url("/img/triangle.png") no-repeat;
+    position: relative;
+    left: 50px;
+    z-index: 50;
+    width: 50px;
+    height: 25px;
+    overflow: hidden;
+}
+
+.stripe2 .event-title {
+    display: inline-block;
+    margin-left: 20px;
+    font: 14px "Open Sans" bolder;
+    color: white;
+    position: relative;
+    top: 50%;
+    margin-top: -10px;
+}
+
+.content {
+    background: #ECEDE7;
+    position: relative;
+    /*top: -20px;*/
+    color: black;
+    padding: 40px;
+    line-height: 2em;
+}
+
+.form-header {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    font: 14px "Open Sans";
+    border-bottom: 1px solid #e20105;
+}
+
+.red {
+    color: #e20105;
+}
+
+.team-photo {
+    width: 880px;
+    height: auto;
+    overflow: hidden;
+}
+
+.team-photo img {
+    /*position: relative;*/
+    /*margin: 0 auto;*/
+    width: 100%;
+}
+
+.category h4 {
+    display: block;
+    width: 800px;
+    font-weight: 500;
+    border-bottom: 1px solid #e20105;
+    margin-bottom: 20px;
+}
+
+.people-list {
+    display: inline-block;
+}
+
+.person-info {
+    /*width: 700px;*/
+    /*left: 150px;*/
+    display: block;
+    border-bottom: 1px dashed grey;
+}
+
+.person {
+    text-align: right;
+    width: 236px;
+    float: left;
+    position: relative;
+    margin-right: 30px;
+}

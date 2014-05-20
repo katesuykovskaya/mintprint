@@ -37,9 +37,12 @@ return [
             'code'=>$code,
         ],
         'albums'=>array(
-            'title' => 'title',
-            'thumb_src' => 'thumb_src',
-            'album_id' => 'aid'
+            'title'         => 'title',
+            'thumb_src'     => 'thumb_src',
+            'album_id'      => 'aid',
+            'album_ids'     => 'album_ids',
+            'album_size'    => 'size',
+            'page_size'     => 20
         )
     ],
     'instagram'=>[
@@ -76,9 +79,12 @@ return [
             'code'=>$code,
         ],
         'albums'=>array(
-            'title' => 'name',
-            'thumb_src' => 'thumb_src',
-            'album_id' => 'id'
+            'title'         => 'name',
+            'thumb_src'     => 'thumb_src',
+            'album_id'      => 'id',
+            'album_ids'     =>'id',
+            'album_size'    =>'count',
+            'page_size'     => 20
         )
     ],
     'google'=>[

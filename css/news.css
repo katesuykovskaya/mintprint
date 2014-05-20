@@ -1,0 +1,140 @@
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+#news {
+    overflow: hidden;
+    color: #000000;
+}
+
+.news-header {
+    padding: 15px 0;
+    color: rgb(173, 15, 15);
+    text-align: center;
+    border-bottom: 1px solid rgb(173, 15, 15);
+    border-top: rgb(173, 15, 15);
+    background: #D4D9DA;
+}
+.news-header:first-letter {
+    text-transform: uppercase;
+}
+
+.news-title {
+    height: 44px;
+    display: block;
+    margin-bottom: 14px;
+    overflow: hidden;
+}
+
+.news-column a {
+    color: rgb(173, 15, 15);
+    text-decoration: underline;
+}
+
+.news-column {
+    background: #f5f5f5;
+    width: 49%;
+}
+
+.news-block {
+    margin: 20px;
+    background: #f5f5f5;
+    padding: 20px;
+    overflow: hidden;
+    border-bottom: 1px dotted #808080;
+    height: 220px;
+}
+
+.news-block img {
+    /*position: relative;*/
+    float: left;
+    margin-right: 30px;
+}
+
+.news-body {
+    height: 134px;
+    overflow: hidden;
+}
+
+.news-text {
+}
+
+.news-footer {
+    margin: 4px 0px;
+    border-top: 28px solid rgba(247, 247, 247, 0.9);
+    position: relative;
+    top: -26px;
+}
+.single-news {
+    padding: 30px 40px;
+    font-size: 0.9em;
+    line-height: 1.6em;
+}
+.single-news .single-news-img {
+    width: 400px;
+    float: left;
+    padding-right: 10px;
+}
+.single-news-title {
+    font-size: 20px;
+}
+.single-news h1 {
+    line-height: 1.2em;
+    text-align: center;
+    border-bottom: 1px solid red;
+    padding: 6px 0;
+    display: inline-block;
+    width: 410px;
+}
+.single-news time {
+    text-align: right;
+    display: block;
+    font-size: 0.8em;
+    color: #2D3029;
+}
+.news-back-link.nice-link {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+/*.pager {*/
+    /*width: 100%;*/
+    /*margin: 20px 0;*/
+    /*text-align: center;*/
+    /*font: 18px "Arial" bold;*/
+/*}*/
+
+.red {
+    color: rgb(156, 28, 28);
+}
+
+.redPager {
+    position: relative;
+    width: 20%;
+    margin: 0 auto 60px auto;
+}
+
+.myPager {
+    text-align: center;
+}
+
+.myPager > li {
+    float: left;
+}
+
+.myPager a {
+    display: block;
+    text-decoration: none;
+    margin: 1px;
+}
+
+.myPager a:hover {
+    background: rgb(156, 28, 28);
+    color: #f5f5f5;
+}

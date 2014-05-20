@@ -25,7 +25,8 @@ class SocialPhotoWidget extends CWidget {
 
         $this->render('albums', array(
             'albums'=>$albums,
-            'config'=>$this->config[$provider]
+            'config'=>$this->config[$provider],
+            'provider'=>$provider
         ));
     }
 } 

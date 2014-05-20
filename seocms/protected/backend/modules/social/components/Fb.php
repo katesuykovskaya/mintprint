@@ -72,8 +72,14 @@ class Fb {
 
     public function getPhotosFromAlbum($id, $token) {
         $fb = new Guzzle\Http\StaticClient();
+        $count = 20;
+        $offset = empty($_REQUEST['offset']) ? 0 : $_REQUEST['offset'];
+        $params = array(
+            'offset'=> $offset,
+            'limit'=>$count,
+        );
         $url = 'https://graph.facebook.com/'.$id.'/photos';
-        $req = $fb::get($url.'?&access_token='.$token);
+        $req = $fb::get($url.'?'.urldecode(http_build_query($params)).'&access_token='.$token);
         $data = $req->json()['data'];
         $result = array();
         foreach($data as $val) {

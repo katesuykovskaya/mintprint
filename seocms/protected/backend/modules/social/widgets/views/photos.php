@@ -4,6 +4,8 @@
  * User: Kate
  * Date: 23.04.14
  * Time: 16:38
+ * @var $album array
+ * @var $album_config array
  */
 //echo CVarDumper::dump($photos, 7, true);
 echo CHtml::link('Sort',  Yii::app()->createUrl('/backend/social/default/photosFromAlbum', array(
@@ -14,10 +16,9 @@ echo CHtml::link('Sort',  Yii::app()->createUrl('/backend/social/default/photosF
 )), array(
     'class'=>'pager'
 ));
-
-$albumSize = $album['size'];
-$pageSize = 20;
-$currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+$albumSize = $album[$album_config['album_size']];
+$pageSize = $album_config['page_size'];
+$currentPage = isset($_GET['offset']) ? ($_GET['offset'] / $pageSize) + 1 : 0;//isset($_GET['page']) ? $_GET['page'] : 1;
 echo CHtml::openTag('div', array(
     'id' => 'photoWidgetPager'
 ));
@@ -25,34 +26,46 @@ $pagersCount = ceil($albumSize / $pageSize);
 /* previous page link */
 if($currentPage != 1)
     echo CHtml::link('<-', Yii::app()->createUrl('/backend/social/default/photosFromAlbum', array(
-        'auth'  => $_GET['auth'],
-        'aid'   => $_REQUEST['aid'],
-        'rev'   => isset($_REQUEST['rev']) ? (int)($_REQUEST['rev']) : 0,
-        'page'  => $currentPage-1
+        'auth'      => $_GET['auth'],
+        $album_config['album_id']       => $_REQUEST[$album_config['album_id']],
+        'rev'       => isset($_REQUEST['rev']) ? (int)($_REQUEST['rev']) : 0,
+        'page'      => $currentPage - 1,
+        'offset'    => ($currentPage - 2) * $album_config['page_size'],
+        'limit'     => $album_config['page_size'],
+        'provider'  => $provider,
     )),array(
         'class'=> 'pager',
-        'id'=>'pager'.($currentPage-1)
+        'id'=>'pager'.($currentPage-1),
+        'data-provider'  => $provider,
     ));
 for($i = 1;$i <= $pagersCount; $i++) {
     echo CHtml::link($i, Yii::app()->createUrl('/backend/social/default/photosFromAlbum', array(
-        'auth'  => $_GET['auth'],
-        'aid'   => $_REQUEST['aid'],
-        'rev'   => isset($_REQUEST['rev']) ? (int)($_REQUEST['rev']) : 0,
-        'page'  => $i
+        'auth'      => $_GET['auth'],
+        $album_config['album_id']       => $_REQUEST[$album_config['album_id']],
+        'rev'       => isset($_REQUEST['rev']) ? (int)($_REQUEST['rev']) : 0,
+        'offset'    => ($i - 1) * $album_config['page_size'],
+        'page'      => $i,
+        'limit'     => $album_config['page_size'],
+        'provider'  => $provider,
     )),array(
         'class'=>$currentPage == $i ? 'active' : 'pager',
-        'id'=>'pager'.$i
+        'id'=>'pager'.$i,
+        'data-provider'  => $provider,
     ));
 }
 if($currentPage != $pagersCount)
     echo CHtml::link('->', Yii::app()->createUrl('/backend/social/default/photosFromAlbum', array(
-        'auth'  => $_GET['auth'],
-        'aid'   => $_REQUEST['aid'],
-        'rev'   => isset($_REQUEST['rev']) ? (int)($_REQUEST['rev']) : 0,
-        'page'  => $currentPage + 1
+        'auth'      => $_GET['auth'],
+        $album_config['album_id']       => $_REQUEST[$album_config['album_id']],
+        'rev'       => isset($_REQUEST['rev']) ? (int)($_REQUEST['rev']) : 0,
+        'page'      => $currentPage + 1,
+        'offset'    => ($currentPage ) * $album_config['page_size'],
+        'limit'     => $album_config['page_size'],
+        'provider'  => $provider
     )),array(
         'class'=>'pager',
-        'id'=>'pager'.($i+1)
+        'id'=>'pager'.($i+1),
+        'data-provider'  => $provider,
     ));
 echo CHtml::closeTag('div');
 $len = count($photos);

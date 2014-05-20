@@ -1,0 +1,140 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+#c-carousel {
+    background: #fff;
+    min-height: 600px;
+    /*max-height: 1250px;*/
+    width: 100%;
+    min-width: 990px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: #ff1493;
+}
+#wrapper {
+    width: 100%;
+    min-width: 900px;
+    /*height: 500px;*/
+    height: 100%;
+    /*margin: -250px 0 0 0;*/
+    /*position: absolute;*/
+    top: 50%;
+    left: 0;
+}
+#c-carousel * {
+    font-family: Arial, Geneva, SunSans-Regular, sans-serif;
+    font-size: 14px;
+    color: #666;
+    line-height: 22px;
+}
+.table {
+    display: table;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+}
+.table-cell {
+    display: table-cell;
+}
+.vam {
+    vertical-align: middle;
+}
+.tac {
+    text-align: center;
+}
+.wrap {
+    text-align: center;
+    border-bottom: 2px solid white;
+    margin: 0;
+    padding: 0;
+    border-top: 2px solid white;
+}
+#wrapperBack {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+#wrapperBack .switch-lang-box {
+    position: absolute;
+    right: 15%;
+    top: 10%;
+}
+#wrapperBack .switch-lang-box li {
+    display: inline-block;
+    border-right: 1px solid #ffffff;
+    padding: 0 10px;
+    line-height: 16px;
+    font-size: 21px;
+}
+#wrapperBack .switch-lang-box li:last-child {
+    border: none;
+}
+#wrapperBack .switch-lang-box li a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+#wrapperBack .caroufredsel_wrapper {
+    height: 100%!important;
+    width: 100%!important;
+}
+#carouselBack {
+    width: 100%!important;
+    height: 100%!important;
+}
+#carouselBack > div {
+    background-size: cover;
+    background-position: center center;
+    width: 100%;
+    height: 100%;
+    /*position: relative;*/
+    font-family: "Times New Roman";
+    font-style: italic;
+    font-weight: bold;
+}
+#carouselBack .blockquote {
+    /*position: absolute;*/
+    padding-top: 5%;
+    margin-left: 16%;
+    font-size: 2em;
+    line-height: 1.4em;
+    color: white;
+    text-shadow: 0 0 15px black, 0 0 20px black, 0 0 25px black;
+}
+#carouselBack div cite {
+    /*position: absolute;*/
+    display: block;
+    font-size: 0.8em;
+    color: #E86A75;
+    margin-top: 25px;
+}
+.logo {
+    display: block;
+    width: 150px;
+    margin-top: 25px;
+}
+.on-main {
+    padding: 4px 13px;
+    display: inline-block;
+    background-color: #E31D2C;
+    color: white;
+    text-decoration: none;
+    text-shadow: none;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 0.6em;
+    line-height: 1em;
+}
+blockquote {
+    width: 75%;
+}

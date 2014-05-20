@@ -1,0 +1,149 @@
+* {
+    box-sizing: border-box;
+}
+
+.stripe1 {
+    width: 782px;
+    height: 26px;
+    background-color: #c80a04;
+    position: relative;
+    left: 2px;
+}
+
+.stripe1-triangle {
+    background: transparent url("/img/triangle2.png") no-repeat;
+    position: relative;
+    left: 50px;
+    z-index: 50;
+    width: 50px;
+    height: 26px;
+    overflow: hidden;
+}
+
+.stripe2 {
+    width: 810px;
+    height: 25px;
+    background-color: #e20105;
+    z-index: 100;
+    position: relative;
+    /*top: 20px;*/
+}
+
+.stripe2-triangle {
+    background: transparent url("/img/triangle.png") no-repeat;
+    position: relative;
+    left: 50px;
+    z-index: 50;
+    width: 50px;
+    height: 30px;
+    overflow: hidden;
+}
+
+.wrap .stripe2 .event-title {
+    display: inline-block;
+    margin-left: 20px;
+    font: 14px "Open Sans" bolder;
+    color: white;
+    position: relative;
+    top: 50%;
+    margin-top: -10px;
+}
+
+.content {
+    background: #ECEDE7;
+    position: relative;
+    /*top: -20px;*/
+    padding: 40px;
+    line-height: 2em;
+    color: #000000;
+}
+
+.form-header {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    font: 14px "Open Sans";
+    border-bottom: 1px solid #e20105;
+}
+
+.red, label .required {
+    color: #e20105;
+}
+
+input, textarea {
+    margin: 6px 0px 20px 0px;
+    height: 32px;
+    width: 300px;
+}
+
+textarea {
+    width: 450px;
+    height: 200px;
+}
+
+
+input[type=submit]{
+    background-color: red;
+    font: 13px "Open Sans";
+    font-weight: 600;
+    color: white;
+    width: 112px;
+    height: 30px;
+}
+
+form {
+    margin: 30px 0;
+    font: 12px "Open Sans";
+}
+
+input[type=text], textarea {
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    padding: 3px 0px 3px 3px;
+    margin: 5px 1px 3px 0px;
+    border: 1px solid #DDDDDD;
+}
+
+input[type=text]:focus, textarea:focus {
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    padding: 3px 0px 3px 3px;
+    margin: 5px 1px 3px 0px;
+    border: 1px solid rgba(81, 203, 238, 1);
+}
+
+.cite {
+    width: 800px;
+    height: 200px;
+    background: whitesmoke;
+    text-align: right;
+    border: 2px solid lightgray;
+    padding: 80px;
+}
+
+.phrase {
+    width: 100%;
+    /*margin-right: 0;*/
+    margin: 0 0 0 auto;
+    position: relative;
+    vertical-align: middle;
+    display: table;
+    font: 37px serif;
+    font-weight: 100;
+}
+
+.author {
+    margin: 0 auto;
+    position: relative;
+    vertical-align: middle;
+    font: 18px serif;
+    font-weight: 100;
+}
+#arrowLoader {
+    border: none;
+}
+.errorSummary > p {
+    color: red;
+}

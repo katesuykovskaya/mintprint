@@ -79,10 +79,10 @@ class Vk {
     public function getPhotosFromAlbum($albumId, $token)
     {
         $vk = new Guzzle\Http\StaticClient();
-        $count = 20;
+        $count = $this->conf['vk']['albums']['page_size'];
         $rev = empty($_REQUEST['rev']) ? 0 : $_REQUEST['rev']; // sorting by date (1 - from old to new, 0 - from new to old)
-//        $offset = empty($_REQUEST['offset']) ? 0 : $_REQUEST['offset'];
-        $offset = empty($_REQUEST['page']) ? 0 : ($_REQUEST['page'] - 1) * $count;
+        $offset = empty($_REQUEST['offset']) ? 0 : $_REQUEST['offset'];
+//        $offset = empty($_REQUEST['page']) ? 0 : ($_REQUEST['page'] - 1) * $count;
         try {
             $photoParams = [
                 'count'     => $count,
