@@ -26,16 +26,7 @@ return array(
 //    ),
     'modules'=>require(dirname(__FILE__) . '/modules.php'),
     'components'=>array(
-        'db'=>array(
-            'connectionString' => 'mysql:host=localhost;dbname=photo_service',
-            'emulatePrepare' => true,
-            'username' => 'root',
-            'password' => '',
-            'charset' => 'utf8',
-//            'tablePrefix'=>'', // needs to be set up for multilingual behavior, or we'll get an error which is in code of ext (usin table prefixes)
-            'enableParamLogging'=>true,
-            'enableProfiling'=>true,
-        ),
+        'db'=>require dirname(__FILE__).'/database.php',
 //        'user'=>array(
 //            'class'=>'RWebUser', //used module Rights instead of basic class CWebUser
 //            // enable cookie-based authentication
