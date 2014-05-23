@@ -9,13 +9,14 @@ class DefaultController extends Controller
 
     public function actionAuth($authprovider)
     {
-        $scenario = Yii::app()->request->getParam('scenario');
+//        $scenario = Yii::app()->request->getParam('scenario');
 
         $authClass = ucfirst($authprovider);
         $auth = new $authClass();
         $token = $auth->getToken();
 
-        $this->redirect($this->createUrl('/backend/social/default/photos?auth='.$authprovider.'&token='.$token.'&scenario='.$scenario));
+        $this->redirect($this->createUrl('/backend/social/default/photos?auth='.$authprovider.'&token='.$token));
+//        $this->redirect($this->createUrl('/backend/social/default/photos?auth='.$authprovider.'&token='.$token.'&scenario='.$scenario));
     }
 
     public function actionAjaxAuth()
@@ -65,5 +66,11 @@ class DefaultController extends Controller
             ));
         }
 
+    }
+
+    public function actionClearSession() {
+        unset(Yii::app()->session['vk_token']);
+        unset(Yii::app()->session['fb_token']);
+        $this->redirect($_SERVER['HTTP_REFERER']);
     }
 }

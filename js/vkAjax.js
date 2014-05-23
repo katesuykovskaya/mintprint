@@ -9,8 +9,10 @@ $(document).ready(function(){
             type : 'get',
             url : _this.attr('href'),
             beforeSend : function() {
+                $('#photoLoader').css('display', 'inline-block');
             },
             success : function(response) {
+                $('#photoLoader').css('display', 'none');
                 $('#photos'+_this.data('provider')).html(response);
             }
         });

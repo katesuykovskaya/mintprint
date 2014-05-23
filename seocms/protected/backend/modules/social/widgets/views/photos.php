@@ -18,7 +18,7 @@ echo CHtml::link('Sort',  Yii::app()->createUrl('/backend/social/default/photosF
 ));
 $albumSize = $album[$album_config['album_size']];
 $pageSize = $album_config['page_size'];
-$currentPage = isset($_GET['offset']) ? ($_GET['offset'] / $pageSize) + 1 : 0;//isset($_GET['page']) ? $_GET['page'] : 1;
+$currentPage = isset($_GET['offset']) ? ($_GET['offset'] / $pageSize) + 1 : 1;//isset($_GET['page']) ? $_GET['page'] : 1;
 echo CHtml::openTag('div', array(
     'id' => 'photoWidgetPager'
 ));
@@ -67,6 +67,7 @@ if($currentPage != $pagersCount)
         'id'=>'pager'.($i+1),
         'data-provider'  => $provider,
     ));
+echo '<span id="photoLoader"></span>';
 echo CHtml::closeTag('div');
 $len = count($photos);
 for($i = 0; $i < $len; $i++) {

@@ -193,9 +193,13 @@ $tweets = CJSON::decode($myTweets);
 //}
 //
 /////////////end of google + /////////////////
+//Yii::app()->session->clear();
 
 $this->widget('backend.modules.social.widgets.SocialAuthWidget',[
     'providers'=>['vk','fb','instagram','google'],
     'socialArray'=>$socialArray,
     'scenario'=>'photos'
 ]);
+echo CHtml::link('CLEAR', '/backend/social/default/clearSession');
+//http://oauth.vk.com/authorize?client_id=4321188&amp;response_type=code&amp;scope=photos&amp;redirect_uri=http://photo-service.home/backend/social/default/auth/authprovider/vk?scenario=photos&amp;v=5.16
+//http://oauth.vk.com/authorize?client_id=4321188&amp;response_type=code&amp;scope=photos&amp;redirect_uri=http://photo-service.home/backend/social/default/auth/authprovider/vk&amp;v=5.16&amp;scenario=photos

@@ -35,3 +35,11 @@
     background-size: 20px 20px;
     background-position: center center;
 }
+#photoLoader {
+    background: url('/img/loading.gif') no-repeat;
+    background-size: 20px 20px;
+    background-position: center center;
+    width: 20px;
+    height: 20px;
+    display: none;
+}
