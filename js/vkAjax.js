@@ -17,6 +17,20 @@ $(document).ready(function(){
             }
         });
     });
+
+    $(document).on('click', '.instagram-more', function(e) {
+        e.preventDefault();
+        var _this = $(this);
+        $.ajax({
+            type: 'post',
+            url: '/backend/social/default/instagramViewMore',
+            data:{url: _this.attr('href')},
+            success: function(response) {
+                $('#photosinstagram .instagram-more').remove();
+                $('#photosinstagram').append(response);
+            }
+        });
+    });
 });
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");

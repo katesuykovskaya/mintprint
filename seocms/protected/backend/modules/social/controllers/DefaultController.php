@@ -38,7 +38,8 @@ class DefaultController extends Controller
         Yii::app()->clientScript->registerCssFile('/css/backend.css');
         $socials = array(
             'vk',
-            'fb'
+            'fb',
+            'instagram'
         );
         $this->render('index', array(
             'socials'=>$socials
@@ -57,8 +58,8 @@ class DefaultController extends Controller
             $token = Yii::app()->session[$provider.'_token'];
             $data = $auth->getPhotosFromAlbum($_GET[$config['album_id']], $token);
             $album = $auth->getAlbums($token, array('album_ids' => $_GET[$config['album_id']]))[0];
-            $this->layout = false;
-            $this->render('application.backend.modules.social.widgets.views.photos', array(
+//            $this->layout = false;
+            $this->renderPartial('application.backend.modules.social.widgets.views.photos', array(
                 'photos'=>$data,
                 'provider'=>$provider,
                 'album'=>$album,
@@ -68,9 +69,19 @@ class DefaultController extends Controller
 
     }
 
+    public function  actionInstagramViewMore() {
+        $ins = new Guzzle\Http\StaticClient;
+        $req = $ins::get($_POST['url']);
+        $nextPhotos = $req->json();
+        $this->renderPartial('application.backend.modules.social.widgets.views._instagramPhotos', array(
+            'photos'=>$nextPhotos
+        ));
+    }
+
     public function actionClearSession() {
         unset(Yii::app()->session['vk_token']);
         unset(Yii::app()->session['fb_token']);
+        unset(Yii::app()->sessopn['instagram_token']);
         $this->redirect($_SERVER['HTTP_REFERER']);
     }
 }

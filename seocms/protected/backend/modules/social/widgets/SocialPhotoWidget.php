@@ -21,12 +21,20 @@ class SocialPhotoWidget extends CWidget {
         $auth = new $authClass();
         $token = Yii::app()->session[$provider.'_token'];
 //        echo $provider;
-        $albums = $auth->getAlbums($token);
+        if($provider == 'instagram') {
+            $photos = $auth->getPhotos($token);
+            $this->render('instagramPhotos', array(
+                'photos'=>$photos)
+            );
+        }
+        else {
+            $albums = $auth->getAlbums($token);
+            $this->render('albums', array(
+                'albums'=>$albums,
+                'config'=>$this->config[$provider],
+                'provider'=>$provider
+            ));
+        }
 
-        $this->render('albums', array(
-            'albums'=>$albums,
-            'config'=>$this->config[$provider],
-            'provider'=>$provider
-        ));
     }
 } 

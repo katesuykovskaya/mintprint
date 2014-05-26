@@ -48,17 +48,17 @@ return [
     'instagram'=>[
         'authUrl'=>'https://api.instagram.com/oauth/authorize/',
         'auth'=>[
-            'client_id' => '64adff1d6300495680d246278f3d72a0',
+            'client_id' => 'c3a5d2a20bd7484e8260dfdc9fc295b4',
             'response_type'=>'code',
-            'redirect_uri' => 'http://olympiec-2.home/backend/social/default/auth/authprovider/instagram',
+            'redirect_uri' => 'http://photo-service.home/backend/social/default/auth/authprovider/instagram',
 
         ],
         'tokenUrl'=>'https://api.instagram.com/oauth/access_token',
         'token'=>[
-            'client_id' => '64adff1d6300495680d246278f3d72a0',
-            'client_secret'=>'98901e6ffc2745bcb13157bd3321c4c1',
+            'client_id' => 'c3a5d2a20bd7484e8260dfdc9fc295b4',
+            'client_secret'=>'6c59c6ba085a48f18e795f6ab0b62045',
             'grant_type'=> 'authorization_code',
-            'redirect_uri' => 'http://olympiec-2.home/backend/social/default/auth/authprovider/instagram?scenario='.$scenario,
+            'redirect_uri' => 'http://photo-service.home/backend/social/default/auth/authprovider/instagram?scenario='.$scenario,
             'code'=>$code,
         ],
     ],
@@ -67,7 +67,9 @@ return [
         'auth'=>[
             'client_id' => '1490682084479558',
             'client_secret' => '26b103623cec4483b764061706fe4758',
-            'scope' => 'user_photos,user_photo_video_tags',
+//            'client_id' => '769552843084826',
+//            'client_secret'=>'457272200ac7b556e97820808861fb93',
+//            'scope' => 'user_photos',
             'redirect_uri' => 'http://photo-service.home/backend/social/default/auth/authprovider/fb'
 
         ],
@@ -75,6 +77,8 @@ return [
         'token'=>[
             'client_id' => '1490682084479558',
             'client_secret'=>'26b103623cec4483b764061706fe4758',
+//            'client_id' => '769552843084826',
+//            'client_secret'=>'457272200ac7b556e97820808861fb93',
             'redirect_uri' => 'http://photo-service.home/backend/social/default/auth/authprovider/fb?scenario='.$scenario,
             'code'=>$code,
         ],

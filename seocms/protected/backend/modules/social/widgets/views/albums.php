@@ -7,6 +7,8 @@
  * @var $config array
  * @var $provider string
  */
+if($provider == 'instagram')
+echo CVarDumper::dump($albums, 6, true);
 ?>
 <h2><?=strtoupper($provider)?></h2>
 <?php $aConf = $config['albums'];
