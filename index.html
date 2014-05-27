@@ -3,25 +3,38 @@
 <head>
     <title></title>
     <link rel="stylesheet" href="/css/main.css"/>
+    <script src="/js/vendor/jquery-1.10.2.min.js"></script>
 </head>
 <body>
 <header>
-    <menu>
-        <ul>
-            <li><a href="#">оплата и доставка</a></li>
-            <li><a href="#">новости</a></li>
-            <li><a href="#">главная</a></li>
-            <li><a href="#">о нас</a></li>
-        </ul>
-    </menu>
-    <div>
-        <a id="profile" href="#"></a>
-        <a id="basket" href="#"></a>
+    <div class="header-wrap">
+        <menu>
+            <ul>
+                <li><a href="#">оплата и доставка</a></li>
+                <li><a href="#">новости</a></li>
+                <li><a href="#">главная</a></li>
+                <li><a href="#">о нас</a></li>
+            </ul>
+        </menu>
+        <div class="right-buttons">
+            <a id="profile" class="profile" href="#"></a>
+            <a id="basket" class="basket" href="#"></a>
+        </div>
     </div>
     <div class="header-bg"></div>
 </header>
 <section class="content" id="content">
     <p>это русский текст</p>
 </section>
+<script>
+    $(document).ready(function(){
+        var menu = $('header menu ul').eq(0);
+        var index = Math.floor(menu.children().length / 2) - 1;
+        var li = $('<li></li>', {'class': 'middle-leaf'}).insertAfter(menu.children('li').eq(index));
+        $('<img>', {
+            src: '/img/leaf.png'
+        }).appendTo(li);
+    });
+</script>
 </body>
 </html>

@@ -114,22 +114,24 @@ header {
     /* background-image: url('/img/header-menu-bg.png'); */
     position: relative;
 }
-header menu {
+header .header-wrap {
     margin: 0 auto;
     width: 850px;
-    text-align: center;
+    position: relative;
+    /* text-align: center; */
 }
 header ul {
     height: 70px;
-    
-    display: table-cell;
-    vertical-align: middle;
     text-align: center;
 }
 header li {
     display: inline-block;
+    margin: 0 18px;
+    padding: 24px 0;
+}
+header menu .middle-leaf {
+    padding: 12px 0;
 
-    margin: 0 30px;
 }
 header menu a {
     text-transform: uppercase;
@@ -142,6 +144,27 @@ header menu a {
     bottom: -10px;
     position: absolute;
     width: 100%;
+}
+.right-buttons {
+    position: absolute;
+    
+    right: 0;
+    top: 12px;
+}
+.profile {
+    display: inline-block;
+
+    width: 48px;
+    height: 48px;
+    background-image: url('/img/cabinet.png');
+}
+.basket {
+    width: 48px;
+
+    height: 48px;
+    display: inline-block;
+    background-image: url('/img/basket.png');
+    margin-left: 5px;
 }
 .content {
     width: 850px;
