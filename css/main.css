@@ -106,6 +106,12 @@ a {
 body {
     background: fixed #352D22 url("/img/bg.jpg") center top;
     font-family: PoiretOne;
+    text-transform: uppercase;
+}
+.header-and-content-wrap {
+    min-height: 100%;
+    height: auto !important;
+    /* margin-bottom: 220px; */
 }
 header {
     height: 70px;
@@ -113,6 +119,7 @@ header {
     background-size: 50px;
     /* background-image: url('/img/header-menu-bg.png'); */
     position: relative;
+    margin-bottom: 10px;
 }
 header .header-wrap {
     margin: 0 auto;
@@ -160,7 +167,6 @@ header menu a {
 }
 .basket {
     width: 48px;
-
     height: 48px;
     display: inline-block;
     background-image: url('/img/basket.png');
@@ -170,7 +176,122 @@ header menu a {
     width: 850px;
     margin: 0 auto;
 }
+.inner-page {
+    margin-top: 60px;
+    
+}
+.basket-cost {
+    width: 150px;
+    /* border: 1px solid greenyellow; */
+    margin-right: 5px;
+}
+.all-photos-thumbs {
+    width: 340px;
+    /* border: 1px solid greenyellow; */
+    margin-right: 25px;
+}
+.social-photo-widget {
+    width: 330px;
+    /* border: 1px solid greenyellow; */
+    background: red;
+}
+.white-text {
+    color: white;
+    font-size: 12px;
+}
+.basket-cost .white-text {
+    padding-top: 2px;
+}
+.green-text {
+    font-size: 14px;
+    color: #19BDC3;
+    line-height: 16px;
+}
+#price {
+    color: #19BDC3;
+    font-size: 66px;
+    height: 66px;
+    line-height: 66px;
+    display: inline-block;
+    padding-right: 30px;
+    margin-top: 15px;
+    margin-bottom: 22px;
+}
+#price sup {
+    font-size: 14px;
+    position: absolute;
+    /* margin-top: -37px; */
+    /* display: inline-block; */
+    top: 0;
+    right: 0;
+    /* height: 30px; */
+    line-height: 30px;
+    font-weight: bold;
+}
+.print-button {
+    background-color: #19BDC3;
+    border-radius: 10px;
+    border-bottom: 3px solid #3492B0;
+    display: inline-block;
+    padding: 8px 15px;
+    color: white;
+    font-size: 16px;
+}
+footer {
+    height: 220px;
+    margin-top: -220px;
+    background-color: white;
+}
+h2 {
+    font-size: 16px;
+    color: #19BDC3;
+}
+.footer-text-wrap {
+    width: 100%;
+    text-align: center;
+    height: 140px;
+    position: relative;
+    margin: 10px 0;
+}
+.footer-top-bg {
+    position: absolute;
+    height: 20px;
+    width: 100%;
+    background-image: url('/img/footer-top-bg.png');
+    top: -9px;
+}
+.footer-bottom-bg {
+    position: absolute;
+    height: 20px;
+    width: 100%;
+    background-image: url('/img/footer-bottom-bg.png');
+    bottom: -10px;
+}
+.footer-text h2 {
+    margin-bottom: 20px;
+    padding-top: 30px;
+}
+.footer-text p {
+    font-size: 12px;
+    color: #A7A9AC;
+    line-height: 16px;
+    text-align: center;
+}
+.footer-text {
+    width: 850px;
+    margin: 0 auto;
+}
+.footer-menu {
+    background: #6BC6B4;
+    height: 60px;
+}
+footer menu {
 
+}
+footer li {
+    display: inline-block;
+
+}
 /* ==========================================================================
    Helper classes
    ========================================================================== */
@@ -203,7 +324,12 @@ header menu a {
     top: 0;
     left: 0;
 }
-
+.overflow-hidden {
+    overflow: hidden;
+}
+.overflow-hidden .left {
+    min-height: 100px;
+}
 /*
  * Hide only visually, but have it available for screenreaders: h5bp.com/v
  */

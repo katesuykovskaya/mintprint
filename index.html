@@ -6,26 +6,61 @@
     <script src="/js/vendor/jquery-1.10.2.min.js"></script>
 </head>
 <body>
-<header>
-    <div class="header-wrap">
+<div class="header-and-content-wrap">
+    <header>
+        <div class="header-wrap">
+            <menu>
+                <ul>
+                    <li><a href="#">оплата и доставка</a></li>
+                    <li><a href="#">новости</a></li>
+                    <li><a href="#">главная</a></li>
+                    <li><a href="#">о нас</a></li>
+                </ul>
+            </menu>
+            <div class="right-buttons">
+                <a id="profile" class="profile" href="#"></a>
+                <a id="basket" class="basket" href="#"></a>
+            </div>
+        </div>
+        <div class="header-bg"></div>
+    </header>
+    <section class="content inner-page overflow-hidden" id="content">
+        <div class="left basket-cost">
+            <p class="green-text">Распечатать ваши замечательные фотографии</p>
+            <p class="white-text">будет стоить</p>
+            <div id="price" class="relative">
+                10<sup>грн.</sup>
+            </div>
+            <a class="print-button" href="#">печатать их</a>
+        </div>
+        <div class="left all-photos-thumbs"></div>
+        <div class="left social-photo-widget"></div>
+    </section>
+</div>
+<footer>
+    <div class="footer-text-wrap">
+        <div class="footer-top-bg"></div>
+        <div class="footer-text">
+            <h2>печать всего за 1 гривну</h2>
+            <div>
+                <p>а воспоминания - бесценны, сохраните их нстоящими.</p>
+                <p>бумажными фотографиями, которые можно дать в руки, подарить, и положить под подушку</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom-bg"></div>
+    </div>
+    <div class="footer-menu">
         <menu>
             <ul>
-                <li><a href="#">оплата и доставка</a></li>
-                <li><a href="#">новости</a></li>
-                <li><a href="#">главная</a></li>
-                <li><a href="#">о нас</a></li>
+                <li><a href="#">вопросы</a></li>
+                <li><a href="#">оферта</a></li>
+                <li><a href="#">политика конфиденциальности</a></li>
+                <li><a href="#">блог</a></li>
             </ul>
         </menu>
-        <div class="right-buttons">
-            <a id="profile" class="profile" href="#"></a>
-            <a id="basket" class="basket" href="#"></a>
-        </div>
     </div>
-    <div class="header-bg"></div>
-</header>
-<section class="content" id="content">
-    <p>это русский текст</p>
-</section>
+</footer>
 <script>
     $(document).ready(function(){
         var menu = $('header menu ul').eq(0);
