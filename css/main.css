@@ -21,6 +21,7 @@ html {
 }
 html, body {
     height: 100%;
+    /* margin-bottom: 36px; */
 }
 /*
  * Remove text-shadow in selection highlight: h5bp.com/i
@@ -100,6 +101,11 @@ textarea {
     font-family: PoiretOne;
     src: url('/css/font/PoiretOne-Regular.ttf');
 }
+@font-face {
+    font-family: OpenSansLight;
+    src: url('/css/font/OpenSans-Light.ttf');
+}
+
 a {
     text-decoration: none;
 }
@@ -107,11 +113,14 @@ body {
     background: fixed #352D22 url("/img/bg.jpg") center top;
     font-family: PoiretOne;
     text-transform: uppercase;
+    /* margin-bottom: -27px; */
 }
 .header-and-content-wrap {
-    min-height: 100%;
-    height: auto !important;
+    /* min-height: 100%; */
+    /* height: auto !important; */
     /* margin-bottom: 220px; */
+    height: 100%;
+    /* margin-bottom: 11px; */
 }
 header {
     height: 70px;
@@ -239,7 +248,7 @@ header menu a {
 }
 footer {
     height: 220px;
-    margin-top: -220px;
+    margin-top: -230px;
     background-color: white;
 }
 h2 {
@@ -264,8 +273,9 @@ h2 {
     position: absolute;
     height: 20px;
     width: 100%;
+    /* background-color: red; */
     background-image: url('/img/footer-bottom-bg.png');
-    bottom: -10px;
+    bottom: -18px;
 }
 .footer-text h2 {
     margin-bottom: 20px;
@@ -273,6 +283,7 @@ h2 {
 }
 .footer-text p {
     font-size: 12px;
+    font-family: "Open Sans";;
     color: #A7A9AC;
     line-height: 16px;
     text-align: center;
@@ -283,14 +294,47 @@ h2 {
 }
 .footer-menu {
     background: #6BC6B4;
-    height: 60px;
+    height: 70px;
 }
 footer menu {
-
+    font-family: "Open Sans";
+    text-align: center;
+}
+footer menu ul {
+    padding-top: 28px;
 }
 footer li {
     display: inline-block;
-
+    padding: 0 12px;
+}
+footer li a {
+    color: white;
+    font-size: 14px;
+}
+.footer-menu-wrap {
+    width: 850px;
+    margin: 0 auto;
+    height: 100%;
+    position: relative;
+}
+.socials-bottom {
+    position: absolute;
+    right: 30px;
+    top: 28px;
+}
+.socials-bottom a {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+.socials-bottom .ins {
+    background-image: url('/img/ins-icon.png');
+}
+.socials-bottom .fb {
+    background-image: url('/img/fb-icon.png');
+}
+.socials-bottom .vk {
+    background-image: url('/img/vk-icon.png');
 }
 /* ==========================================================================
    Helper classes
