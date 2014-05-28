@@ -116,7 +116,7 @@ body {
     /* margin-bottom: -27px; */
 }
 .header-and-content-wrap {
-    /* min-height: 100%; */
+    min-height: 900px;
     /* height: auto !important; */
     /* margin-bottom: 220px; */
     height: 100%;
@@ -195,14 +195,42 @@ header menu a {
     margin-right: 5px;
 }
 .all-photos-thumbs {
-    width: 340px;
+    width: 350px;
     /* border: 1px solid greenyellow; */
     margin-right: 25px;
 }
+.photo-wrap {
+    width: 110px;
+    height: 130px;
+    background-color: white;
+    float: left;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    text-align: center;
+    position: relative;
+}
+.photo-wrap img {
+    margin-top: 6px;
+}
+.photo-wrap .remove {
+    background-image: url('/img/remove-image.png');
+    height: 16px;
+    display: inline-block;
+    width: 16px;
+    position: absolute;
+    right: 12px;
+    top: 12px;
+}
 .social-photo-widget {
-    width: 330px;
-    /* border: 1px solid greenyellow; */
-    background: red;
+    width: 320px;
+}
+h1 {
+    color: #18BCC2;
+    font-size: 50px;
+    line-height: 50px;
+}
+.social-photo-widget h1 {
+    margin-top: -6px;
 }
 .white-text {
     color: white;
@@ -215,6 +243,7 @@ header menu a {
     font-size: 14px;
     color: #19BDC3;
     line-height: 16px;
+    font-weight: 600;
 }
 #price {
     color: #19BDC3;
@@ -336,6 +365,108 @@ footer li a {
 .socials-bottom .vk {
     background-image: url('/img/vk-icon.png');
 }
+.social-widget {
+    margin-top: 20px;
+}
+.tabs-head li {
+    display: inline-block;
+    margin-right: 5px;
+}
+.tabs-head a {
+    display: inline-block;
+    height: 60px;
+    width: 70px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    text-align: center;
+    background-repeat: no-repeat;
+}
+.tabs-head .ins {
+    background-color: #929497;
+    background-image: url('/img/ins.png');
+    background-position: 22px 16px;
+    background-repeat: no-repeat;
+}
+.tabs-head .fb {
+    background-color: #6AC6B4;
+    background-image: url('/img/fb.png');
+    background-position: 17px 7px;
+}
+.tabs-head .vk {
+    background-color: #35A0BE;
+    background-image: url('/img/vk.png');
+    background-position: 26px 14px;
+}
+.tabs-head .upload {
+    background-color: #18BCC2;
+    background-position: 20px 8px;
+    background-image: url('/img/upload.png');
+}
+.tabs-head a span {
+    font-size: 8px;
+    color: white;
+    width: 100%;
+    padding-top: 45px;
+    display: inline-block;
+}
+.tab {
+    width: 325px;
+    height: 410px;
+    max-height: 410px;
+    background-color: white;
+}
+.scrollbar {
+    position: relative;
+    background-position: 0 0;
+    float: right;
+    width: 15px;
+}
+.track {
+    width: 15px;
+    position: relative;
+    padding: 0 1px;
+}
+.thumb {
+    height: 20px;
+    width: 15px;
+    cursor: pointer;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: -5px;
+    background-color: #E6E7E8;
+}
+.end {
+    overflow: hidden;
+    height: 5px;
+    width: 25px;
+}
+.viewport {
+    width: 304px;
+    height: 410px;
+    overflow: hidden;
+    position: relative;
+}
+.overview {
+    list-style: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 0;
+    margin: 0;
+}
+.overview a {
+    display: inline-block;
+    height: 95px;
+    width: 95px;
+    float: left;
+    text-align: center;
+    line-height: 95px;
+}
+.overview a > img {
+    max-height: 100%;
+    max-width: 100%;
+}
 /* ==========================================================================
    Helper classes
    ========================================================================== */
@@ -372,7 +503,7 @@ footer li a {
     overflow: hidden;
 }
 .overflow-hidden .left {
-    min-height: 100px;
+    min-height: 107px;
 }
 /*
  * Hide only visually, but have it available for screenreaders: h5bp.com/v

@@ -3,8 +3,8 @@ return CMap::mergeArray(
     (require dirname(dirname(__FILE__)).'/common/config/main.php'),
     array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'SC Olympiec',
-    'theme'=>'sc-olympiec',
+	'name'=>'Mint print',
+    'theme'=>'mint-print',
     'sourceLanguage'=>'ru',
     'language'=>'ru',
 

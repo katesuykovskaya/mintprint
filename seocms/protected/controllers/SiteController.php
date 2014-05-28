@@ -16,10 +16,8 @@ class SiteController extends Controller
     }
 
 	public function actionIndex() {
-        $this->layout = '//layouts/index';
-        Yii::import('application.backend.modules.cap.models.*');
-        $model = Cap::model()->with(array('translation'))->findAllByAttributes(array('show'=>true), array('order'=>'move'));
-        $this->render('index', array('model'=>$model));
+        $this->layout = false;
+        $this->render('index');
 	}
 
     public function actionMain() {

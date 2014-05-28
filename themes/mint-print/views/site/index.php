@@ -1,15 +1,24 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Kate
+ * Date: 28.05.14
+ * Time: 15:00
+ * @var $this SiteController
+ */
+Yii::app()->clientScript->registerCoreScript('jquery');
+Yii::app()->clientScript->registerCoreScript('jquery.ui');
+Yii::app()->clientScript->registerScriptFile('/js_plugins/tinyscrollbar.js');
+?>
 <!DOCTYPE html>
 <html>
 <head>
     <title></title>
     <link rel="stylesheet" href="/css/main.css"/>
-    <script src="/js/vendor/jquery-1.10.2.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
-    <!--<script src="/js_plugins/jqui1812/js/jquery-1.5.1.min.js"></script>-->
-    <!--<script src="/js_plugins/jqui1812/js/jquery-ui-1.8.12.custom.min.js"></script>-->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <!--    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">-->
+    <!--    <script src="//code.jquery.com/jquery-1.10.2.js"></script>-->
+    <!--    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>-->
 </head>
 <body>
 <div class="header-and-content-wrap">
@@ -59,17 +68,42 @@
         <div class="left social-photo-widget">
             <h1>mint print</h1>
             <p class="white-text">печать фотографий из соцсетей</p>
-            <div id="socialWidget">
-                <ul>
-                    <li><a href="#tabs-1">ins</a></li>
-                    <li><a href="#tabs-2">fb</a></li>
-                    <li><a href="#tabs-3">vk</a></li>
-                    <li><a href="#tabs-4">upload</a></li>
+            <div class="social-widget" id="socialWidget">
+                <ul class="tabs-head">
+                    <li><a class="ins" href="#tabs-1"><span>инстаграм</span></a></li>
+                    <li><a class="fb" href="#tabs-2"><span>фейсбук</span></a></li>
+                    <li><a class="vk" href="#tabs-3"><span>вконтакте</span></a></li>
+                    <li><a class="upload" href="#tabs-4"><span>загрузить</span></a></li>
                 </ul>
-                <div id="tabs-1">dfdsfsdf</div>
-                <div id="tabs-2">dfsdfsf</div>
-                <div id="tabs-3">dfd5454353434sfsdf</div>
-                <div id="tabs-4">aaaaaaaaa</div>
+                <div class="tab" id="tabs-1">
+                    <div class="scrollbar">
+                        <div class="track">
+                            <div class="thumb"></div>
+                            <div class="end"></div>
+                        </div>
+                    </div>
+                    <div class="viewport">
+                        <div class="overview">
+                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg"></a>
+                            <a href="#"><img src="http://cs416726.vk.me/v416726610/592/_U5Tnu5SsNA.jpg" alt=""/></a>
+                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg" alt=""/></a>
+                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg" alt=""/></a>
+                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg" alt=""/></a>
+                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg" alt=""/></a>
+                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg" alt=""/></a>
+                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg" alt=""/></a>
+                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg" alt=""/></a>
+                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg" alt=""/></a>
+                            <a href="#"><img src="http://cs416726.vk.me/v416726610/592/_U5Tnu5SsNA.jpg" alt=""/></a>
+                            <a href="#"><img src="http://cs416726.vk.me/v416726610/592/_U5Tnu5SsNA.jpg" alt=""/></a>
+                            <a href="#"><img src="http://cs416726.vk.me/v416726610/592/_U5Tnu5SsNA.jpg" alt=""/></a>
+                            <a href="#"><img src="http://cs416726.vk.me/v416726610/592/_U5Tnu5SsNA.jpg" alt=""/></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab" id="tabs-2">dfsdfsf</div>
+                <div class="tab" id="tabs-3">dfd5454353434sfsdf</div>
+                <div class="tab" id="tabs-4">aaaaaaaaa</div>
             </div>
         </div>
     </section>
@@ -115,6 +149,8 @@
         }).appendTo(li);
 
         $('#socialWidget').tabs();
+
+        $('#tabs-1').tinyscrollbar();
     });
 </script>
 </body>
