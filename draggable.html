@@ -5,11 +5,13 @@
     <link rel="stylesheet" href="/css/draggable.css"/>
     <script src="/js/vendor/jquery-1.10.2.min.js"></script>
     <script src="/js/vendor/jquery-ui-1.10.4.custom.min.js"></script>
-    <script src="/js/vendor/multidraggable.js"></script>
 </head>
 <body>
 <div class="wrapper-blocks">
    <div class="left-block">
+       <div class="photo"></div>
+       <div class="photo"></div>
+       <div class="photo"></div>
        <div class="photo"></div>
        <div class="photo"></div>
        <div class="photo"></div>
@@ -31,57 +33,39 @@
 </div>
    <script type="text/javascript">
        $( document ).ready(function() {
+                   $( ".right-block" ).selectable();
 
-           $( ".right-block" ).selectable(
-                   {
-                       stop: function() {
-                           $(".ui-selected").multiDraggable({ group: $(".ui-selected"),dragNative : function () {}});
-                           return false;
-                       },
-                       unselecting: function() {
-                           $(".ui-selected").unbind();
-                           return false;
-                       }
-                   }
-           );
-//           $( ".right-block .load-photo" ).draggable({
-//               start: function() {
-//                   // что то при старте
-//               },
-//               drag: function( event, ui) {
-//                   //функция срабатывает при перемещении
-//                   $(".right-block .ui-selected").offset( { left:ui.offset.left, top:ui.offset.top} )
-//               },
-//               stop: function() {
-//                   // что то при окончании перемещения
-//               },
-//               cursor: "move",
-//               revert: "invalid",
-//               helper: "clone",
-//           });
+           $( ".right-block .load-photo" ).draggable({
+               start: function() {
+                   // что то при старте
+               },
+               drag: function( event, ui) {
+                   //функция срабатывает при перемещении
+                   $(".right-block .ui-selected").offset( { left:ui.offset.left, top:ui.offset.top } )
+               },
+               stop: function() {
+                   // что то при окончании перемещения
+               },
+               cursor: "move",
+               revert: "invalid",
+               containment: ".wrapper-blocks",
+               snap: ".left-block",
+               snapMode: "both",
+               snapTolerance: 50
+           });
 
-           $( ".left-block" ).droppable({
+           $( ".left-block, .photo" ).droppable({
                activeClass: "active-photo",
                hoverClass: "hover-photo",
                drop: function( event, ui ) {
-//                   deleteImage( ui.draggable );
+                   $(this).remove();
+//                   $( this )
+//                           .addClass( "ui-state-highlight" )
+//                           .find( "> p" )
+//                           .html( "Dropped!" );
+                   return false;
                }
            });
-           function deleteImage( $item ) {
-               $item.fadeOut(function() {
-                   var $list = $( "ul", $trash ).length ?
-                           $( "ul", $trash ) :
-                           $( "<ul class='gallery ui-helper-reset'/>" ).appendTo( $trash );
-
-                   $item.find( "a.ui-icon-trash" ).remove();
-                   $item.append( recycle_icon ).appendTo( $list ).fadeIn(function() {
-                       $item
-                               .animate({ width: "48px" })
-                               .find( "img" )
-                               .animate({ height: "36px" });
-                   });
-               });
-           }
        });
    </script>
 </body>
