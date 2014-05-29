@@ -6,8 +6,6 @@
  * Time: 15:00
  * @var $this SiteController
  */
-Yii::app()->clientScript->registerCoreScript('jquery');
-Yii::app()->clientScript->registerCoreScript('jquery.ui');
 Yii::app()->clientScript->registerScriptFile('/js_plugins/tinyscrollbar.js');
 ?>
     <section class="content inner-page overflow-hidden" id="content">
