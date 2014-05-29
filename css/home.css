@@ -207,7 +207,7 @@ header menu a {
     font-size: 15px;
 }
 .home-page .buttons-soc{
-padding: 12px 0 250px 38%;
+    padding: 12px 0 250px 38%;
 }
 .home-page .buttons-soc .inst, .home-page .buttons-soc .fb, .home-page .buttons-soc .vk{
     display: block;

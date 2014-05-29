@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>draggable</title>
+    <link rel="stylesheet" href="/css/draggable.css"/>
+    <script src="/js/vendor/jquery-1.10.2.min.js"></script>
+    <script src="/js/vendor/jquery-ui-1.10.4.custom.min.js"></script>
+</head>
+<body>
+<div class="wrapper-blocks">
+   <div class="left-block">
+       <div class="photo"></div>
+       <div class="photo"></div>
+       <div class="photo"></div>
+       <div class="photo"></div>
+       <div class="photo"></div>
+       <div class="photo"></div>
+       <div class="photo"></div>
+       <div class="photo"></div>
+       <div class="photo"></div>
+   </div>
+   <div class="right-block">
+       <div class="load-photo"></div>
+       <div class="load-photo"></div>
+       <div class="load-photo"></div>
+       <div class="load-photo"></div>
+       <div class="load-photo"></div>
+       <div class="load-photo"></div>
+       <div class="load-photo"></div>
+       <div class="load-photo"></div>
+
+   </div>
+</div>
+   <script type="text/javascript">
+       $( document ).ready(function() {
+           $( ".right-block .load-photo" ).draggable({
+               cursor: "move",
+               revert: "invalid",
+               containment: ".wrapper-blocks"
+           });
+
+           $( ".left-block, .photo" ).droppable({
+               activeClass: "active-photo",
+               hoverClass: "hover-photo",
+               drop: function( event, ui ) {
+                   $( this )
+                           .addClass( "ui-state-highlight" )
+                           .find( "> p" )
+                           .html( "Dropped!" );
+                   return false;
+               }
+           });
+       });
+   </script>
+</body>
+</html>
