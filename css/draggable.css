@@ -38,3 +38,5 @@
 .wrapper-blocks{
     overflow: hidden;
 }
+.right-block .ui-selecting,  .right-block .ui-selected{ background: #FECA40; }
+.ui-selectable-helper{position:absolute;z-index:100;border:1px dotted black}
