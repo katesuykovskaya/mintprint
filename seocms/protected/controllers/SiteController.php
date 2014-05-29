@@ -16,9 +16,14 @@ class SiteController extends Controller
     }
 
 	public function actionIndex() {
-        $this->layout = false;
+//        $this->layout = false;
         $this->render('index');
 	}
+
+    public function actionEdit()
+    {
+
+    }
 
     public function actionMain() {
         Yii::import('application.backend.modules.news.models.*');
