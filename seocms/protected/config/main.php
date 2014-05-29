@@ -16,6 +16,7 @@ return CMap::mergeArray(
 
 	'modules'=>array(
         'attach',
+        'social',
 	),
 
 	// application components

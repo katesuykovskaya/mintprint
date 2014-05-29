@@ -75,6 +75,14 @@ Yii::app()->clientScript->registerScriptFile('/js_plugins/tinyscrollbar.js');
                 <div class="tab" id="tabs-4">aaaaaaaaa</div>
             </div>
         </div>
+        <?php
+        $this->widget('application.modules.social.widgets.SocialPhotoWidget', array(
+            'url'=>'/social/default/photosFromAlbum',
+            'config'=>Yii::app()->getModule('social')->config,
+            'socials'=>array(
+                'vk','fb','instagram'
+            )
+        ))?>
     </section>
 <script>
     $(document).ready(function(){

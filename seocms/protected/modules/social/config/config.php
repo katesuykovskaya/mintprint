@@ -21,7 +21,7 @@ return [
             'client_id' => '4321188',
             'response_type'=>'code',
             'scope'=>'photos',
-            'redirect_uri' => 'http://photo-service.home/backend/social/default/auth/authprovider/vk',
+            'redirect_uri' => 'http://photo-service.home/social/default/auth/authprovider/vk',
             'v'=>'5.16'
 
         ],
@@ -33,7 +33,7 @@ return [
             'client_secret' => '1se2sLZmk2IZoXibbPRr',
             'response_type'=>'code',
             'scope'=>'photos',
-            'redirect_uri' => 'http://photo-service.home/backend/social/default/auth/authprovider/vk?scenario='.$scenario,
+            'redirect_uri' => 'http://photo-service.home/social/default/auth/authprovider/vk?scenario='.$scenario,
             'code'=>$code,
         ],
         'albums'=>array(
