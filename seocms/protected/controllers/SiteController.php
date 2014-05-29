@@ -10,15 +10,29 @@ class SiteController extends Controller
 	 * when an action is not explicitly requested by users.
 	 */
 
+    public function beforeAction($action) {
+        if(parent::beforeAction($action)) {
+            Yii::app()->clientScript->registerCoreScript('jquery');
+            Yii::app()->clientScript->registerCoreScript('jquery.ui');
+            return true;
+        }
+        return false;
+    }
+
     public function init() {
         parent::init();
         $this->mainUrl = Yii::app()->createUrl('main.html', ['language'=>Yii::app()->language]);
     }
 
 	public function actionIndex() {
-        $this->layout = false;
+//        $this->layout = false;
         $this->render('index');
 	}
+
+    public function actionEdit() {
+
+        $this->render('edit');
+    }
 
     public function actionMain() {
         Yii::import('application.backend.modules.news.models.*');

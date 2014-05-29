@@ -54,10 +54,10 @@ $this->widget('application.backend.modules.attach.widgets.FileUploadWidget',arra
     'entity'=>$entity,
     'entity_id'=> !$translate->isNewRecord ? $translate->page_id : null,
     'versions'=>array('small','thumbnail',''),
-    'tempUrl'=>'/var/www/seotm_cms/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
-    'uploadUrl'=>'/var/www/seotm_cms/uploads/',
+    'tempUrl'=>Yii::getPathOfAlias('webroot').'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
+    'uploadUrl'=>Yii::getPathOfAlias('webroot').'/uploads/',
     'webUrl'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
-    'filePath'=>'/var/www/seotm_cms/uploads/'.$entity.DIRECTORY_SEPARATOR.$translate->page_id.DIRECTORY_SEPARATOR,
+    'filePath'=>Yii::getPathOfAlias('webroot').'/uploads/'.$entity.DIRECTORY_SEPARATOR.$translate->page_id.DIRECTORY_SEPARATOR,
 ));
 ?>
 
