@@ -10,12 +10,15 @@
 //if($provider == 'instagram')
 //echo CVarDumper::dump($albums, 6, true);
 ?>
-<h2><?=strtoupper($provider)?></h2>
+<!--<h2>--><?//=strtoupper($provider)?><!--</h2>-->
 <?php $aConf = $config['albums'];
 foreach($albums as $key => $album) {
 //    echo CVarDumper::dump($config, 6, true);
     echo CHtml::ajaxLink(
-        CHtml::image($album[$aConf['thumb_src']], $album[$aConf['title']]).'<span class="loader loader'.$provider.'-'.$key.'"></span>',
+        CHtml::image('/img/folder-jpg.jpg', $album[$aConf['title']],
+            array('class'=>'folder')).
+        '<span class="loader loader'.$provider.'-'.$key.'"></span>'.
+        CHtml::tag('p', array(), $album[$aConf['title']]),
         Yii::app()->createUrl($this->url,  [
             'auth'=>$provider
         ]),
@@ -24,12 +27,12 @@ foreach($albums as $key => $album) {
             'data'=>'js:{'.$aConf['album_id'].' : '.$album[$aConf['album_id']].'}',
             'beforeSend'=>'js:function(){$(".loader'.$provider.'-'.$key.'").css("display", "block")}',
             'complete'=>'js:function(){$(".loader'.$provider.'-'.$key.'").css("display", "none")}',
-            'update'=>'#photos'.$provider,
+            'update'=>'.'.$provider.'-tab .viewport',
         ),array(
             'class'=>'album-thumb'
         )
     );
 }
 ?>
-<div id="photos<?=$provider?>"></div>
-<hr/>
+<div class="clearfix"></div>
+<!--<div id="photos--><?//=$provider?><!--"></div>-->

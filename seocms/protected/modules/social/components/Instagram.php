@@ -43,6 +43,7 @@ class Instagram {
         $instaMediaUrl = 'https://api.instagram.com/v1/users/self/feed';
 
         try {
+//            echo $instaMediaUrl.'?access_token='.$token;
             $requestM = $insta->get($instaMediaUrl.'?access_token='.$token);
             $data = $requestM->send()->json();
             return $data;

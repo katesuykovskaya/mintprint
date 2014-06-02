@@ -7,13 +7,14 @@ $(document).ready(function(){
         var _this = $(this);
         $.ajax({
             type : 'get',
+            data: { provider: _this.data('provider') },
             url : _this.attr('href'),
             beforeSend : function() {
                 $('#photoLoader').css('display', 'inline-block');
             },
             success : function(response) {
                 $('#photoLoader').css('display', 'none');
-                $('#photos'+_this.data('provider')).html(response);
+                $('.'+_this.data('provider')+'-tab .viewport').html(response);
             }
         });
     });
@@ -23,7 +24,7 @@ $(document).ready(function(){
         var _this = $(this);
         $.ajax({
             type: 'post',
-            url: '/backend/social/default/instagramViewMore',
+            url: '/social/default/instagramViewMore',
             data:{url: _this.attr('href')},
             success: function(response) {
                 $('#photosinstagram .instagram-more').remove();
