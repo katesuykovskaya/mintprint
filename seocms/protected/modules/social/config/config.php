@@ -21,7 +21,7 @@ return [
             'client_id' => '4321188',
             'response_type'=>'code',
             'scope'=>'photos',
-            'redirect_uri' => 'http://photo-service.home/social/default/auth/authprovider/vk',
+            'redirect_uri' => 'http://photo-service.home/social/default/auth?authprovider=vk',
             'v'=>'5.16'
 
         ],
@@ -33,7 +33,7 @@ return [
             'client_secret' => '1se2sLZmk2IZoXibbPRr',
             'response_type'=>'code',
             'scope'=>'photos',
-            'redirect_uri' => 'http://photo-service.home/social/default/auth/authprovider/vk?scenario='.$scenario,
+            'redirect_uri' => 'http://photo-service.home/social/default/auth?authprovider=vk',
             'code'=>$code,
         ],
         'albums'=>array(
@@ -50,7 +50,7 @@ return [
         'auth'=>[
             'client_id' => 'c3a5d2a20bd7484e8260dfdc9fc295b4',
             'response_type'=>'code',
-            'redirect_uri' => 'http://photo-service.home/backend/social/default/auth/authprovider/instagram',
+            'redirect_uri' => 'http://photo-service.home/social/default/auth?authprovider=instagram',
 
         ],
         'tokenUrl'=>'https://api.instagram.com/oauth/access_token',
@@ -58,7 +58,7 @@ return [
             'client_id' => 'c3a5d2a20bd7484e8260dfdc9fc295b4',
             'client_secret'=>'6c59c6ba085a48f18e795f6ab0b62045',
             'grant_type'=> 'authorization_code',
-            'redirect_uri' => 'http://photo-service.home/backend/social/default/auth/authprovider/instagram?scenario='.$scenario,
+            'redirect_uri' => 'http://photo-service.home/social/default/auth?authprovider=instagram',
             'code'=>$code,
         ],
     ],
@@ -70,16 +70,18 @@ return [
 //            'client_id' => '769552843084826',
 //            'client_secret'=>'457272200ac7b556e97820808861fb93',
 //            'scope' => 'user_photos',
-            'redirect_uri' => 'http://photo-service.home/backend/social/default/auth/authprovider/fb'
+            'redirect_uri' => 'http://photo-service.home/social/default/auth?authprovider=fb'
 
         ],
         'tokenUrl'=>'https://graph.facebook.com/oauth/access_token',
         'token'=>[
+            //kate
             'client_id' => '1490682084479558',
             'client_secret'=>'26b103623cec4483b764061706fe4758',
+            //alexandr
 //            'client_id' => '769552843084826',
 //            'client_secret'=>'457272200ac7b556e97820808861fb93',
-            'redirect_uri' => 'http://photo-service.home/backend/social/default/auth/authprovider/fb?scenario='.$scenario,
+            'redirect_uri' => 'http://photo-service.home/social/default/auth?authprovider=fb',
             'code'=>$code,
         ],
         'albums'=>array(

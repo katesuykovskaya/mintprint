@@ -6,13 +6,62 @@
  * Time: 17:56
  * @var $this SocialPhotoWidget
  */
-foreach($this->socials as $val) {
-    if(empty(Yii::app()->session[$val.'_token'])) {
-        $socialArray = $this->config;
-        $socialArray[$val]['auth']['redirect_uri'] .= '?scenario=auth';
-        $url = $socialArray[$val]['authUrl'] . '?' . urldecode(http_build_query($socialArray[$val]['auth']));
-        echo CHtml::link($val, $url).'<br>';
-    } else {
-        $this->getAlbum($val);
-    }
-}
+?>
+<div class="social-widget" id="socialWidget">
+    <ul class="tabs-head">
+        <li><a class="ins" href="#tabs-1"><span>инстаграм</span></a></li>
+        <li><a class="fb" href="#tabs-2"><span>фейсбук</span></a></li>
+        <li><a class="vk" href="#tabs-3"><span>вконтакте</span></a></li>
+        <li><a class="upload" href="#tabs-4"><span>загрузить</span></a></li>
+    </ul>
+    <?php foreach($this->socials as $key=>$val):
+        if($val == 'upload'):
+            ob_start();
+            $this->render('fileupload');
+            $upload = ob_get_contents();
+            ob_end_clean();?>
+            <div class="tab" id="tabs-<?=($key+1)?>">
+<!--                <div class="scrollbar">-->
+<!--                    <div class="track">-->
+<!--                        <div class="thumb"></div>-->
+<!--                        <div class="end"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="viewport">-->
+<!--                    <div class="overview">-->
+                        <?=$upload?>
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+        <?php else:
+        if(empty(Yii::app()->session[$val.'_token'])) :
+            $socialArray = $this->config;
+            $socialArray[$val]['auth']['redirect_uri'] .= '&scenario=auth';
+            $url = $socialArray[$val]['authUrl'] . '?' . urldecode(http_build_query($socialArray[$val]['auth']));?>
+            <div class="tab" id="tabs-<?=($key+1)?>">
+                <h3>войдите в сеть.</h3>
+                <p>жмите на кнопку</p>
+                <?=CHtml::link($val, $url, array('class'=>'login-social '.$val))?>
+            </div>
+        <?php else :?>
+            <div class="tab <?=$val?>-tab" id="tabs-<?=($key+1)?>">
+                <div class="my-viewport">
+                    <div class="stripe"></div>
+                    <div class="viewport">
+                        <?php $this->getAlbum($val);?>
+                    </div>
+                </div>
+            </div>
+        <?php endif;
+    endif;
+    endforeach?>
+</div>
+<script>
+    $(document).ready(function(){
+        $('#socialWidget').tabs();
+        var tabs = $('.tab');
+        for(var i = 0; i < tabs.length; i++) {
+//            tabs.eq(i).tinyscrollbar();
+        }
+    });
+</script>

@@ -37,52 +37,19 @@ Yii::app()->clientScript->registerScriptFile('/js_plugins/tinyscrollbar.js');
         <div class="left social-photo-widget">
             <h1>mint print</h1>
             <p class="white-text">печать фотографий из соцсетей</p>
-            <div class="social-widget" id="socialWidget">
-                <ul class="tabs-head">
-                    <li><a class="ins" href="#tabs-1"><span>инстаграм</span></a></li>
-                    <li><a class="fb" href="#tabs-2"><span>фейсбук</span></a></li>
-                    <li><a class="vk" href="#tabs-3"><span>вконтакте</span></a></li>
-                    <li><a class="upload" href="#tabs-4"><span>загрузить</span></a></li>
-                </ul>
-                <div class="tab" id="tabs-1">
-                    <div class="scrollbar">
-                        <div class="track">
-                            <div class="thumb"></div>
-                            <div class="end"></div>
-                        </div>
-                    </div>
-                    <div class="viewport">
-                        <div class="overview">
-                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg"></a>
-                            <a href="#"><img src="http://cs416726.vk.me/v416726610/592/_U5Tnu5SsNA.jpg" alt=""/></a>
-                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg" alt=""/></a>
-                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg" alt=""/></a>
-                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg" alt=""/></a>
-                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg" alt=""/></a>
-                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg" alt=""/></a>
-                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg" alt=""/></a>
-                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg" alt=""/></a>
-                            <a href="#"><img src="http://cs303601.vk.me/v303601610/44c7/_bhlOAKvc7g.jpg" alt=""/></a>
-                            <a href="#"><img src="http://cs416726.vk.me/v416726610/592/_U5Tnu5SsNA.jpg" alt=""/></a>
-                            <a href="#"><img src="http://cs416726.vk.me/v416726610/592/_U5Tnu5SsNA.jpg" alt=""/></a>
-                            <a href="#"><img src="http://cs416726.vk.me/v416726610/592/_U5Tnu5SsNA.jpg" alt=""/></a>
-                            <a href="#"><img src="http://cs416726.vk.me/v416726610/592/_U5Tnu5SsNA.jpg" alt=""/></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab" id="tabs-2">dfsdfsf</div>
-                <div class="tab" id="tabs-3">dfd5454353434sfsdf</div>
-                <div class="tab" id="tabs-4">aaaaaaaaa</div>
-            </div>
+            <?php
+            $this->widget('application.modules.social.widgets.SocialPhotoWidget', array(
+                'url'=>'/social/default/photosFromAlbum',
+                'config'=>Yii::app()->getModule('social')->config,
+                'socials'=>array(
+                    'instagram',
+                    'fb',
+                    'vk',
+                    'upload'
+                )
+            ))?>
         </div>
-        <?php
-        $this->widget('application.modules.social.widgets.SocialPhotoWidget', array(
-            'url'=>'/social/default/photosFromAlbum',
-            'config'=>Yii::app()->getModule('social')->config,
-            'socials'=>array(
-                'vk','fb','instagram'
-            )
-        ))?>
+
     </section>
 <script>
     $(document).ready(function(){
@@ -93,8 +60,8 @@ Yii::app()->clientScript->registerScriptFile('/js_plugins/tinyscrollbar.js');
             src: '/img/leaf.png'
         }).appendTo(li);
 
-        $('#socialWidget').tabs();
+//        $('#socialWidget').tabs();
 
-        $('#tabs-1').tinyscrollbar();
+//        $('#tabs-1').tinyscrollbar();
     });
 </script>

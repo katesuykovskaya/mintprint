@@ -7,15 +7,16 @@ class DefaultController extends Controller
 		$this->render('index');
 	}
 
-    public function actionAuth($authprovider)
+    public function actionAuth()
     {
+        $authprovider = $_GET['authprovider'];
+        require Yii::getPathOfAlias('webroot').'/seocms/protected/backend/vendors/autoload.php';
 //        $scenario = Yii::app()->request->getParam('scenario');
-
         $authClass = ucfirst($authprovider);
         $auth = new $authClass();
         $token = $auth->getToken();
 
-        $this->redirect($this->createUrl('/backend/social/default/photos?auth='.$authprovider.'&token='.$token));
+        $this->redirect($this->createUrl('/site/index', array('auth'=>$authprovider,'token'=>$token)));
 //        $this->redirect($this->createUrl('/backend/social/default/photos?auth='.$authprovider.'&token='.$token.'&scenario='.$scenario));
     }
 
@@ -59,21 +60,27 @@ class DefaultController extends Controller
             $data = $auth->getPhotosFromAlbum($_GET[$config['album_id']], $token);
             $album = $auth->getAlbums($token, array('album_ids' => $_GET[$config['album_id']]))[0];
 //            $this->layout = false;
-            $this->renderPartial('application.backend.modules.social.widgets.views.photos', array(
+            $this->renderPartial('application.modules.social.widgets.views.photos', array(
                 'photos'=>$data,
                 'provider'=>$provider,
                 'album'=>$album,
                 'album_config'=>$config
             ));
         }
+    }
 
+    public function actionAlbums() {
+        Yii::import('application.modules.social.widgets.SocialPhotoWidget');
+        $widget = new SocialPhotoWidget;
+        $widget->config = $this->module->config;
+        $widget->getAlbum($_GET['provider']);
     }
 
     public function  actionInstagramViewMore() {
         $ins = new Guzzle\Http\StaticClient;
         $req = $ins::get($_POST['url']);
         $nextPhotos = $req->json();
-        $this->renderPartial('application.backend.modules.social.widgets.views._instagramPhotos', array(
+        $this->renderPartial('application.modules.social.widgets.views._instagramPhotos', array(
             'photos'=>$nextPhotos
         ));
     }
