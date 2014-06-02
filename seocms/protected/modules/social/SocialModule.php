@@ -9,7 +9,7 @@ class SocialModule extends CWebModule
 		// this method is called when the module is being created
 		// you may place code here to customize the module or the application
 
-        $this->config = include(Yii::getPathOfAlias('application.backend.modules.social.config').'/config.php');
+        $this->config = include(dirname(__FILE__).'/config/config.php');
 		// import the module-level models and components
 		$this->setImport(array(
 //			'social.models.*',

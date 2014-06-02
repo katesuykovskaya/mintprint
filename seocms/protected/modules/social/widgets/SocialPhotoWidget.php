@@ -7,7 +7,7 @@
  */
 
 class SocialPhotoWidget extends CWidget {
-    public $provider;
+    public $socials;
     public $url;
     public $config;
 
@@ -16,15 +16,18 @@ class SocialPhotoWidget extends CWidget {
     }
 
     public function run() {
-        $provider = $this->provider;
+        $this->render('widget');
+//        $provider = $this->provider;
+    }
+
+    public function getAlbum($provider) {
         $authClass = ucfirst($provider);
         $auth = new $authClass();
         $token = Yii::app()->session[$provider.'_token'];
-//        echo $provider;
         if($provider == 'instagram') {
             $photos = $auth->getPhotos($token);
             $this->render('instagramPhotos', array(
-                'photos'=>$photos)
+                    'photos'=>$photos)
             );
         }
         else {
@@ -35,6 +38,5 @@ class SocialPhotoWidget extends CWidget {
                 'provider'=>$provider
             ));
         }
-
     }
 } 

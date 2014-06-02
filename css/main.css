@@ -269,6 +269,7 @@ h1 {
 .print-button {
     background-color: #19BDC3;
     border-radius: 10px;
+    border: none;
     border-bottom: 3px solid #3492B0;
     display: inline-block;
     padding: 8px 15px;
@@ -389,7 +390,7 @@ footer li a {
 }
 .tabs-head .fb {
     background-color: #6AC6B4;
-    background-image: url('/img/fb.png');
+    background-image: url('/img/fb-tab-icon.png');
     background-position: 17px 7px;
 }
 .tabs-head .vk {
@@ -466,6 +467,11 @@ footer li a {
 .overview a > img {
     max-height: 100%;
     max-width: 100%;
+}
+.edit-image {
+    width: 600px;
+    display: inline-block;
+    margin-top: 50px;
 }
 /* ==========================================================================
    Helper classes
