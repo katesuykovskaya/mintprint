@@ -9,5 +9,11 @@ defined('YII_DEBUG') or define('YII_DEBUG',true);
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
 
 require_once($yii);
-require Yii::getPathOfAlias('webroot').'/seocms/protected/backend/vendors/autoload.php';
+//echo Yii::getPathOfAlias('webroot').'/seocms/protected/backend/vendors/autoload.php';
+//die();
+require dirname(__FILE__).'/seocms/protected/backend/vendors/autoload.php';
 Yii::createWebApplication($config)->run();
+//echo 234234;
+//die();
+
+
