@@ -19,20 +19,59 @@ Yii::app()->clientScript->registerScriptFile('/js_plugins/tinyscrollbar.js');
         </div>
         <div class="left all-photos-thumbs">
             <div class="photo-wrap">
-                <a href="#" class="remove"></a>
-                <img src="/img/no-image.jpg" alt=""/>
+                <div class="photo">
+                    <img class="no-image" src="/img/insert-image.jpg" alt=""/>
+                </div>
             </div>
-            <div class="photo-wrap"><img class="no-image" src="/img/insert-image.jpg" alt=""/></div>
-            <div class="photo-wrap"><img class="no-image" src="/img/no-image.jpg" alt=""/></div>
-            <div class="photo-wrap"><img class="no-image" src="/img/no-image.jpg" alt=""/></div>
-            <div class="photo-wrap"><img class="no-image" src="/img/no-image.jpg" alt=""/></div>
-            <div class="photo-wrap"><img class="no-image" src="/img/no-image.jpg" alt=""/></div>
-            <div class="photo-wrap"><img class="no-image" src="/img/no-image.jpg" alt=""/></div>
-            <div class="photo-wrap"><img class="no-image" src="/img/no-image.jpg" alt=""/></div>
-            <div class="photo-wrap"><img class="no-image" src="/img/no-image.jpg" alt=""/></div>
-            <div class="photo-wrap"><img class="no-image" src="/img/no-image.jpg" alt=""/></div>
-            <div class="photo-wrap"><img class="no-image" src="/img/no-image.jpg" alt=""/></div>
-            <div class="photo-wrap"><img class="no-image" src="/img/no-image.jpg" alt=""/></div>
+            <div class="photo-wrap">
+                <div class="photo">
+                <img class="no-image" src="/img/no-image.jpg" alt=""/>
+                </div>
+            </div>
+            <div class="photo-wrap">
+                <div class="photo">
+                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
+                </div>
+            </div>
+            <div class="photo-wrap">
+                <div class="photo">
+                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
+                </div>
+            </div>
+            <div class="photo-wrap">
+                <div class="photo">
+                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
+                </div>
+            </div>
+            <div class="photo-wrap">
+                <div class="photo">
+                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
+                </div>
+            </div>
+
+            <div class="photo-wrap">
+                <div class="photo">
+                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
+                </div>
+            </div>
+
+            <div class="photo-wrap">
+                <div class="photo">
+                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
+                </div>
+            </div>
+
+            <div class="photo-wrap">
+                <div class="photo">
+                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
+                </div>
+            </div>
+            <div class="photo-wrap">
+                <div class="photo">
+                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
+                </div>
+            </div>
+
         </div>
         <div class="left social-photo-widget">
             <h1>mint print</h1>
@@ -53,6 +92,84 @@ Yii::app()->clientScript->registerScriptFile('/js_plugins/tinyscrollbar.js');
     </section>
 <script>
     $(document).ready(function(){
+
+
+
+
+
+        $(".my-viewport").on('click', '.image-wrap',  function(){
+
+            var img = $(this).find('img').clone();
+
+            var newImg = createPhoto(img);
+
+            $('.all-photos-thumbs').prepend(newImg);
+
+            if($(".all-photos-thumbs > div:not(div.full)").length > 3)
+            {
+                $(".all-photos-thumbs > .photo-wrap:last").remove();
+            }
+        });
+
+        $(".all-photos-thumbs").on('click', 'a.remove',  function(){
+            $(this).parent().remove();
+        });
+
+        function createPhoto(img)
+        {
+            var size = JSON.parse(getImgSize(img[0].src));
+
+            if(size.width == size.height)
+            {
+                var param = {'width': 97, 'height':97, 'handler': 'same'};
+            }
+            else if(size.width > size.height)
+            {
+                var marginLeft = Math.round((size.width - 97) / 2);
+                var param = {'height': 97, 'marginLeft': marginLeft, 'handler': 'width'};
+            }
+            else if(size.width < size.height)
+            {
+                var marginTop = Math.round((size.height - 97) / 2);
+                var param = {'width': 97, 'marginTop': marginTop, 'handler': 'height'};
+            }
+            var changeImg = img[0];
+            switch (param.handler) {
+                case 'same':
+                    $(changeImg).attr({'width': '97', 'height': '97'});
+                    break
+                case 'width':
+                    $(changeImg).attr({'height': '97'});
+                    $(changeImg).css("margin-left","-"+param.marginLeft+"px");
+                    break
+                case 'height':
+                    $(changeImg).attr({'width': '97'});
+                    $(changeImg).css("margin-top","-"+param.marginTop+"px");
+                    break
+            }
+
+
+            var newImg =  document.createElement('div');
+            newImg.setAttribute('class', 'photo-wrap full');
+            newImg.innerHTML = '<a href="#" class="remove"></a><div class="photo"></div>';
+            $(newImg).find('.photo').append(changeImg);
+
+            return newImg;
+        }
+
+        function getImgSize(imgSrc){
+            var newImg = new Image();
+            newImg.src = imgSrc;
+            var height = newImg.height;
+            var width = newImg.width;
+            p = $(newImg).ready(function(){
+                return {width: newImg.width, height: newImg.height};
+            });
+
+             return '{"width":'+p[0]['width']+',"height":'+p[0]['height']+'}';
+        }
+
+
         var menu = $('header menu ul').eq(0);
         var index = Math.floor(menu.children().length / 2) - 1;
         var li = $('<li></li>', {'class': 'middle-leaf'}).insertAfter(menu.children('li').eq(index));
