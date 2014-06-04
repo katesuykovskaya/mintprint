@@ -94,6 +94,7 @@ class Vk {
             $req = $vk::get($apiUrl.'photos.get?'.urldecode(http_build_query($photoParams)).'&access_token='.$token);
 //            if(empty($req->json()['response'])) echo CVarDumper::dump($req->json(), 6, true);
             $data = $req->json()['response'];
+//            echo CVarDumper::dump($data, 7, true);
             return $data;
         } catch(Exception $e) {
             echo $e->getMessage();

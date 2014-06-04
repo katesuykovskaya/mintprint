@@ -91,7 +91,10 @@ echo '<span id="photoLoader"></span>';
 echo CHtml::closeTag('div');
 $len = count($photos);
 for($i = 0; $i < $len; $i++) {
-    echo CHtml::link(CHtml::image($photos[$i]['src'],$photos[$i]['text']).'<div class="add-photo">+<span>добавить</span></div>', '#', array(
-        'class'=>'image-wrap'
+//    echo $photos[$i]['src'];
+    echo CHtml::link(CHtml::image($photos[$i]['src'],$photos[$i]['text'], array(
+            'data-original'=>$photos[$i][$photo_config['original']]
+        )).'<div class="add-photo">+<span>добавить</span></div>', '#', array(
+        'class'=>'image-wrap',
     ));
 }

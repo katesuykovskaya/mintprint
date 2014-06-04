@@ -18,6 +18,7 @@ return CMap::mergeArray(
 	'modules'=>array(
         'attach',
         'social',
+        'order'
 	),
 //    'aliases' => array(
 //        'xupload' => 'ext.xupload'

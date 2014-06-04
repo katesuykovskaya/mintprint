@@ -64,7 +64,8 @@ class DefaultController extends Controller
                 'photos'=>$data,
                 'provider'=>$provider,
                 'album'=>$album,
-                'album_config'=>$config
+                'album_config'=>$config,
+                'photo_config'=>$this->module->config[$provider]['photos'],
             ));
         }
     }
@@ -88,7 +89,7 @@ class DefaultController extends Controller
     public function actionClearSession() {
         unset(Yii::app()->session['vk_token']);
         unset(Yii::app()->session['fb_token']);
-        unset(Yii::app()->sessopn['instagram_token']);
+        unset(Yii::app()->session['instagram_token']);
         $this->redirect($_SERVER['HTTP_REFERER']);
     }
 }

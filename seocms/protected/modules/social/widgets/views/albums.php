@@ -15,7 +15,7 @@
 foreach($albums as $key => $album) {
 //    echo CVarDumper::dump($config, 6, true);
     echo CHtml::ajaxLink(
-        CHtml::image('/img/folder-jpg.jpg', $album[$aConf['title']],
+        CHtml::image('/img/folder.png', $album[$aConf['title']],
             array('class'=>'folder')).
         '<span class="loader loader'.$provider.'-'.$key.'"></span>'.
         CHtml::tag('p', array(), $album[$aConf['title']]),

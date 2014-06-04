@@ -1,9 +1,9 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: chosen1
- * Date: 25.03.14
- * Time: 17:29
+ * User: Kate
+ * Date: 03.06.14
+ * Time: 16:51
  */
 $code = (isset($_GET['code'])) ? $_GET['code'] : null;
 $scenario = (isset($_GET['scenario'])) ? $_GET['scenario'] : null;
@@ -17,20 +17,21 @@ return [
     'vk'=>[
         'authUrl'=>'http://oauth.vk.com/authorize',
         'auth'=>[
-            'client_id' => '4321188',
+            'client_id' => '4382088',
             'response_type'=>'code',
             'scope'=>'photos',
-            'redirect_uri' => 'http://photo-service.home/social/default/auth?authprovider=vk',
+            'redirect_uri' => 'http://mint-print.seotm.biz/social/default/auth?authprovider=vk',
             'v'=>'5.16'
 
         ],
         'tokenUrl'=>'https://oauth.vk.com/access_token',
         'token'=>[
-            'client_id' => '4321188',
-            'client_secret' => '1se2sLZmk2IZoXibbPRr',
+            // http://mint-print.seotm.biz
+            'client_id'=>'4382088',
+            'client_secret' => 'BijBNOVApjLsGb83KlAq',
             'response_type'=>'code',
             'scope'=>'photos',
-            'redirect_uri' => 'http://photo-service.home/social/default/auth?authprovider=vk',
+            'redirect_uri' => 'http://mint-print.seotm.biz/social/default/auth?authprovider=vk',
             'code'=>$code,
         ],
         'albums'=>array(
@@ -41,27 +42,24 @@ return [
             'album_size'    => 'size',
             'page_size'     => 20
         )
-        ,'photos'=>array(
-            'original' => 'src_xxbig',
-            'thumbnail' => 'src'
-        )
     ],
     'instagram'=>[
         'authUrl'=>'https://api.instagram.com/oauth/authorize/',
         'auth'=>[
             //photo-service.home
-            'client_id' => 'c3a5d2a20bd7484e8260dfdc9fc295b4',
+//            'client_id' => 'c3a5d2a20bd7484e8260dfdc9fc295b4',
+            // mint-print.seotm.biz
+            'client_id'=>'ae8b424720a64f278e31849ebcdac957',
             'response_type'=>'code',
-            'redirect_uri' => 'http://photo-service.home/social/default/auth?authprovider=instagram',
+            'redirect_uri' => 'http://mint-print.seotm.biz/social/default/auth?authprovider=instagram',
 
         ],
         'tokenUrl'=>'https://api.instagram.com/oauth/access_token',
         'token'=>[
-            //photo-service.home
-            'client_id' => 'c3a5d2a20bd7484e8260dfdc9fc295b4',
-            'client_secret'=>'6c59c6ba085a48f18e795f6ab0b62045',
+            'client_id' => 'ae8b424720a64f278e31849ebcdac957',
+            'client_secret'=>'dcb38e4984404cbc94b0aaaab6bd01c2',
             'grant_type'=> 'authorization_code',
-            'redirect_uri' => 'http://photo-service.home/social/default/auth?authprovider=instagram',
+            'redirect_uri' => 'http://mint-print.seotm.biz/social/default/auth?authprovider=instagram',
             'code'=>$code,
         ],
     ],
