@@ -140,6 +140,14 @@ class qqFileUploader {
 
         if ($this->file->save($uploadDirectory . $filename . '.' . $ext)){
 			//echo "$filename";
+            $pathIcon = Yii::app()->easyImage->thumbOf($uploadDirectory . $filename . '.' . $ext, array(
+                'crop' => array('width' => 97, 'height' => 97),
+                "savePath"=>$uploadDirectory,
+                'save'=>$filename . 'Icon.' . $ext,
+                "quality" => 80,
+            ));
+
+
             return array('success'=>true,'filename'=>$filename.'.'.$ext);
         } else {
             return array('error'=> 'Could not save uploaded file.' .

@@ -641,6 +641,25 @@ footer li a {
     position: absolute;
     width: 1px;
 }
+.addAllPhoto{
+    height: 40px;
+    width: 40px;
+    border: 2px solid white;
+    margin: 12px 0 0 0;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    padding: 5px;
+    font-size: 20px;
+}
+
+.addAllPhoto span{
+    display: block;
+    font-size: 8px;
+    margin-top: -5px;
+}
 
 /*
  * Extends the .visuallyhidden class to allow the element to be focusable

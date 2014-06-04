@@ -273,6 +273,7 @@ class EasyImage extends CApplicationComponent
 
         // Make cache dir
         if (!is_dir($cachePath)) {
+//            die($cachePath);
             mkdir($cachePath, 0755, true);
         }
 
