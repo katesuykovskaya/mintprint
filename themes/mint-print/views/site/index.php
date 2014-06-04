@@ -18,14 +18,28 @@ Yii::app()->clientScript->registerScriptFile('/js_plugins/tinyscrollbar.js');
             <a class="print-button" href="#">печатать их</a>
         </div>
         <div class="left all-photos-thumbs">
-            <div class="photo-wrap">
-                <div class="photo">
-                    <img class="no-image" src="/img/insert-image.jpg" alt=""/>
+            <?php
+            Yii::import('application.modules.order.models.OrderTemp');
+            $attr = array(
+                'session_id'=>Yii::app()->session->sessionID,
+            );
+            if(!Yii::app()->user->isGuest)
+                $attr['user_id'] = Yii::app()->user_id;
+            $model = OrderTemp::model()->findAllByAttributes($attr);
+
+            ?>
+            <?php foreach($model as $photo):?>
+                <div class="photo-wrap full">
+                    <a href="#" class="remove"></a>
+                    <div class="photo">
+                        <?=CHtml::image($photo['thumb_url'])?>
+                    </div>
                 </div>
-            </div>
+            <?php endforeach?>
+
             <div class="photo-wrap">
                 <div class="photo">
-                <img class="no-image" src="/img/no-image.jpg" alt=""/>
+                <img class="no-image" src="/img/insert-image.jpg" alt=""/>
                 </div>
             </div>
             <div class="photo-wrap">
@@ -88,8 +102,10 @@ Yii::app()->clientScript->registerScriptFile('/js_plugins/tinyscrollbar.js');
                 )
             ))?>
         </div>
-
     </section>
+<div style="background: white">
+<!--    --><?//=CVarDumper::dump(Yii::app()->user->isGuest, 7, true)?>
+</div>
 <script>
     $(document).ready(function(){
 
@@ -100,7 +116,7 @@ Yii::app()->clientScript->registerScriptFile('/js_plugins/tinyscrollbar.js');
         $(".my-viewport").on('click', '.image-wrap',  function(){
 
             var img = $(this).find('img').clone();
-
+            SendAjax(img);
             var newImg = createPhoto(img);
 
             $('.all-photos-thumbs').prepend(newImg);
@@ -114,6 +130,30 @@ Yii::app()->clientScript->registerScriptFile('/js_plugins/tinyscrollbar.js');
         $(".all-photos-thumbs").on('click', 'a.remove',  function(){
             $(this).parent().remove();
         });
+
+        function SendAjax(img) {
+            $.ajax({
+                url: '/order/orderTemp/create',
+                type: 'post',
+                data: {
+                    'OrderTemp[img_url]': img.data('original'),
+                    'OrderTemp[thumb_url]': img.attr('src')
+                },
+                success: function(response) {
+                    try {
+                        var result = $.parseJSON(response);
+                        if(!result.res) {
+                            if(typeof result.reason != 'undefined')
+                                alert(result.reason);
+                            else
+                                alert('Не прошло сохранение');
+                        }
+                    } catch(e) {
+                        alert('some error: watch site/index');
+                    }
+                }
+            });
+        }
 
         function createPhoto(img)
         {

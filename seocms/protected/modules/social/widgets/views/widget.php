@@ -21,27 +21,20 @@
             $upload = ob_get_contents();
             ob_end_clean();?>
             <div class="tab" id="tabs-<?=($key+1)?>">
-<!--                <div class="scrollbar">-->
-<!--                    <div class="track">-->
-<!--                        <div class="thumb"></div>-->
-<!--                        <div class="end"></div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="viewport">-->
-<!--                    <div class="overview">-->
-                        <?=$upload?>
-<!--                    </div>-->
-<!--                </div>-->
+                <?=$upload?>
             </div>
         <?php else:
         if(empty(Yii::app()->session[$val.'_token'])) :
             $socialArray = $this->config;
             $socialArray[$val]['auth']['redirect_uri'] .= '&scenario=auth';
             $url = $socialArray[$val]['authUrl'] . '?' . urldecode(http_build_query($socialArray[$val]['auth']));?>
-            <div class="tab" id="tabs-<?=($key+1)?>">
-                <h3>войдите в сеть.</h3>
-                <p>жмите на кнопку</p>
-                <?=CHtml::link($val, $url, array('class'=>'login-social '.$val))?>
+            <div class="tab <?=$val?>-tab" id="tabs-<?=($key+1)?>">
+                <div class="stripe"></div>
+                <div class="enter">
+                    <h3>войдите в сеть.</h3>
+                    <p>жмите на кнопку</p>
+                    <?=CHtml::link(Yii::t('frontend', 'enter '.$val), $url, array('class'=>'login-social'))?>
+                </div>
             </div>
         <?php else :?>
             <div class="tab <?=$val?>-tab" id="tabs-<?=($key+1)?>">
