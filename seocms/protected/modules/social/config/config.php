@@ -65,6 +65,11 @@ return [
             'redirect_uri' => 'http://photo-service.home/social/default/auth?authprovider=instagram',
             'code'=>$code,
         ],
+        'photos'=>array(
+            'original' => 'standard_resolution',
+            'originalSecond' => 'standard_resolution',
+            'thumbnail' => 'thumbnail'
+        )
     ],
     'fb'=>[
         'authUrl'=>'https://www.facebook.com/dialog/oauth',

@@ -157,14 +157,17 @@ class qqFileUploader {
                 $master = EasyImage::RESIZE_WIDTH;
             }
 
-            Yii::app()->easyImage->thumbOf($uploadDirectory . $filename . '.' . $ext, array(
-                "resize" => array("width"=>97, 'height' => 97, "master"=>$master),
-                "savePath"=>$uploadDirectory,
-                'save'=>$filename . 'Icon',
-                "quality" => 80,
-            ));
+//            Yii::app()->easyImage->thumbOf($uploadDirectory . $filename . '.' . $ext, array(
+//                "resize" => array("width"=>97, 'height' => 97, "master"=>$master),
+//                "savePath"=>$uploadDirectory,
+//                'save'=>$filename . 'Icon',
+//                "quality" => 80,
+//            ));
 
-            return array('success'=>true,'originalPath'=>'/uploads/tmp/'.Yii::app()->session->sessionID.'/' . $filename . '.' . $ext, 'iconPath'=>'/uploads/tmp/'.Yii::app()->session->sessionID.'/'.$filename . 'Icon'. '.' . $ext);
+//            $model = new OrderTemp;
+
+//            return array('success'=>true,'originalPath'=>'/uploads/tmp/'.Yii::app()->session->sessionID.'/' . $filename . '.' . $ext, 'iconPath'=>'/uploads/tmp/'.Yii::app()->session->sessionID.'/'.$filename . 'Icon'. '.' . $ext);
+            return array('success'=>true,'uploadDirectory'=>$uploadDirectory, 'filename'=>$filename, 'ext'=>$ext, 'master'=>$master);
         } else {
             return array('error'=> 'Could not save uploaded file.' .
                 'The upload was cancelled, or server error encountered');

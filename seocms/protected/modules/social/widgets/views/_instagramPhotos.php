@@ -10,12 +10,9 @@
     <?php $data = $photos['data'];
     foreach($data as $val): ?>
         <a class="image-wrap">
-            <img src="<?=$val['images']['thumbnail']['url']?>"/>
+            <img src="<?=$val['images']['thumbnail']['url']?>" data-original="<?=$val['images']['standard_resolution']['url']?>"/>
         </a>
     <?php endforeach;
-//    echo CHtml::tag('div', array(
-//        'class'=>'clear-float'
-//    ));
     if(!empty($photos['pagination'])):?>
         <a class="instagram-more" href="<?=$photos['pagination']['next_url']?>">View more...</a>
     <?php endif; ?>
