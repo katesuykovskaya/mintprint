@@ -87,7 +87,7 @@ class SliderController extends Controller
                         $model->img->saveAs($imgDir.$model->img->name);
                     }
                 }
-                $this->redirect($this->createUrl('backend/slider/slider/update',array(
+                $this->redirect($this->createUrl('/backend/slider/slider/update',array(
                     'language'=>Yii::app()->language,
                     'id'=>$model->id
                 )));
@@ -132,7 +132,7 @@ class SliderController extends Controller
                         $model->img->saveAs($imgDir.$model->img->name);
                     }
                 }
-                $this->redirect($this->createUrl('backend/slider/slider/update',array(
+                $this->redirect($this->createUrl('/backend/slider/slider/update',array(
                     'language'=>Yii::app()->language,
                     'id'=>$model->id
                 )));

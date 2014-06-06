@@ -76,8 +76,8 @@
                     ),
                 'type'=>'raw',
                 'value'=>'Chtml::link("<i class=icon-remove></i>",
-                                    Yii::app()->urlManager->createUrl("backend/feedback/feedback/delete",array("id"=>$data->id,"language"=>Yii::app()->language)),array("confirm"=>Yii::t("backend","Удалить?"))).
-                          Chtml::link("<i class=icon-search></i>",Yii::app()->urlManager->createUrl("backend/feedback/feedback/view",array("id"=>$data->id,"language"=>Yii::app()->language)))',
+                                    Yii::app()->urlManager->createUrl("/backend/feedback/feedback/delete",array("id"=>$data->id,"language"=>Yii::app()->language)),array("confirm"=>Yii::t("backend","Удалить?"))).
+                          Chtml::link("<i class=icon-search></i>",Yii::app()->urlManager->createUrl("/backend/feedback/feedback/view",array("id"=>$data->id,"language"=>Yii::app()->language)))',
                 'htmlOptions'=>array('style'=>'text-align: center'),
             )
         ),

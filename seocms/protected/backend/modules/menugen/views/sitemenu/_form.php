@@ -34,11 +34,11 @@
             
             ( ($createRoot!='true') ? 
           
-            Yii::app()->urlManager->createUrl('backend/menugen/sitemenu/create') :
+            Yii::app()->urlManager->createUrl('/backend/menugen/sitemenu/create') :
 
-            Yii::app()->urlManager->createUrl('backend/menugen/sitemenu/createRoot')):
+            Yii::app()->urlManager->createUrl('/backend/menugen/sitemenu/createRoot')):
 
-            Yii::app()->urlManager->createUrl('backend/menugen/sitemenu/update');
+            Yii::app()->urlManager->createUrl('/backend/menugen/sitemenu/update');
  
 $val_error_msg='Error.Sitemenu was not saved.';
 

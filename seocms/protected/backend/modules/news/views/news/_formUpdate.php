@@ -41,7 +41,7 @@ Yii::app()->clientScript->registerScriptFile('/js/jquery.ui.i18n-ru.js');
         echo CHtml::link(Yii::t('backend','Удалить').' <i class="icon-remove"></i>',
                         '#',array(
                         'id'=>'delImg','data-id'=>$model->id,
-                        'data-url'=>$this->createUrl('backend/news/news/delImage',array('language'=>Yii::app()->language)),
+                        'data-url'=>$this->createUrl('/backend/news/news/delImage',array('language'=>Yii::app()->language)),
                         'data-name'=>Yii::app()->easyImage->getHashedName($imageName,$imageParams,true)
             )
         );

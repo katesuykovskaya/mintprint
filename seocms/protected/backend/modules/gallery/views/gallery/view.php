@@ -63,7 +63,7 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
 <div class="span12 clearfix">
 <div class="row">
     <ul class="breadcrumb span6">
-        <li><?=CHtml::link(Yii::t('backend','Все галереи'),$this->createUrl('backend/gallery/gallery/index',['language'=>Yii::app()->language]))?></li>
+        <li><?=CHtml::link(Yii::t('backend','Все галереи'),$this->createUrl('/backend/gallery/gallery/index',['language'=>Yii::app()->language]))?></li>
         <li><span class="divider">/</span><?=$model->translation[Yii::app()->language]->t_title;?></li>
     </ul>
 </div>
@@ -76,7 +76,7 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
         <?php foreach($categories as $category) :?>
 
             <div class="well span4">
-                <a href="<?=$this->createUrl('backend/gallery/gallery/view',['id'=>$category->id])?>">
+                <a href="<?=$this->createUrl('/backend/gallery/gallery/view',['id'=>$category->id])?>">
                     <h4 class="page-header"><?=$category->translation[Yii::app()->language]->t_title?></h4>
                     <p><?=Yii::t('backend','Дата создания: ').$category->translation[Yii::app()->language]->t_createdate?></p>
                     <p><?=Yii::t('backend','Элементов').': '.count($category->children()->findAll())?></p>
@@ -161,8 +161,8 @@ $categoryForm = [];
 
     <div class="row">
         <ul class="breadcrumb span6">
-            <li><?=CHtml::link(Yii::t('backend','Все галереи'),$this->createUrl('backend/gallery/gallery/index',['language'=>Yii::app()->language]))?></li>
-            <li><span class="divider">/</span><?=CHtml::link($parent->translation[Yii::app()->language]->t_title,$this->createUrl('backend/gallery/gallery/view',['id'=>$parent->id,'language'=>Yii::app()->language]))?></li>
+            <li><?=CHtml::link(Yii::t('backend','Все галереи'),$this->createUrl('/backend/gallery/gallery/index',['language'=>Yii::app()->language]))?></li>
+            <li><span class="divider">/</span><?=CHtml::link($parent->translation[Yii::app()->language]->t_title,$this->createUrl('/backend/gallery/gallery/view',['id'=>$parent->id,'language'=>Yii::app()->language]))?></li>
             <li><span class="divider">/</span><?=$model->translation[Yii::app()->language]->t_title;?></li>
         </ul>
     </div>
@@ -202,7 +202,7 @@ $categoryForm = [];
                 <td class="centered"><span class="preview"><?= $image ? '<a href="'.$child->translation[Yii::app()->language]->t_file.'" data-gallery>'.$image.'</a>': '' ?></span></td>
                 <td class="centered"><?=$child->translation[Yii::app()->language]->t_title?></td>
                 <td class="centered"><?=$child->translation[Yii::app()->language]->t_createdate?></td>
-                <td class="centered"><?=CHtml::link('<i class="icon-edit icon-large"></i>',$this->createUrl('backend/gallery/gallery/imageEdit',['id'=>$child->id,'language'=>Yii::app()->language]))?></td>
+                <td class="centered"><?=CHtml::link('<i class="icon-edit icon-large"></i>',$this->createUrl('/backend/gallery/gallery/imageEdit',['id'=>$child->id,'language'=>Yii::app()->language]))?></td>
                 <td class="centered"><a href="#" id="removeImage" data-id="<?=$child->id?>" data-prompt="<?=Yii::t('backend','Удалить?')?>"><i class="icon-remove icon-large"></i></a></td>
             </tr>
         <?php endforeach ?>

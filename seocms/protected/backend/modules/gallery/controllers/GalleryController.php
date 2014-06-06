@@ -92,7 +92,7 @@ class GalleryController extends Controller
         if(isset($_POST['Gallery'])){
             $model->attributes = $_POST['Gallery'];
             if($model->saveNode()){
-                $this->redirect($this->createUrl('backend/gallery/gallery/index',['language'=>Yii::app()->language]));
+                $this->redirect($this->createUrl('/backend/gallery/gallery/index',['language'=>Yii::app()->language]));
             }
         }
 
@@ -380,10 +380,10 @@ class GalleryController extends Controller
             $translation->t_meta = serialize($metaArray);
             if($translation->save(false)){
                 Yii::app()->user->setFlash('meta-success',Yii::t('backend','Метаданные обновлены'));
-                $this->redirect($this->createUrl('backend/gallery/gallery/imageEdit',['id'=>$translation->t_id,'language'=>Yii::app()->language]));
+                $this->redirect($this->createUrl('/backend/gallery/gallery/imageEdit',['id'=>$translation->t_id,'language'=>Yii::app()->language]));
             } else {
                 Yii::app()->user->setFlash('meta-error',Yii::t('backend','Ошибка сохранения метаданных'));
-                $this->redirect($this->createUrl('backend/gallery/gallery/imageEdit',['id'=>$translation->t_id,'language'=>Yii::app()->language]));
+                $this->redirect($this->createUrl('/backend/gallery/gallery/imageEdit',['id'=>$translation->t_id,'language'=>Yii::app()->language]));
             }
         }
 

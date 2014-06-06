@@ -79,7 +79,7 @@ class NewsController extends Controller
                     mkdir($imgDir,0777,true);
                     $model->img->saveAs($imgDir.$model->img->name);
                 }
-                $this->redirect($this->createUrl('backend/news/news/admin',['language'=>Yii::app()->language]));
+                $this->redirect($this->createUrl('/backend/news/news/admin',['language'=>Yii::app()->language]));
             }
 		}
 
@@ -242,7 +242,7 @@ class NewsController extends Controller
                     }
                 }
 
-                $this->redirect($this->createUrl('backend/news/news/admin',['language'=>Yii::app()->language]));
+                $this->redirect($this->createUrl('/backend/news/news/admin',['language'=>Yii::app()->language]));
             }
 
 		}

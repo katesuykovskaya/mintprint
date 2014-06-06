@@ -6,7 +6,7 @@
 <div class="row">
     <ul class="breadcrumb span6">
         <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend',['language'=>Yii::app()->language]))?></li>
-        <li><span class="divider">/</span><?=CHtml::link(Yii::t('backend','Управление командами'),$this->createUrl('backend/teams/teams/admin',['language'=>Yii::app()->language]))?></li>
+        <li><span class="divider">/</span><?=CHtml::link(Yii::t('backend','Управление командами'),$this->createUrl('/backend/teams/teams/admin',['language'=>Yii::app()->language]))?></li>
         <li><span class="divider">/</span><?=Yii::t('backend','Создание команды')?></li>
     </ul>
 </div>

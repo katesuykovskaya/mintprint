@@ -76,7 +76,7 @@
 
 <?php
     $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'myModal'));
-    echo CHtml::beginForm($this->createUrl('backend/menugen/default/translateActions',array('language'=>Yii::app()->language)));
+    echo CHtml::beginForm($this->createUrl('/backend/menugen/default/translateActions',array('language'=>Yii::app()->language)));
 ?>
 
 <?php

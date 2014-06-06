@@ -167,7 +167,7 @@ class SitemenuController extends Controller
 
         if(isset($_POST['cancel']))
         {
-            $this->redirect($this->createUrl('backend/menugen/sitemenu/mainmenu',array('language'=>Yii::app()->language)));
+            $this->redirect($this->createUrl('/backend/menugen/sitemenu/mainmenu',array('language'=>Yii::app()->language)));
 
         }
         if(isset($_POST['confirm'])){
@@ -258,10 +258,10 @@ class SitemenuController extends Controller
         if($translate->save(false))
         {
             Yii::app()->user->setFlash('menu_success',Yii::t('backend','Saved '.$source));
-            $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+            $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
         } else {
             Yii::app()->user->setFlash('menu_error',Yii::t('backend','Not saved, error occured!'));
-            $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+            $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
         }
     }
 
@@ -609,7 +609,7 @@ class SitemenuController extends Controller
                     $this->doUpdateMenu($postArray,$redirect);
                     break;
                 case 'cancel':
-                    $this->redirect($this->createUrl('backend/menugen/sitemenu/view',array('type'=>$redirect,'language'=>Yii::app()->language)));
+                    $this->redirect($this->createUrl('/backend/menugen/sitemenu/view',array('type'=>$redirect,'language'=>Yii::app()->language)));
                     break;
                 default:
                     throw new CHttpException('404','no redirect page');

@@ -33,7 +33,7 @@
             echo CHtml::link($tmb, '/uploads/Cap/'.$model->id.'/'.$model->img, array('class'=>'full-cap'));
             echo '<br/>';
             echo CHtml::link(Yii::t('backend', 'Удалить').'<i class="icon-remove"></i>',
-                Yii::app()->createUrl('backend/cap/cap/delImage', array('language'=>Yii::app()->language)),
+                Yii::app()->createUrl('/backend/cap/cap/delImage', array('language'=>Yii::app()->language)),
                 array(
                     'class'=>'del-image',
                     'data-id'=>$model->id

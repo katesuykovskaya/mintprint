@@ -9,7 +9,7 @@
 
 <div class="row-fluid">
    <div class="span2">
-    <?php echo CHtml::link(Yii::t('backend','Новая фраза'),$this->createUrl('backend/multilanguage/source/create'),array('class'=>'btn btn-success'));?>
+    <?php echo CHtml::link(Yii::t('backend','Новая фраза'),$this->createUrl('/backend/multilanguage/source/create'),array('class'=>'btn btn-success'));?>
    </div>
     <div id="message" class="span5 offset1">
 
@@ -76,10 +76,10 @@
                         'header'=>Yii::t('backend','Удаление'),
                         'buttons'=>array(
                             'delete'=>array(
-                                'url'=>'Yii::app()->urlManager->createUrl("backend/multilanguage/source/delete",array("id"=>$data->id,"language"=>Yii::app()->language))'
+                                'url'=>'Yii::app()->urlManager->createUrl("/backend/multilanguage/source/delete",array("id"=>$data->id,"language"=>Yii::app()->language))'
                             ),
                             'update'=>array(
-                                'url'=>'Yii::app()->urlManager->createUrl("backend/multilanguage/source/update",array("id"=>$data->id,"language"=>Yii::app()->language))'
+                                'url'=>'Yii::app()->urlManager->createUrl("/backend/multilanguage/source/update",array("id"=>$data->id,"language"=>Yii::app()->language))'
                             ),
                             'view'=>array(
                                 'visible'=>'0',

@@ -12,7 +12,7 @@
         echo CHtml::textField('t_desc',$model->translation['t_desc']);echo '<br />';
 
         echo CHtml::link(Yii::t('backend','Edit'),
-            $this->createUrl('backend/pages/pages/update',
+            $this->createUrl('/backend/pages/pages/update',
             array('id'=>$model->page_id,'language'=>Yii::app()->language)),
             array('class'=>'btn')
         );

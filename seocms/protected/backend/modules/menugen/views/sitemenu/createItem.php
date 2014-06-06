@@ -1,7 +1,7 @@
 <div class="row">
     <ul class="breadcrumb span6">
         <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend',['language'=>Yii::app()->language]))?></li>
-        <li><span class="divider">/</span><?=CHtml::link(Yii::t('backend','Создание меню'),$this->createUrl('backend/menugen/sitemenu/index',['language'=>Yii::app()->language]))?></li>
+        <li><span class="divider">/</span><?=CHtml::link(Yii::t('backend','Создание меню'),$this->createUrl('/backend/menugen/sitemenu/index',['language'=>Yii::app()->language]))?></li>
         <li><span class="divider">/</span><?=Yii::t('backend','Создание нового пункта меню')?></li>
     </ul>
 </div>
@@ -18,7 +18,7 @@
 <?php echo CHtml::dropDownList('linkType','',array('page'=>'page','category'=>'category','url'=>'url'),array(
                                     'ajax'=>array(
                                         'type'=>'post',
-                                        'url'=>$this->createUrl('backend/menugen/sitemenu/createItem',array('language'=>Yii::app()->language)),
+                                        'url'=>$this->createUrl('/backend/menugen/sitemenu/createItem',array('language'=>Yii::app()->language)),
                                         'update'=>'#menuForm',
                                         'data' => array(
                                             'linkType'=> 'js: $("#linkType option:selected").val()',

@@ -14,7 +14,7 @@ Yii::app()->clientScript->registerCssFile('/css/backend.css');
 <h3 class="page-header"><?=Yii::t('backend', 'Управление Игроками')?></h3>
 
 <div style="margin-bottom:40px;">
-    <?php echo CHtml::link(Yii::t('backend','Создать игрока'),$this->createUrl('backend/teams/players/create',['language'=>Yii::app()->language]),['class'=>'btn btn-success'])?>
+    <?php echo CHtml::link(Yii::t('backend','Создать игрока'),$this->createUrl('/backend/teams/players/create',['language'=>Yii::app()->language]),['class'=>'btn btn-success'])?>
     <?php Yii::import('application.backend.modules.teams.models.*')?>
     <?php echo CHtml::link(Yii::t('backend', 'Сбросить фильтры'), Yii::app()->request->requestUri, ['class'=>'pull-right btn btn-primary'])?>
 </div>
@@ -97,10 +97,10 @@ Yii::app()->clientScript->registerCssFile('/css/backend.css');
             'template'=>'{update} {delete}',
             'buttons'=>array(
                 'update'=>array(
-                    'url'=>'Yii::app()->controller->createUrl("backend/teams/players/update",array("id"=>$data->id, "language"=>Yii::app()->language))',
+                    'url'=>'Yii::app()->controller->createUrl("/backend/teams/players/update",array("id"=>$data->id, "language"=>Yii::app()->language))',
                 ),
                 'delete'=>array(
-                    'url'=>'Yii::app()->controller->createUrl("backend/teams/players/delete",array("id"=>$data->id, "language"=>Yii::app()->language))',
+                    'url'=>'Yii::app()->controller->createUrl("/backend/teams/players/delete",array("id"=>$data->id, "language"=>Yii::app()->language))',
                 ),
             ),
 		),

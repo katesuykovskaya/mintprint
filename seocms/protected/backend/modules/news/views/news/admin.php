@@ -12,7 +12,7 @@
 
 <h3 class="page-header"><?=Yii::t('backend','Администрирование новостей')?></h3>
 
-<?=CHtml::link(Yii::t('backend','Написать новость'),$this->createUrl('backend/news/news/create',['language'=>Yii::app()->language]),['class'=>'btn'])?>
+<?=CHtml::link(Yii::t('backend','Написать новость'),$this->createUrl('/backend/news/news/create',['language'=>Yii::app()->language]),['class'=>'btn'])?>
 
 <?php
 $this->widget('bootstrap.widgets.TbExtendedGridView', array(
@@ -74,7 +74,7 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
                     'options'=>['target'=>'_blank']
                 ],
             ],
-            'updateButtonUrl'=>'Yii::app()->urlManager->createUrl("backend/news/news/update",array("id"=>$data->id,"language"=>Yii::app()->language))',
-            'deleteButtonUrl'=>'Yii::app()->urlManager->createUrl("backend/news/news/delete",array("id"=>$data->id,"language"=>Yii::app()->language))',
+            'updateButtonUrl'=>'Yii::app()->urlManager->createUrl("/backend/news/news/update",array("id"=>$data->id,"language"=>Yii::app()->language))',
+            'deleteButtonUrl'=>'Yii::app()->urlManager->createUrl("/backend/news/news/delete",array("id"=>$data->id,"language"=>Yii::app()->language))',
         ],
     )));
