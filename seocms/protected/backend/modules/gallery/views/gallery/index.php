@@ -12,7 +12,7 @@
 
 <h3><?=Yii::t('backend','Управление галереями')?></h3>
 
-<?=CHtml::link(Yii::t('backend','Создать галерею'),$this->createUrl('backend/gallery/gallery/gallerycreate',['language'=>Yii::app()->language]),['class'=>'btn'])?>
+<?=CHtml::link(Yii::t('backend','Создать галерею'),$this->createUrl('/backend/gallery/gallery/gallerycreate',['language'=>Yii::app()->language]),['class'=>'btn'])?>
 
 
 <?php $this->widget('zii.widgets.CListView', array(

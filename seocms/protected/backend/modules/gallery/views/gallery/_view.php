@@ -4,7 +4,7 @@
 $model = Gallery::model()->findByPk($data->id);
 ?>
 <div class="well span3">
-    <a href="<?=$this->createUrl('backend/gallery/gallery/view',['id'=>$data->id,'language'=>Yii::app()->language])?>">
+    <a href="<?=$this->createUrl('/backend/gallery/gallery/view',['id'=>$data->id,'language'=>Yii::app()->language])?>">
         <h4 class="page-header"><?=CHtml::encode($data->translation[Yii::app()->language]->t_title);?></h4>
 
         <br />

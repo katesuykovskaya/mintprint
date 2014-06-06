@@ -90,7 +90,7 @@ class PlayersController extends Controller
 //                echo CVarDumper::dump($modelTeamPlayer, 3, true);
 //                die();
                 $modelTeamPlayer->save();
-                $this->redirect(Yii::app()->urlManager->createUrl('backend/teams/players/admin',array('language'=>Yii::app()->language)));
+                $this->redirect(Yii::app()->urlManager->createUrl('/backend/teams/players/admin',array('language'=>Yii::app()->language)));
             }
 
 		}

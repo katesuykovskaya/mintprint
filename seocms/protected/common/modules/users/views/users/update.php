@@ -5,7 +5,7 @@
     <div class="row">
         <ul class="breadcrumb span6">
             <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend',['language'=>Yii::app()->language]))?></li>
-            <li><span class="divider">/</span><?=CHtml::link(Yii::t('backend','Управление пользователями'),$this->createUrl('backend/users/users/admin',['language'=>Yii::app()->language]))?></li>
+            <li><span class="divider">/</span><?=CHtml::link(Yii::t('backend','Управление пользователями'),$this->createUrl('/backend/users/users/admin',['language'=>Yii::app()->language]))?></li>
             <li><span class="divider">/</span><?=$model->login?></li>
         </ul>
     </div>

@@ -68,7 +68,7 @@ $this->endWidget();
     document.getElementById('Sitemenu_parent').onchange = function(){
         $.ajax({
             type:"POST",
-            url: "<?=$this->createUrl('backend/menugen/sitemenu/dropdown',array('language'=>Yii::app()->language));?>",
+            url: "<?=$this->createUrl('/backend/menugen/sitemenu/dropdown',array('language'=>Yii::app()->language));?>",
             data:{
             parent:$('#Sitemenu_parent option:selected').val()
     },

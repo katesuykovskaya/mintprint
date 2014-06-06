@@ -50,10 +50,10 @@ class SourceController extends Controller
 			$model->attributes=$_POST['SourceMessage'];
 			if($model->save()){
                 Yii::app()->user->setFlash('success',Yii::t('backend','Запись успешно добавлена'));
-                $this->redirect(array(Yii::app()->urlManager->createUrl('backend/multilanguage/source/admin',array('language'=>Yii::app()->language))));
+                $this->redirect(array(Yii::app()->urlManager->createUrl('/backend/multilanguage/source/admin',array('language'=>Yii::app()->language))));
             } else {
                 Yii::app()->user->setFlash('error',Yii::t('backend','Ошибка! Обратитесь к администратору.'));
-                $this->redirect(array(Yii::app()->urlManager->createUrl('backend/multilanguage/source/admin',array('language'=>Yii::app()->language))));
+                $this->redirect(array(Yii::app()->urlManager->createUrl('/backend/multilanguage/source/admin',array('language'=>Yii::app()->language))));
             }
 
 		}
@@ -80,10 +80,10 @@ class SourceController extends Controller
 			$model->attributes=$_POST['SourceMessage'];
 			if($model->save()){
                 Yii::app()->user->setFlash('success',Yii::t('backend','Успешно отредактировано'));
-                $this->redirect($this->createUrl('backend/multilanguage/source/admin',array('language'=>Yii::app()->language)));
+                $this->redirect($this->createUrl('/backend/multilanguage/source/admin',array('language'=>Yii::app()->language)));
             } else {
                 Yii::app()->user->setFlash('error',Yii::t('backend','Не удалось изменить! Обратитесь к администратору.'));
-                $this->redirect($this->createUrl('backend/multilanguage/source/admin',array('language'=>Yii::app()->language)));
+                $this->redirect($this->createUrl('/backend/multilanguage/source/admin',array('language'=>Yii::app()->language)));
             }
 
 		}

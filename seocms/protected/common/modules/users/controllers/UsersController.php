@@ -108,7 +108,7 @@ class UsersController extends Controller
                     $user->active = 1;
                     $user->token = null;
                     $user->save(false);
-                $this->redirect($this->createUrl('backend/users/users/login'));
+                $this->redirect($this->createUrl('/backend/users/users/login'));
             }
         }
         // display the login form

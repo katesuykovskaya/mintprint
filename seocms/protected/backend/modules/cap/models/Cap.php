@@ -91,7 +91,7 @@ class Cap extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
 //            'pagination'=>array(
-//                'route'=>Yii::app()->urlManager->createUrl('backend/cap/cap/admin',array('language'=>Yii::app()->language)),
+//                'route'=>Yii::app()->urlManager->createUrl('/backend/cap/cap/admin',array('language'=>Yii::app()->language)),
 //                'pageVar'=>'page',
 //                'params'=>isset($_GET['url']) ? array('url'=>urlencode($_GET['url'])) : array(),
 //                'pagesize'=>10,

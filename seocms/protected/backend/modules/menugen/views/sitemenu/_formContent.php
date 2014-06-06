@@ -9,7 +9,7 @@
                             array(
                                 'ajax'=>array(
                                     'type'=>'post',
-                                    'url'=>$this->createUrl('backend/menugen/sitemenu/dropdown',array('language'=>Yii::app()->language)),
+                                    'url'=>$this->createUrl('/backend/menugen/sitemenu/dropdown',array('language'=>Yii::app()->language)),
                                     'update'=>'#after',
                                     'data' => array(
                                                 'parent'=> 'js: $("#parent option:selected").val()',

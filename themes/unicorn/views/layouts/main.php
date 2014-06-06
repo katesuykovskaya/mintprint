@@ -22,7 +22,7 @@
             $count = Feedback::getMaillistCount();
             ?>
             <li class="btn btn-inverse">
-                <a href="<?=Yii::app()->createUrl('backend/feedback/feedback/maillist', ['language'=>Yii::app()->language])?>">
+                <a href="<?=Yii::app()->createUrl('/backend/feedback/feedback/maillist', ['language'=>Yii::app()->language])?>">
                     <i class="icon icon-envelope"></i>
                     <span class="text"><?=Yii::t('backend','Сообщения')?></span>
                     <span class="label label-important"><?=$count?></span>
@@ -43,7 +43,7 @@
             </li>
 
             <li class="btn btn-inverse">
-                <a title="" href="<?php echo $this->createUrl('backend/users/users/logout',array('language'=>Yii::app()->language));?>"><i class="icon icon-share-alt"></i> <span class="text"><?=Yii::t('backend','Выход')?></span></a>
+                <a title="" href="<?php echo $this->createUrl('/backend/users/users/logout',array('language'=>Yii::app()->language));?>"><i class="icon icon-share-alt"></i> <span class="text"><?=Yii::t('backend','Выход')?></span></a>
             </li>
         </ul>
     </div>

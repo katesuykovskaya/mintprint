@@ -151,10 +151,10 @@ class DefaultController extends Controller
             if($translate->save(false))
             {
                 Yii::app()->user->setFlash('menu_success',Yii::t('backend','Saved '.$source));
-                $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+                $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
             } else {
                 Yii::app()->user->setFlash('menu_error',Yii::t('backend','Not saved, error occured!'));
-                $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+                $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
             }
         } else {
             $action = isset($_POST['phrase']) ? $_POST['phrase'] : null;
@@ -338,7 +338,7 @@ class DefaultController extends Controller
                 }
             }
 
-            $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+            $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
         }
     }
 
@@ -347,7 +347,7 @@ class DefaultController extends Controller
         If(!empty($model))
         {
             Yii::app()->user->setFlash('menu_error',Yii::t('backend','Menu already exists'));
-            $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+            $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
         }
         $menuArr = $this->createAuthArray($role);
 
@@ -366,7 +366,7 @@ class DefaultController extends Controller
         }
 
         Yii::app()->user->setFlash('menu_success', Yii::t('backend','Menu was created!'));
-        $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+        $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
     }
 
     private function deleteMenu($role)
@@ -375,10 +375,10 @@ class DefaultController extends Controller
         if($result)
         {
             Yii::app()->user->setFlash('menu_success', Yii::t('backend','Menu was deleted!'));
-            $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+            $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
         } else {
             Yii::app()->user->setFlash('menu_error', Yii::t('backend','Menu was not deleted!'));
-            $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+            $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
         }
     }
 

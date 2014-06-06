@@ -94,7 +94,7 @@ class News extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
             'pagination'=>[
-                'route'=>Yii::app()->urlManager->createUrl('backend/news/news/admin',array('language'=>Yii::app()->language)),
+                'route'=>Yii::app()->urlManager->createUrl('/backend/news/news/admin',array('language'=>Yii::app()->language)),
                 'pageVar'=>'page',
                 'params'=>isset($_GET['url']) ? ['url'=>urlencode($_GET['url']),'language'=>Yii::app()->language] : ['language'=>Yii::app()->language],
                 'pagesize'=>25,

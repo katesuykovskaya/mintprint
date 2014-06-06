@@ -12,7 +12,7 @@
 <h3 class="page-header"><?=Yii::t('backend', 'Администрирование команд')?></h3>
 <div class="span10 clearfix">
     <?php echo CHtml::link(Yii::t('backend','Создать команду'),
-    $this->createUrl('backend/teams/teams/create',['language'=>Yii::app()->language]),['class'=>'btn btn-success','style'=>'margin-bottom:40px;'])?>
+    $this->createUrl('/backend/teams/teams/create',['language'=>Yii::app()->language]),['class'=>'btn btn-success','style'=>'margin-bottom:40px;'])?>
 </div>
 <div>
 <?php $this->widget('bootstrap.widgets.TbExtendedGridView', array(

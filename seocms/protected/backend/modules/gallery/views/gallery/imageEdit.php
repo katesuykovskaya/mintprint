@@ -16,9 +16,9 @@ if(!is_array($metadata)){
 
 <div class="row">
     <ul class="breadcrumb span6">
-        <li><?=CHtml::link(Yii::t('backend','Все галереи'),$this->createUrl('backend/gallery/gallery/index',['language'=>Yii::app()->language]))?></li>
-        <li><span class="divider">/</span><?=CHtml::link(Yii::t('frontend','Фотогалерея'),$this->createUrl('backend/gallery/gallery/view',['id'=>22,'language'=>Yii::app()->language]))?></li>
-        <li><span class="divider">/</span><?=CHtml::link($parent->translation[Yii::app()->language]->t_title,$this->createUrl('backend/gallery/gallery/view',['id'=>$parent->id,'language'=>Yii::app()->language]))?></li>
+        <li><?=CHtml::link(Yii::t('backend','Все галереи'),$this->createUrl('/backend/gallery/gallery/index',['language'=>Yii::app()->language]))?></li>
+        <li><span class="divider">/</span><?=CHtml::link(Yii::t('frontend','Фотогалерея'),$this->createUrl('/backend/gallery/gallery/view',['id'=>22,'language'=>Yii::app()->language]))?></li>
+        <li><span class="divider">/</span><?=CHtml::link($parent->translation[Yii::app()->language]->t_title,$this->createUrl('/backend/gallery/gallery/view',['id'=>$parent->id,'language'=>Yii::app()->language]))?></li>
         <li><span class="divider">/</span><?=$model->translation[Yii::app()->language]->t_title;?></li>
     </ul>
 </div>

@@ -1,7 +1,7 @@
 
 <h3 class="page-header"><?php echo Yii::t('backend','Администрирование страниц');?></h3>
 
-<?php echo CHtml::link(Yii::t('backend','Create new Page'),$this->createUrl('backend/pages/pages/create',array('language'=>Yii::app()->language)),array('class'=>'btn btn-info'));?>
+<?php echo CHtml::link(Yii::t('backend','Create new Page'),$this->createUrl('/backend/pages/pages/create',array('language'=>Yii::app()->language)),array('class'=>'btn btn-info'));?>
 
 <?php $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 	'id'=>'pages-translate-grid',
@@ -49,9 +49,9 @@
                 't_translit',
 		array(
 			'class'=>'CButtonColumn',
-            'updateButtonUrl'=>'Yii::app()->urlManager->createUrl("backend/pages/pages/update",array("id"=>$data->page_id,"language"=>Yii::app()->language))',
-            'viewButtonUrl'=>'Yii::app()->urlManager->createUrl("backend/pages/pages/view",array("id"=>$data->page_id,"language"=>Yii::app()->language))',
-            'deleteButtonUrl'=>'Yii::app()->urlManager->createUrl("backend/pages/pages/delete",array("id"=>$data->page_id,"language"=>Yii::app()->language))',
+            'updateButtonUrl'=>'Yii::app()->urlManager->createUrl("/backend/pages/pages/update",array("id"=>$data->page_id,"language"=>Yii::app()->language))',
+            'viewButtonUrl'=>'Yii::app()->urlManager->createUrl("/backend/pages/pages/view",array("id"=>$data->page_id,"language"=>Yii::app()->language))',
+            'deleteButtonUrl'=>'Yii::app()->urlManager->createUrl("/backend/pages/pages/delete",array("id"=>$data->page_id,"language"=>Yii::app()->language))',
 		),
 	),
 )); 

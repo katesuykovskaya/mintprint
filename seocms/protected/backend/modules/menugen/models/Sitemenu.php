@@ -312,7 +312,7 @@ class Sitemenu extends CActiveRecord
             }
         } else {
             echo CHtml::link(Yii::t('backend','Создать меню'),
-                Yii::app()->urlManager->createUrl('backend/menugen/sitemenu/createmenu',array('language'=>Yii::app()->language)),
+                Yii::app()->urlManager->createUrl('/backend/menugen/sitemenu/createmenu',array('language'=>Yii::app()->language)),
                 array('class'=>'btn'));
         }
     }
@@ -471,7 +471,7 @@ class Sitemenu extends CActiveRecord
 
             }
 
-        echo '<td><span class="text">'.CHtml::link($item->translation[Yii::app()->language]->t_text,Yii::app()->urlManager->createUrl('backend/menugen/sitemenu/updatemenu',
+        echo '<td><span class="text">'.CHtml::link($item->translation[Yii::app()->language]->t_text,Yii::app()->urlManager->createUrl('/backend/menugen/sitemenu/updatemenu',
                 array('id'=>$item->id,'language'=>Yii::app()->language)
             ));
         echo '</span></td>
@@ -577,7 +577,7 @@ class Sitemenu extends CActiveRecord
 
             }
 
-            echo '<td><span class="text">'.CHtml::link($item->translation[Yii::app()->language]->t_text,Yii::app()->urlManager->createUrl('backend/menugen/sitemenu/updatemenu',
+            echo '<td><span class="text">'.CHtml::link($item->translation[Yii::app()->language]->t_text,Yii::app()->urlManager->createUrl('/backend/menugen/sitemenu/updatemenu',
                     array('id'=>$item->id,'language'=>Yii::app()->language)
                 ));
             echo '</span></td>
@@ -663,14 +663,14 @@ class Sitemenu extends CActiveRecord
                 if($childrenNum != 0){
                     echo '<tr id=row-'.$item->id.' parent='.$parent->id.' data-rowid='.$item->id.' children="'.$childrenString.'" descendants="'.$descendantsString.'" style="padding-left:0;">';
                     echo '<td class="mainAjax"></td>
-                          <td><span class="text" style="padding-left: '.$padding.'px;">'.CHtml::link($item->translation[Yii::app()->language]->t_text,Yii::app()->urlManager->createUrl('backend/menugen/sitemenu/updatemenu',
+                          <td><span class="text" style="padding-left: '.$padding.'px;">'.CHtml::link($item->translation[Yii::app()->language]->t_text,Yii::app()->urlManager->createUrl('/backend/menugen/sitemenu/updatemenu',
                             array('id'=>$item->id,'language'=>Yii::app()->language)
                         ));
                     echo '</span></td>';
                 } else {
                     echo '<tr id=row-'.$item->id.' parent='.$parent->id.' data-rowid='.$item->id.' style="padding-left:0;">';
                     echo '<td class="mainAjax"></td>
-                          <td><span class="text" style="padding-left: '.$padding.'px;">'.CHtml::link($item->translation[Yii::app()->language]->t_text,Yii::app()->urlManager->createUrl('backend/menugen/sitemenu/updatemenu',
+                          <td><span class="text" style="padding-left: '.$padding.'px;">'.CHtml::link($item->translation[Yii::app()->language]->t_text,Yii::app()->urlManager->createUrl('/backend/menugen/sitemenu/updatemenu',
                             array('id'=>$item->id,'language'=>Yii::app()->language)
                             ));
                     echo '</span></td>';

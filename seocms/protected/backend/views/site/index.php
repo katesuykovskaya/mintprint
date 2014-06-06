@@ -12,7 +12,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/seocms/protected/backend/vendors/autolo
         /*size in Mb*/
         'maxSize'=>1024,
         'path'=>Yii::getPathOfAlias('webroot').'/uploads/tmp/',
-        'clearAction'=> Yii::app()->urlManager->createUrl('backend/attach/default/clearTmp'),
+        'clearAction'=> Yii::app()->urlManager->createUrl('/backend/attach/default/clearTmp'),
         'title'=>'Временная папка изображений: ',
     ));
 
@@ -20,7 +20,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/seocms/protected/backend/vendors/autolo
         /*size in Mb*/
         'maxSize'=>1024,
         'path'=>Yii::getPathOfAlias('webroot').'/galleries/tmp/',
-        'clearAction'=> Yii::app()->urlManager->createUrl('backend/gallery/gallery/clearTmp'),
+        'clearAction'=> Yii::app()->urlManager->createUrl('/backend/gallery/gallery/clearTmp'),
         'title'=>'Временная папка галереи: ',
     ));
 
@@ -195,11 +195,12 @@ $tweets = CJSON::decode($myTweets);
 /////////////end of google + /////////////////
 //Yii::app()->session->clear();
 
-$this->widget('backend.modules.social.widgets.SocialAuthWidget',[
+/*$this->widget('backend.modules.social.widgets.SocialAuthWidget',[
     'providers'=>['vk','fb','instagram','google'],
     'socialArray'=>$socialArray,
     'scenario'=>'photos'
 ]);
+*/
 echo CHtml::link('CLEAR', '/backend/social/default/clearSession');
 //http://oauth.vk.com/authorize?client_id=4321188&amp;response_type=code&amp;scope=photos&amp;redirect_uri=http://photo-service.home/backend/social/default/auth/authprovider/vk?scenario=photos&amp;v=5.16
 //http://oauth.vk.com/authorize?client_id=4321188&amp;response_type=code&amp;scope=photos&amp;redirect_uri=http://photo-service.home/backend/social/default/auth/authprovider/vk&amp;v=5.16&amp;scenario=photos

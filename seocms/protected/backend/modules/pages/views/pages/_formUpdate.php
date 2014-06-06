@@ -49,7 +49,7 @@ Yii::app()->clientScript->registerCssFile('/css/lightbox.css');
         echo CHtml::link(Yii::t('backend','Удалить').' <i class="icon-remove"></i>',
                         '#',array(
                         'id'=>'delImg','data-id'=>$model->page_id,
-                        'data-url'=>$this->createUrl('backend/pages/pages/delImage',array('language'=>Yii::app()->language)),
+                        'data-url'=>$this->createUrl('/backend/pages/pages/delImage',array('language'=>Yii::app()->language)),
                         'data-name'=>Yii::app()->easyImage->getHashedName($imageName,$imageParams,true)
             )
         );

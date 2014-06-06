@@ -86,7 +86,7 @@ class TeamsController extends Controller
                         $model->photo->saveAs($imgDir.$model->photo->name);
                     }
                 }
-                $this->redirect($this->createUrl('backend/teams/teams/admin',array('language'=>Yii::app()->language)));
+                $this->redirect($this->createUrl('/backend/teams/teams/admin',array('language'=>Yii::app()->language)));
             }
 		}
 
@@ -125,7 +125,7 @@ class TeamsController extends Controller
                         $model->photo->saveAs($imgDir.$model->photo->name);
                     }
                 }
-                $this->redirect($this->createUrl('backend/teams/teams/admin',array('language'=>Yii::app()->language)));
+                $this->redirect($this->createUrl('/backend/teams/teams/admin',array('language'=>Yii::app()->language)));
             }
 		}
 

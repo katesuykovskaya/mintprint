@@ -127,7 +127,7 @@ $form = $this->beginWidget('CActiveForm', array(
     function getTranslit(attrs,message,lang){
         $.ajax({
             type:"POST",
-            url: "<?=$this->createUrl('backend/menugen/sitemenu/getTranslit',array('language'=>Yii::app()->language));?>",
+            url: "<?=$this->createUrl('/backend/menugen/sitemenu/getTranslit',array('language'=>Yii::app()->language));?>",
             data:{
                 pageid:pageField.value,
                 lang:lang
@@ -234,7 +234,7 @@ $form = $this->beginWidget('CActiveForm', array(
     parentField.onchange = function(){
         $.ajax({
             type:"POST",
-            url: "<?=$this->createUrl('backend/menugen/sitemenu/dropdown',array('language'=>Yii::app()->language));?>",
+            url: "<?=$this->createUrl('/backend/menugen/sitemenu/dropdown',array('language'=>Yii::app()->language));?>",
             data:{
                 parent:$('#Sitemenu_parent option:selected').val()
             },
@@ -247,7 +247,7 @@ $form = $this->beginWidget('CActiveForm', array(
     $(document).on("click",".icon-repeat",function(){
             $.ajax({
                 type:"POST",
-                url:"<?= $this->createUrl('backend/menugen/sitemenu/loadData');?>",
+                url:"<?= $this->createUrl('/backend/menugen/sitemenu/loadData');?>",
                 data:{
                     element:$(this).attr('data-element'),
                     language:$(this).attr('data-language'),
