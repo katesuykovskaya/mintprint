@@ -83,7 +83,9 @@ class OrderTempController extends Controller
 		{
 			$model->attributes=$_POST['OrderTemp'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				die(json_encode(array('res'=>true)));
+            else
+                die(json_encode(array('res'=>false)));
 		}
 
 		$this->render('update',array(

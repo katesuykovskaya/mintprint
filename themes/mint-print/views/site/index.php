@@ -32,9 +32,9 @@ Yii::app()->clientScript->registerScriptFile('/js/draggablePhotos.js');
             <?php foreach($model as $photo):?>
                 <div class="photo-wrap full">
                     <a href="#" class="remove"></a>
-                    <div class="photo">
+                    <a href="<?=Yii::app()->createUrl('order/orderTemp/update', array('id'=>$photo['id']))?>" class="photo">
                         <?=CHtml::image($photo['thumb_url'])?>
-                    </div>
+                    </a>
                 </div>
             <?php endforeach?>
 
@@ -108,23 +108,3 @@ Yii::app()->clientScript->registerScriptFile('/js/draggablePhotos.js');
         </div>
 
     </section>
-<script>
-
-
-    $(document).ready(function(){
-
-
-        
-        //menu
-        var menu = $('header menu ul').eq(0);
-        var index = Math.floor(menu.children().length / 2) - 1;
-        var li = $('<li></li>', {'class': 'middle-leaf'}).insertAfter(menu.children('li').eq(index));
-        $('<img>', {
-            src: '/img/leaf.png'
-        }).appendTo(li);
-
-//        $('#socialWidget').tabs();
-
-//        $('#tabs-1').tinyscrollbar();
-    });
-</script>

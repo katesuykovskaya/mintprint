@@ -70,3 +70,14 @@
     </footer>
 </body>
 </html>
+<script>
+    $(document).ready(function(){
+        //menu
+        var menu = $('header menu ul').eq(0);
+        var index = Math.floor(menu.children().length / 2) - 1;
+        var li = $('<li></li>', {'class': 'middle-leaf'}).insertAfter(menu.children('li').eq(index));
+        $('<img>', {
+            src: '/img/leaf.png'
+        }).appendTo(li);
+    });
+</script>
