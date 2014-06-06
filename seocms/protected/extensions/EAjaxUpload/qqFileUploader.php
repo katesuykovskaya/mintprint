@@ -24,9 +24,11 @@ class qqUploadedFileXhr {
 
         return true;
     }
+
     function getName() {
         return $_GET['qqfile'];
     }
+
     function getSize() {
         if (isset($_SERVER["CONTENT_LENGTH"])){
             return (int)$_SERVER["CONTENT_LENGTH"];
@@ -135,20 +137,34 @@ class qqFileUploader {
             /// don't overwrite previous files that were uploaded
             while (file_exists($uploadDirectory . $filename . '.' . $ext)) {
                 $filename .= rand(10, 99);
+//                return array('error'=> 'File exists on server');
             }
         }
 
         if ($this->file->save($uploadDirectory . $filename . '.' . $ext)){
-			//echo "$filename";
-            $pathIcon = Yii::app()->easyImage->thumbOf($uploadDirectory . $filename . '.' . $ext, array(
-                'crop' => array('width' => 97, 'height' => 97),
+
+            $sizeImg = getimagesize($uploadDirectory . $filename . '.' . $ext);
+
+            if($sizeImg[0] < $sizeImg[1]){
+                $master = EasyImage::RESIZE_WIDTH;
+            }
+            elseif($sizeImg[0] > $sizeImg[1])
+            {
+                $master = EasyImage::RESIZE_HEIGHT;
+            }
+            else
+            {
+                $master = EasyImage::RESIZE_WIDTH;
+            }
+
+            Yii::app()->easyImage->thumbOf($uploadDirectory . $filename . '.' . $ext, array(
+                "resize" => array("width"=>97, 'height' => 97, "master"=>$master),
                 "savePath"=>$uploadDirectory,
-                'save'=>$filename . 'Icon.' . $ext,
+                'save'=>$filename . 'Icon',
                 "quality" => 80,
             ));
 
-
-            return array('success'=>true,'filename'=>$filename.'.'.$ext);
+            return array('success'=>true,'originalPath'=>'/uploads/tmp/'.Yii::app()->session->sessionID.'/' . $filename . '.' . $ext, 'iconPath'=>'/uploads/tmp/'.Yii::app()->session->sessionID.'/'.$filename . 'Icon'. '.' . $ext);
         } else {
             return array('error'=> 'Could not save uploaded file.' .
                 'The upload was cancelled, or server error encountered');

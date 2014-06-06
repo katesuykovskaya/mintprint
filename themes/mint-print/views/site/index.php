@@ -113,29 +113,7 @@ Yii::app()->clientScript->registerScriptFile('/js/draggablePhotos.js');
 
     $(document).ready(function(){
 
-        function SendAjax(img) {
-            $.ajax({
-                url: '/order/orderTemp/create',
-                type: 'post',
-                data: {
-                    'OrderTemp[img_url]': img.data('original'),
-                    'OrderTemp[thumb_url]': img.attr('src')
-                },
-                success: function(response) {
-                    try {
-                        var result = $.parseJSON(response);
-                        if(!result.res) {
-                            if(typeof result.reason != 'undefined')
-                                alert(result.reason);
-                            else
-                                alert('Не прошло сохранение');
-                        }
-                    } catch(e) {
-                        alert('some error: watch site/index');
-                    }
-                }
-            });
-        }
+
         
         //menu
         var menu = $('header menu ul').eq(0);

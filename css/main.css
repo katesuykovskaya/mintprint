@@ -556,6 +556,9 @@ footer li a {
 .vk-tab .stripe {
     background-color: #35A0BE;
 }
+.upload-tab .stripe {
+    background-color: #18BCC2;
+}
 .album-thumb {
     display: inline-block;
     

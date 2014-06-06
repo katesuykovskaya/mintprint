@@ -15,7 +15,13 @@ $this->widget('ext.EAjaxUpload.EAjaxUpload',
             'minSizeLimit'=>1*1024,
             'auto'=>true,
             'multiple' => true,
-            'onComplete'=>"js:function(id, fileName, responseJSON){ console.log(responseJSON); }",
+            'onComplete'=>"js:function(id, fileName, responseJSON)
+            {
+                ajaxLoadPhoto(responseJSON.originalPath, responseJSON.iconPath);
+
+//                console.log(responseJSON);
+
+            }",
             'messages'=>array(
                 'typeError'=>"{file} has invalid extension. Only {extensions} are allowed.",
                 'sizeError'=>"{file} is too large, maximum file size is {sizeLimit}.",

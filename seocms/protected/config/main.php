@@ -13,6 +13,7 @@ return CMap::mergeArray(
 //		'application.models.*',
 		'application.components.*',
         'application.extensions.EAjaxUpload.*',
+        'ext.easyimage.EasyImage'
 	),
 
 	'modules'=>array(

@@ -62,8 +62,8 @@ class SiteController extends Controller
         $result = $uploader->handleUpload($folder);
         $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
 
-        $fileSize=filesize($folder.$result['filename']);//GETTING FILE SIZE
-        $fileName=$result['filename'];//GETTING FILE NAME
+//        $fileSize=filesize($folder.$result['filename']);//GETTING FILE SIZE
+//        $fileName=$result['filename'];//GETTING FILE NAME
         //$img = CUploadedFile::getInstance($model,'image');
 
         echo $return;// it's array

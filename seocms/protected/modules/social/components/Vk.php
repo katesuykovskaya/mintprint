@@ -95,6 +95,7 @@ class Vk {
 //            if(empty($req->json()['response'])) echo CVarDumper::dump($req->json(), 6, true);
             $data = $req->json()['response'];
 //            echo CVarDumper::dump($data, 7, true);
+//            die();
             return $data;
         } catch(Exception $e) {
             echo $e->getMessage();

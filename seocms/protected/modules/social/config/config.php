@@ -43,6 +43,7 @@ return [
         )
         ,'photos'=>array(
             'original' => 'src_xxbig',
+            'originalSecond' => 'src_big',
             'thumbnail' => 'src'
         )
     ],
