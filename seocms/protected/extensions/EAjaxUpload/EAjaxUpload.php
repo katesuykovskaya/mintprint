@@ -74,7 +74,12 @@ class EAjaxUpload extends CWidget
 
                 unset($this->config['element']);
 
-                echo '<div id="'.$this->id.'"><noscript><p>Please enable JavaScript to use file uploader.</p></noscript></div>';
+                echo '<div class="stripe"></div>
+                    <div class="enter">
+                    <h3>Загрузка фотографий с диска</h3>
+                    <p>жмите на кнопку</p>
+                    <div id="'.$this->id.'"><noscript><p>Please enable JavaScript to use file uploader.</p></noscript></div>
+                    </div>';
 		$assets = dirname(__FILE__).'/assets';
                 $baseUrl = Yii::app()->assetManager->publish($assets);
 

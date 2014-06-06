@@ -236,6 +236,8 @@ class EasyImage extends CApplicationComponent
                     break;
                 case 'savePath':
                     break;
+                case 'save':
+                    break;
                 default:
                     throw new CException('Action "' . $key . '" is not found');
             }
@@ -252,14 +254,15 @@ class EasyImage extends CApplicationComponent
     public function thumbSrcOf($file, $params = array())
     {
         // Paths
-        $hash = $this->getHashedName($file,$params,false);
+//        $hash = $this->getHashedName($file,$params,false);
+        $hash =$params['save'];
         $cacheFileExt = isset($params['type']) ? $params['type'] : pathinfo($file, PATHINFO_EXTENSION);
         $cacheFileName = $hash . '.' . $cacheFileExt;
 
         if($params['savePath']){
-            $cachePath = Yii::getpathOfAlias('webroot') . $params['savePath'];
+            $cachePath = $params['savePath'];
             $webCacheFile = $cachePath.$cacheFileName;
-            $cacheFile = Yii::getpathOfAlias('webroot').$params['savePath'] . $cacheFileName;
+            $cacheFile = $params['savePath'] . $cacheFileName;
         } else {
             $cachePath = Yii::getpathOfAlias('webroot') . $this->cachePath . $hash{0};
             $webCacheFile = Yii::app()->baseUrl . $this->cachePath . $hash{0} . '/' . $cacheFileName;
@@ -271,9 +274,10 @@ class EasyImage extends CApplicationComponent
             return isset($params['savePath']) ? $params['savePath'].$cacheFileName : $webCacheFile;
         }
 
-        // Make cache dir
-        if (!is_dir($cachePath)) {
-            mkdir($cachePath, 0755, true);
+        // Make cache dir //
+        if (!file_exists($cachePath)) {
+//            die($cachePath);
+            mkdir($cachePath, 0777);
         }
 
         // Create and caching thumbnail use params

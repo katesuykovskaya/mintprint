@@ -13,6 +13,7 @@ return CMap::mergeArray(
 //		'application.models.*',
 		'application.components.*',
         'application.extensions.EAjaxUpload.*',
+        'ext.easyimage.EasyImage'
 	),
 
 	'modules'=>array(
@@ -26,6 +27,9 @@ return CMap::mergeArray(
 
 	// application components
 	'components'=>array(
+        'easyImage' => array(
+            'class' => 'application.extensions.easyimage.EasyImage',
+        ),
 		// uncomment the following to enable URLs in path-format
 		'urlManager'=>array(
             'class' => 'application.backend.components.UrlManager',

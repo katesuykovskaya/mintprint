@@ -556,6 +556,9 @@ footer li a {
 .vk-tab .stripe {
     background-color: #35A0BE;
 }
+.upload-tab .stripe {
+    background-color: #18BCC2;
+}
 .album-thumb {
     display: inline-block;
     
@@ -675,6 +678,25 @@ a:visited {
     padding: 0;
     position: absolute;
     width: 1px;
+}
+.addAllPhoto{
+    height: 40px;
+    width: 40px;
+    border: 2px solid white;
+    margin: 12px 0 0 0;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    padding: 5px;
+    font-size: 20px;
+}
+
+.addAllPhoto span{
+    display: block;
+    font-size: 8px;
+    margin-top: -5px;
 }
 
 /*

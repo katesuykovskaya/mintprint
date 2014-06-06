@@ -89,11 +89,13 @@ if($currentPage != $pagersCount)
     ));
 echo '<span id="photoLoader"></span>';
 echo CHtml::closeTag('div');
+//CVarDumper::dump($photos, 5, true);
 $len = count($photos);
 for($i = 0; $i < $len; $i++) {
 //    echo $photos[$i]['src'];
+
     echo CHtml::link(CHtml::image($photos[$i]['src'],$photos[$i]['text'], array(
-            'data-original'=>$photos[$i][$photo_config['original']]
+            'data-original'=>empty($photos[$i][$photo_config['original']])?$photos[$i][$photo_config['originalSecond']]: $photos[$i][$photo_config['original']]
         )).'<div class="add-photo">+<span>добавить</span></div>', '#', array(
         'class'=>'image-wrap',
     ));

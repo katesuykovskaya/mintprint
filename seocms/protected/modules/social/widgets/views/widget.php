@@ -20,7 +20,7 @@
             $this->render('fileupload');
             $upload = ob_get_contents();
             ob_end_clean();?>
-            <div class="tab" id="tabs-<?=($key+1)?>">
+            <div class="tab upload-tab" id="tabs-<?=($key+1)?>">
                 <?=$upload?>
             </div>
         <?php else:

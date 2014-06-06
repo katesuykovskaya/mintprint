@@ -548,44 +548,44 @@ qq.extend(qq.FileUploader.prototype, {
         return element;
     },
     _setupDragDrop: function(){
-        var self = this,
-            dropArea = this._find(this._element, 'drop');
-
-        var dz = new qq.UploadDropZone({
-            element: dropArea,
-            onEnter: function(e){
-                qq.addClass(dropArea, self._classes.dropActive);
-                e.stopPropagation();
-            },
-            onLeave: function(e){
-                e.stopPropagation();
-            },
-            onLeaveNotDescendants: function(e){
-                qq.removeClass(dropArea, self._classes.dropActive);
-            },
-            onDrop: function(e){
-                dropArea.style.display = 'none';
-                qq.removeClass(dropArea, self._classes.dropActive);
-                self._uploadFileList(e.dataTransfer.files);
-            }
-        });
-
-        dropArea.style.display = 'none';
-
-        qq.attach(document, 'dragenter', function(e){
-            if (!dz._isValidFileDrag(e)) return;
-
-            dropArea.style.display = 'block';
-        });
-        qq.attach(document, 'dragleave', function(e){
-            if (!dz._isValidFileDrag(e)) return;
-
-            var relatedTarget = document.elementFromPoint(e.clientX, e.clientY);
-            // only fire when leaving document out
-            if ( ! relatedTarget || relatedTarget.nodeName == "HTML"){
-                dropArea.style.display = 'none';
-            }
-        });
+//        var self = this,
+//            dropArea = this._find(this._element, 'drop');
+//
+//        var dz = new qq.UploadDropZone({
+//            element: dropArea,
+//            onEnter: function(e){
+//                qq.addClass(dropArea, self._classes.dropActive);
+//                e.stopPropagation();
+//            },
+//            onLeave: function(e){
+//                e.stopPropagation();
+//            },
+//            onLeaveNotDescendants: function(e){
+//                qq.removeClass(dropArea, self._classes.dropActive);
+//            },
+//            onDrop: function(e){
+//                dropArea.style.display = 'none';
+//                qq.removeClass(dropArea, self._classes.dropActive);
+//                self._uploadFileList(e.dataTransfer.files);
+//            }
+//        });
+//
+//        dropArea.style.display = 'none';
+//
+//        qq.attach(document, 'dragenter', function(e){
+//            if (!dz._isValidFileDrag(e)) return;
+//
+//            dropArea.style.display = 'block';
+//        });
+//        qq.attach(document, 'dragleave', function(e){
+//            if (!dz._isValidFileDrag(e)) return;
+//
+//            var relatedTarget = document.elementFromPoint(e.clientX, e.clientY);
+//            // only fire when leaving document out
+//            if ( ! relatedTarget || relatedTarget.nodeName == "HTML"){
+//                dropArea.style.display = 'none';
+//            }
+//        });
     },
     _onSubmit: function(id, fileName){
         qq.FileUploaderBasic.prototype._onSubmit.apply(this, arguments);
@@ -809,13 +809,15 @@ qq.UploadButton.prototype = {
             // the right side of the input
             right: 0,
             top: 0,
-            fontFamily: 'Arial',
+            fontFamily: 'PoiretOne',
             // 4 persons reported this, the max values that worked for them were 243, 236, 236, 118
-            fontSize: '118px',
+            fontSize: '1em',
             margin: 0,
             padding: 0,
             cursor: 'pointer',
-            opacity: 0
+            opacity: 0,
+            height: '30px',
+            width: '535px'
         });
 
         this._element.appendChild(input);
