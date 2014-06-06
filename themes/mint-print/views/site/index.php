@@ -86,6 +86,21 @@ Yii::app()->clientScript->registerScriptFile('/js/draggablePhotos.js');
                     <img class="no-image" src="/img/no-image.jpg" alt=""/>
                 </div>
             </div>
+            <div class="photo-wrap">
+                <div class="photo">
+                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
+                </div>
+            </div>
+            <div class="photo-wrap">
+                <div class="photo">
+                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
+                </div>
+            </div>
+            <div class="photo-wrap">
+                <div class="photo">
+                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
+                </div>
+            </div>
 
         </div>
         <div class="left social-photo-widget">

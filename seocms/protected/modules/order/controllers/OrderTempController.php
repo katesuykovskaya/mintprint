@@ -59,13 +59,25 @@ class OrderTempController extends Controller
             if(isset($_POST['OrderTemp'])) {
                 $model->attributes=$_POST['OrderTemp'];
                 if($model->save()) {
-                    die(json_encode(array('res'=>true)));
+                    die(json_encode(array('res'=>true, 'id'=>$model->id)));
                 }
                 die(json_encode(array('res'=>false, 'reason'=>'not valid (kate message)')));
             }
 		}
         die(json_encode(array('res'=>false,'reason'=>'not ajax request')));
 	}
+
+    public function actionDeletePhotoWithDb()
+    {
+        if(Yii::app()->request->isAjaxRequest) {
+//            $model = new OrderTemp;
+//            if($model->deleteAllByAttributes(array('id'=>$_POST['OrderTemp']['id']))){
+//                die(echo 1);
+//            }else{
+//                die(echo 2);
+//            }
+        }
+    }
 
 	/**
 	 * Updates a particular model.

@@ -5,6 +5,7 @@ $(document).ready(function(){
 
         $('.tab:visible img').each(function(index){
             var img = $(this).clone();
+            SendAjax(img);
             var newImg = createPhoto(img);
             $('.all-photos-thumbs').prepend(newImg);
         });
@@ -15,9 +16,9 @@ $(document).ready(function(){
     $(".my-viewport").on('click', '.image-wrap',  function(e){
         e.preventDefault();
         var img = $(this).find('img').clone();
+        SendAjax(img);
         var newImg = createPhoto(img);
 
-        SendAjax(img);
 
         $('.all-photos-thumbs').prepend(newImg);
 
@@ -31,7 +32,33 @@ $(document).ready(function(){
     //delete photo
     $(".all-photos-thumbs").on('click', 'a.remove',  function(e){
         e.preventDefault();
-        $(this).parent().remove();
+//        $(this).parent().remove();
+
+        $.ajax({
+            url: '/order/orderTemp/deletePhotoWithDb',
+            type: 'post',
+            data: {
+                'OrderTemp[img_url]': $(this).parent().find('img').attr('data-original'),
+                'OrderTemp[thumb_url]': $(this).parent().find('img').attr('src'),
+                'OrderTemp[type]': $(this).parent().find('img').attr('data-type'),
+                'OrderTemp[id]': $(this).attr('data-id')
+            },
+            success: function(response) {
+                console.log(response);
+//                try {
+//                    var result = $.parseJSON(response);
+//                    if(!result.res) {
+//                        if(typeof result.reason != 'undefined')
+//                            alert(result.reason);
+//                        else
+//                            alert('Не прошло сохранение');
+//                    }
+//                } catch(e) {
+//                    alert('some error: watch site/index');
+//                }
+            }
+        });
+
     });
 
 });
@@ -40,7 +67,8 @@ function ajaxLoadPhoto(originPath, iconPath)
 {
     var img = document.createElement("img");
     img.setAttribute("src", iconPath);
-    img.setAttribute("data-orig", originPath);
+    img.setAttribute("data-original", originPath);
+    img.setAttribute("data-type", 'upload');
     img.onload = function() {
         var newImg = createPhoto($(img));
         $('.all-photos-thumbs').prepend(newImg);
@@ -95,7 +123,6 @@ function createPhoto(img)
 function getImgSize(imgSrc){
     return '{"width":'+imgSrc[0].width+',"height":'+imgSrc[0].height+'}';
 }
-
 function SendAjax(img) {
     $.ajax({
         url: '/order/orderTemp/create',
@@ -113,9 +140,13 @@ function SendAjax(img) {
                     else
                         alert('Не прошло сохранение');
                 }
+                else{
+                    $(img).parent().siblings('.remove').attr('data-id', result.id);
+                }
             } catch(e) {
                 alert('some error: watch site/index');
             }
         }
     });
+
 }

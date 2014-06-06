@@ -46,6 +46,7 @@ class Instagram {
 //            echo $instaMediaUrl.'?access_token='.$token;
             $requestM = $insta->get($instaMediaUrl.'?access_token='.$token);
             $data = $requestM->send()->json();
+//            die(CVarDumper::dump($data, 5, true));
             return $data;
         } catch (Exception $e) {
             echo $e->getMessage();

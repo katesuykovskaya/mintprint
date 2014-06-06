@@ -60,6 +60,41 @@ class SiteController extends Controller
         $sizeLimit = 100 * 1024 * 1024;// maximum file size in bytes
         $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
         $result = $uploader->handleUpload($folder);
+
+        if(!empty($result['success'])){
+            Yii::app()->easyImage->thumbOf($result['uploadDirectory'] . $result['filename'] . '.' . $result['ext'], array(
+                "resize" => array("width"=>97, 'height' => 97, "master"=>$result['master']),
+                "savePath"=>$result['uploadDirectory'],
+                'save'=>$result['filename'] . 'Icon',
+                "quality" => 80,
+            ));
+
+            Yii::import('application.modules.order.models.OrderTemp');
+
+            $model = new OrderTemp;
+            $path = 'http://' . $_SERVER['SERVER_NAME'] ."/uploads/tmp/" . Yii::app()->session->sessionID . "/";
+            $model->attributes = array(
+                'img_url'=> $path . $result['filename'] . '.' . $result['ext'],
+                'thumb_url'=> $path . $result['filename'] . 'Icon' . '.' . $result['ext'],
+                'type'=> 'upload'
+            );
+
+            if($model->save()) {
+                $result =  array('success'=>true,'originalPath'=> $path . $result['filename'] . '.' . $result['ext'], 'iconPath' =>$path . $result['filename'] . 'Icon'. '.' . $result['ext']);
+            }
+            else{
+                $result = array('error'=> 'Could not save uploaded file.' .
+                    'The upload was cancelled, or server error encountered');
+            }
+
+
+
+        }
+
+
+
+
+
         $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
 
 //        $fileSize=filesize($folder.$result['filename']);//GETTING FILE SIZE
