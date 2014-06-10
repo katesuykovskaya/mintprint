@@ -66,19 +66,6 @@ class OrderTempController extends Controller
 		}
         die(json_encode(array('res'=>false,'reason'=>'not ajax request')));
 	}
-
-    public function actionDeletePhotoWithDb()
-    {
-        if(Yii::app()->request->isAjaxRequest) {
-//            $model = new OrderTemp;
-//            if($model->deleteAllByAttributes(array('id'=>$_POST['OrderTemp']['id']))){
-//                die(echo 1);
-//            }else{
-//                die(echo 2);
-//            }
-        }
-    }
-
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -110,9 +97,18 @@ class OrderTempController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
+	public function actionDelete()
 	{
-		$this->loadModel($id)->delete();
+        if(Yii::app()->request->isAjaxRequest) {
+            $this->loadModel($_POST['OrderTemp']['id'])->delete();
+            if(!empty($_POST['OrderTemp']['type']) && $_POST['OrderTemp']['type'] == 'upload'){
+                $img_url = str_replace('http://' . $_SERVER['SERVER_NAME'], Yii::getPathOfAlias('webroot'), $_POST['OrderTemp']['img_url']);
+                $thumb_url = str_replace('http://' . $_SERVER['SERVER_NAME'], Yii::getPathOfAlias('webroot'), $_POST['OrderTemp']['thumb_url']);
+                unlink($img_url);
+                unlink($thumb_url);
+            }
+        }
+
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))

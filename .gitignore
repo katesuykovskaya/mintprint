@@ -3,6 +3,7 @@ assets/*
 protected/runtime/*
 !protected/runtime/.gitignore
 protected/data/*.db
+uploads/*
 themes/classic/views/.idea
 .idea
 seocms/protected/common/config/database.php
