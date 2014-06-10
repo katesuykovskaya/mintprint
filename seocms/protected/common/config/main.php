@@ -68,11 +68,7 @@ return array(
             'autoCreateSessionTable'=>false,
             'autoStart'=>true,
 //            'timeout'=>'1440',
-            'timeout'=>'7200',
-        ),
-        'errorHandler'=>array(
-            // use 'site/error' action to display errors
-            'errorAction'=>'site/error',
+            'timeout'=>60*60*24*7,
         ),
 
         'messages'=>array(
