@@ -32,10 +32,10 @@ $(document).ready(function(){
     //delete photo
     $(".all-photos-thumbs").on('click', 'a.remove',  function(e){
         e.preventDefault();
-//        $(this).parent().remove();
+        $(this).parent().remove();
 
         $.ajax({
-            url: '/order/orderTemp/deletePhotoWithDb',
+            url: '/order/orderTemp/delete',
             type: 'post',
             data: {
                 'OrderTemp[img_url]': $(this).parent().find('img').attr('data-original'),
@@ -44,18 +44,7 @@ $(document).ready(function(){
                 'OrderTemp[id]': $(this).attr('data-id')
             },
             success: function(response) {
-                console.log(response);
-//                try {
-//                    var result = $.parseJSON(response);
-//                    if(!result.res) {
-//                        if(typeof result.reason != 'undefined')
-//                            alert(result.reason);
-//                        else
-//                            alert('Не прошло сохранение');
-//                    }
-//                } catch(e) {
-//                    alert('some error: watch site/index');
-//                }
+//                console.log(response);
             }
         });
 
@@ -63,7 +52,7 @@ $(document).ready(function(){
 
 });
 //load photos local
-function ajaxLoadPhoto(originPath, iconPath)
+function ajaxLoadPhoto(originPath, iconPath, id)
 {
     var img = document.createElement("img");
     img.setAttribute("src", iconPath);
@@ -71,9 +60,9 @@ function ajaxLoadPhoto(originPath, iconPath)
     img.setAttribute("data-type", 'upload');
     img.onload = function() {
         var newImg = createPhoto($(img));
+        $(newImg).find('.remove').attr('data-id', id);
         $('.all-photos-thumbs').prepend(newImg);
     };
-
     if($(".all-photos-thumbs > div:not(div.full)").length > 3)
     {
         $(".all-photos-thumbs > .photo-wrap:last").remove();
@@ -114,7 +103,7 @@ function createPhoto(img)
 
     var newImg =  document.createElement('div');
     newImg.setAttribute('class', 'photo-wrap full');
-    newImg.innerHTML = '<a href="#" class="remove"></a><div class="photo"></div>';
+    newImg.innerHTML = '<a href="#" class="remove"></a><a class="photo"></a>';
     $(newImg).find('.photo').append(changeImg);
 
     return newImg;
@@ -142,11 +131,11 @@ function SendAjax(img) {
                 }
                 else{
                     $(img).parent().siblings('.remove').attr('data-id', result.id);
+                    $(img).parent().attr('href', '/order/orderTemp/update?id='+result.id);
                 }
             } catch(e) {
                 alert('some error: watch site/index');
             }
         }
     });
-
 }

@@ -27,13 +27,13 @@ Yii::app()->clientScript->registerScriptFile('/js/draggablePhotos.js');
             if(!Yii::app()->user->isGuest)
                 $attr['user_id'] = Yii::app()->user_id;
             $model = OrderTemp::model()->findAllByAttributes($attr);
-
+//            CVarDumper::dump($model, 5,true);
             ?>
             <?php foreach($model as $photo):?>
                 <div class="photo-wrap full">
-                    <a href="#" class="remove"></a>
-                    <a href="<?=Yii::app()->createUrl('order/orderTemp/update', array('id'=>$photo['id']))?>" class="photo">
-                        <?=CHtml::image($photo['thumb_url'])?>
+                    <a href="#" class="remove" data-id="<?=$photo['id']?>"></a>
+                    <a href="<?=Yii::app()->createUrl('order/orderTemp/update', array('id'=>$photo['id']))?>" class="photo" >
+                            <?=CHtml::image($photo['img_url'], null, array('data-original'=>$photo['img_url'], 'data-type'=>$photo['type']))?>
                     </a>
                 </div>
             <?php endforeach?>

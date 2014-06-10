@@ -80,7 +80,7 @@ class SiteController extends Controller
             );
 
             if($model->save()) {
-                $result =  array('success'=>true,'originalPath'=> $path . $result['filename'] . '.' . $result['ext'], 'iconPath' =>$path . $result['filename'] . 'Icon'. '.' . $result['ext']);
+                $result =  array('success'=>true,'originalPath'=> $path . $result['filename'] . '.' . $result['ext'], 'iconPath' =>$path . $result['filename'] . 'Icon'. '.' . $result['ext'], 'id'=>$model->id);
             }
             else{
                 $result = array('error'=> 'Could not save uploaded file.' .
