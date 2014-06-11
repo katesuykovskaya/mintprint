@@ -45,6 +45,13 @@ $(document).ready(function(){
             },
             success: function(response) {
 //                console.log(response);
+                try {
+                    var result = $.parseJSON(response);
+                    var price = result.sum;
+                    $('#price').text(price);
+                } catch(e) {
+
+                }
             }
         });
 
@@ -132,6 +139,7 @@ function SendAjax(img) {
                 else{
                     $(img).parent().siblings('.remove').attr('data-id', result.id);
                     $(img).parent().attr('href', '/order/orderTemp/update?id='+result.id);
+                    $('#price').text(result.sum);
                 }
             } catch(e) {
                 alert('some error: watch site/index');

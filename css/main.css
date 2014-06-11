@@ -184,7 +184,7 @@ header menu a {
 .content {
     width: 950px;
     margin: 0 auto;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 .inner-page {
     margin-top: 60px;
@@ -250,7 +250,7 @@ h1 {
     line-height: 16px;
     font-weight: 600;
 }
-#price {
+#priceWrap {
     color: #19BDC3;
     font-size: 66px;
     height: 66px;
@@ -260,7 +260,7 @@ h1 {
     margin-top: 15px;
     margin-bottom: 22px;
 }
-#price sup {
+#priceWrap sup {
     font-size: 14px;
     position: absolute;
     /* margin-top: -37px; */
@@ -621,11 +621,76 @@ footer li a {
 .enter {
      padding: 12px;
 }
-a:active,
-a:visited {
-    text-decoration: none;
-    border: none;
-    outline: none;
+.basket-detail {
+    border-spacing: 4px;
+    border: 1px solid #6BC6B3;
+    background: rgba(255, 255, 255, 0.5);
+    width: 100%;
+}
+.basket-detail tr {
+
+}
+.basket-detail td {
+    padding: 10px;
+    border: 1px solid #6BC6B3;
+}
+.single-img-price {
+    color: red;
+    
+    font-weight: 700;
+    width: 100px;
+    text-align: center;
+}
+.single-img-price > span {
+    font-size: 36px;
+    display: inline-block;
+    text-align: center;
+}
+.basket-step-1 {
+    width: 520px;
+}
+.total-price-wrap {
+    margin: 20px 0;
+
+}
+.total-word {
+    float: left;
+    font-weight: 900;
+    text-transform: capitalize;
+    line-height: 54px;
+}
+.total-price {
+    float: right;
+    font-weight: bold;
+    color: red;
+}
+.green-button,
+.back-button {
+    background-color: #6CC7B4;
+    border-bottom: 3px solid #6DBACB;
+    border-radius: 20px;
+    padding: 5px 25px;
+    display: inline-block;
+    color: black;
+}
+.continue-button {
+    background: #18BDC3;
+    border-bottom: 3px solid #3195B2;
+    border-radius: 20px;
+    padding: 5px 25px;
+    display: inline-block;
+    color: black;
+}
+#totalPrice {
+    font-size: 36px;
+}
+td.img-count {
+    width: 180px;
+    text-align: center;
+}
+td.img-count input {
+    width: 70px;
+    
 }
 /* ==========================================================================
    Helper classes
@@ -661,6 +726,8 @@ a:visited {
 }
 .overflow-hidden {
     overflow: hidden;
+    vertical-align: middle;
+    /* display: table-cell; */
 }
 .overflow-hidden .left {
     min-height: 107px;

@@ -13,10 +13,10 @@ Yii::app()->clientScript->registerScriptFile('/js/draggablePhotos.js');
         <div class="left basket-cost">
             <p class="green-text">Распечатать ваши замечательные фотографии</p>
             <p class="white-text">будет стоить</p>
-            <div id="price" class="relative">
-                10<sup>грн.</sup>
+            <div id="priceWrap" class="relative">
+                <span id="price"><?=$sum?></span><sup>грн.</sup>
             </div>
-            <a class="print-button" href="#">печатать их</a>
+            <a class="print-button" href="<?=Yii::app()->createUrl('order/orderTemp/basket')?>">печатать их</a>
         </div>
         <div class="left all-photos-thumbs">
             <?php
@@ -26,7 +26,7 @@ Yii::app()->clientScript->registerScriptFile('/js/draggablePhotos.js');
             );
             if(!Yii::app()->user->isGuest)
                 $attr['user_id'] = Yii::app()->user_id;
-            $model = OrderTemp::model()->findAllByAttributes($attr);
+            $model = OrderTemp::model()->resent()->findAllByAttributes($attr);
 //            CVarDumper::dump($model, 5,true);
             ?>
             <?php foreach($model as $photo):?>

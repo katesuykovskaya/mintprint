@@ -134,4 +134,19 @@ class OrderTemp extends CActiveRecord
         }
         return true;
     }
+
+    public static function CollectPrice($price) {
+        $connection = Yii::app()->db;
+        $sql = 'select sum(img_count) as sum from '.self::tableName().' where session_id = "'.Yii::app()->session->sessionID.'"';
+        $command = $connection->createCommand($sql);
+        return $price * $command->queryScalar();
+    }
+
+    public function resent()
+    {
+        $this->getDbCriteria()->mergeWith(array(
+            'order'=>'id DESC',
+        ));
+        return $this;
+    }
 }

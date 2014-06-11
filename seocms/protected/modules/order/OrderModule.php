@@ -2,11 +2,13 @@
 
 class OrderModule extends CWebModule
 {
+    public $config;
+
 	public function init()
 	{
 		// this method is called when the module is being created
 		// you may place code here to customize the module or the application
-
+        $this->config = include(dirname(__FILE__).'/config/config.php');
 		// import the module-level models and components
 		$this->setImport(array(
 			'order.models.*',

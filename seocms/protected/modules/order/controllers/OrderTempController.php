@@ -14,7 +14,7 @@ class OrderTempController extends Controller
 	public function filters()
 	{
 		return array(
-			'accessControl', // perform access control for CRUD operations
+//			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
@@ -59,7 +59,8 @@ class OrderTempController extends Controller
             if(isset($_POST['OrderTemp'])) {
                 $model->attributes=$_POST['OrderTemp'];
                 if($model->save()) {
-                    die(json_encode(array('res'=>true, 'id'=>$model->id)));
+                    $singlePrice = $this->module->config['price'];
+                    die(json_encode(array('res'=>true, 'id'=>$model->id, 'sum'=>OrderTemp::CollectPrice($singlePrice))));
                 }
                 die(json_encode(array('res'=>false, 'reason'=>'not valid (kate message)')));
             }
@@ -77,6 +78,23 @@ class OrderTempController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
+        if(Yii::app()->request->isAjaxRequest) {
+            if(isset($_POST['OrderTemp']['img_count'])) {
+                $model->attributes=$_POST['OrderTemp'];
+                if($model->save(true, array('img_count'))) {
+                    $config = $this->module->config;
+                    die(json_encode(array(
+                        'res' => true,
+                        'total' => OrderTemp::CollectPrice($config['price']),
+                        'singleSum' => $model->img_count * $config['price']
+                    )));
+                }
+                else
+                    die(json_encode(array('res'=>false, 'reason'=>'Fail save')));
+            }
+            else
+                die(json_encode(array('res'=>false, 'reason'=>'Не задано количество фотографий')));
+        }
 
 		if(isset($_POST['OrderTemp']))
 		{
@@ -107,6 +125,8 @@ class OrderTempController extends Controller
                 unlink($img_url);
                 unlink($thumb_url);
             }
+            $singlePrice = $this->module->config['price'];
+            die (json_encode(array('res'=>true, 'sum' => OrderTemp::CollectPrice($singlePrice))));
         }
 
 
@@ -118,12 +138,20 @@ class OrderTempController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
+	public function actionBasket()
 	{
-		$dataProvider=new CActiveDataProvider('OrderTemp');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+        $this->layout = '//layouts/no-bg';
+        $attr = array(
+            'session_id' => Yii::app()->session->sessionID,
+        );
+        if(!Yii::app()->user->isGuest)
+            $attr['user_id'] = Yii::app()->user_id;
+        $models = OrderTemp::model()->findAllByAttributes($attr);
+        $config = $this->module->config;
+        $this->render('basket', array(
+            'models'=>$models,
+            'config'=>$config
+        ));
 	}
 
 	/**

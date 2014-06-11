@@ -28,7 +28,12 @@ class SiteController extends Controller
         if(isset($_GET['token']) && isset($_GET['auth'])) {
             Yii::app()->session[$_GET['auth'].'_token'] = $_GET['token'];
         }
-        $this->render('index');
+        Yii::import('application.modules.order.models.OrderTemp');
+        $orderConf = require(Yii::getPathOfAlias('application.modules.order.config.config').'.php');
+        $sum = OrderTemp::CollectPrice($orderConf['price']);
+        $this->render('index', array(
+            'sum'=>$sum
+        ));
 	}
 
     public function actionEdit() {
@@ -80,7 +85,13 @@ class SiteController extends Controller
             );
 
             if($model->save()) {
-                $result =  array('success'=>true,'originalPath'=> $path . $result['filename'] . '.' . $result['ext'], 'iconPath' =>$path . $result['filename'] . 'Icon'. '.' . $result['ext'], 'id'=>$model->id);
+                $config = require(Yii::getPathOfAlias('application.modules.order.config.config').'.php');
+                $result =  array(
+                    'success'=>true,
+                    'originalPath'=> $path . $result['filename'] . '.' . $result['ext'],
+                    'iconPath' =>$path . $result['filename'] . 'Icon'. '.' . $result['ext'],
+                    'id'=>$model->id,
+                    'sum'=>OrderTemp::CollectPrice($config['price']));
             }
             else{
                 $result = array('error'=> 'Could not save uploaded file.' .

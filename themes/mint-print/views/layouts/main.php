@@ -12,9 +12,6 @@
     <title></title>
     <link rel="stylesheet" href="/css/main.css"/>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
-    <!--    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">-->
-    <!--    <script src="//code.jquery.com/jquery-1.10.2.js"></script>-->
-    <!--    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>-->
 </head>
 <body>
     <div class="header-and-content-wrap">
@@ -30,7 +27,7 @@
                 </menu>
                 <div class="right-buttons">
                     <a id="profile" class="profile" href="#"></a>
-                    <a id="basket" class="basket" href="#"></a>
+                    <a id="basket" class="basket" href="<?=Yii::app()->createUrl('order/orderTemp/basket')?>"></a>
                 </div>
             </div>
             <div class="header-bg"></div>
