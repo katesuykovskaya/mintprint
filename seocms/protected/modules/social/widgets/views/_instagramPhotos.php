@@ -11,6 +11,7 @@
     foreach($data as $val): ?>
         <a class="image-wrap">
             <img src="<?=$val['images']['thumbnail']['url']?>" data-original="<?=$val['images']['standard_resolution']['url']?>"/>
+            <div class="add-photo">+<span>добавить</span></div>
         </a>
     <?php endforeach;
     if(!empty($photos['pagination'])):?>

@@ -16,6 +16,7 @@ $(document).ready(function(){
     $(".my-viewport").on('click', '.image-wrap',  function(e){
         e.preventDefault();
         var img = $(this).find('img').clone();
+        img[0].setAttribute('data-thumb', img.attr('src'));
         SendAjax(img);
         var newImg = createPhoto(img);
 
@@ -38,10 +39,10 @@ $(document).ready(function(){
             url: '/order/orderTemp/delete',
             type: 'post',
             data: {
-                'OrderTemp[img_url]': $(this).parent().find('img').attr('data-original'),
-                'OrderTemp[thumb_url]': $(this).parent().find('img').attr('src'),
-                'OrderTemp[type]': $(this).parent().find('img').attr('data-type'),
-                'OrderTemp[id]': $(this).attr('data-id')
+                'OrderTemp[img_url]': $(this).parent().find('img').data('original'),
+                'OrderTemp[thumb_url]': $(this).parent().find('img').data('tnumb'),
+                'OrderTemp[type]': $(this).parent().find('img').data('type'),
+                'OrderTemp[id]': $(this).data('id')
             },
             success: function(response) {
 //                console.log(response);
@@ -63,11 +64,13 @@ function ajaxLoadPhoto(originPath, iconPath, id)
 {
     var img = document.createElement("img");
     img.setAttribute("src", iconPath);
+    img.setAttribute("data-thumb", iconPath);
     img.setAttribute("data-original", originPath);
     img.setAttribute("data-type", 'upload');
     img.onload = function() {
         var newImg = createPhoto($(img));
         $(newImg).find('.remove').attr('data-id', id);
+        $(newImg).find('.photo')[0].setAttribute('href', '/order/orderTemp/update?id='+id);
         $('.all-photos-thumbs').prepend(newImg);
     };
     if($(".all-photos-thumbs > div:not(div.full)").length > 3)
@@ -119,13 +122,17 @@ function createPhoto(img)
 function getImgSize(imgSrc){
     return '{"width":'+imgSrc[0].width+',"height":'+imgSrc[0].height+'}';
 }
+
 function SendAjax(img) {
+
     $.ajax({
         url: '/order/orderTemp/create',
         type: 'post',
         data: {
             'OrderTemp[img_url]': img.data('original'),
-            'OrderTemp[thumb_url]': img.attr('src')
+            'OrderTemp[thumb_url]': img.attr('src'),
+            'OrderTemp[thumb_width]': img[0].naturalWidth,
+            'OrderTemp[thumb_height]': img[0].naturalHeight
         },
         success: function(response) {
             try {

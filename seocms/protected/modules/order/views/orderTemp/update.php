@@ -30,9 +30,13 @@ Yii::app()->clientScript->registerCssFile('/js_plugins/cropper/cropper.css');
 
         $(document).on('click', '#saveAndCrop', function(e){
             e.preventDefault();
+
             var data = $('.cropper').cropper("getData");
             var loader = $(this).next();
             loader.css('display', 'inline-block');
+
+            var originalWidth = $('.cropper-container > img')[0].naturalWidth;
+
             $.ajax({
                 url: '<?=Yii::app()->createUrl("order/orderTemp/update", array("id"=>$model->id))?>',
                 type: 'post',
@@ -40,7 +44,8 @@ Yii::app()->clientScript->registerCssFile('/js_plugins/cropper/cropper.css');
                     'OrderTemp[img_width]': data.width,
                     'OrderTemp[img_height]': data.height,
                     'OrderTemp[img_x]': data.x1,
-                    'OrderTemp[img_y]': data.y1
+                    'OrderTemp[img_y]': data.y1,
+                    'OrderTemp[original_width]': originalWidth
                 },
                 success: function(response) {
                     loader.css('display', 'none');
