@@ -50,7 +50,11 @@ class OrderTemp extends CActiveRecord
 			// Please remove those attributes that should not be searched.
 			array('id, session_id, user_id, img_url, thumb_url, img_count, img_width, img_height, img_x, img_y', 'safe', 'on'=>'search'),
             array('type', 'in', 'range'=>array('social', 'upload'), 'allowEmpty' => true),
-            array('type', 'default', 'value'=>'social')
+            array('type', 'default', 'value'=>'social'),
+            array('original_width', 'default', 'value'=>0),
+            array('thumb_width', 'default', 'value'=>0),
+            array('thumb_height', 'default', 'value'=>0)
+
 		);
 	}
 
