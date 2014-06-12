@@ -92,18 +92,14 @@ class OrderTempController extends Controller
                 else
                     die(json_encode(array('res'=>false, 'reason'=>'Fail save')));
             }
-            else
-                die(json_encode(array('res'=>false, 'reason'=>'Не задано количество фотографий')));
+            elseif(isset($_POST['OrderTemp'])) {
+                $model->attributes=$_POST['OrderTemp'];
+                if($model->save())
+                    die(json_encode(array('res'=>true)));
+                else
+                    die(json_encode(array('res'=>false)));
+            }
         }
-
-		if(isset($_POST['OrderTemp']))
-		{
-			$model->attributes=$_POST['OrderTemp'];
-			if($model->save())
-				die(json_encode(array('res'=>true)));
-            else
-                die(json_encode(array('res'=>false)));
-		}
 
 		$this->render('update',array(
 			'model'=>$model,
@@ -118,7 +114,8 @@ class OrderTempController extends Controller
 	public function actionDelete()
 	{
         if(Yii::app()->request->isAjaxRequest) {
-            $this->loadModel($_POST['OrderTemp']['id'])->delete();
+            $model = $this->loadModel($_POST['OrderTemp']['id']);
+            $model->delete();
             if(!empty($_POST['OrderTemp']['type']) && $_POST['OrderTemp']['type'] == 'upload'){
                 $img_url = str_replace('http://' . $_SERVER['SERVER_NAME'], Yii::getPathOfAlias('webroot'), $_POST['OrderTemp']['img_url']);
                 $thumb_url = str_replace('http://' . $_SERVER['SERVER_NAME'], Yii::getPathOfAlias('webroot'), $_POST['OrderTemp']['thumb_url']);

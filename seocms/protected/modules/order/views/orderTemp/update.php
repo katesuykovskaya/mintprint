@@ -49,7 +49,7 @@ Yii::app()->clientScript->registerCssFile('/js_plugins/cropper/cropper.css');
                 },
                 success: function(response) {
                     loader.css('display', 'none');
-                    location.href= "/";
+                    //location.href= "/";
                 }
             });
         });

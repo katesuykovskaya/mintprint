@@ -11,17 +11,22 @@
 <section class="content">
     <div class="basket-step-1">
         <table class="basket-detail">
-            <?php foreach($models as $model):
+            <?php
+            $counter = 0;
+            foreach($models as $model):
                 /**
                  * @var $model OrderTemp
                  */
+                $info = $model->cropStyle;
                 ?>
                 <tr id="orderTemp<?=$model->id?>">
-                    <td><?=CHtml::image($model->thumb_url, '')?></td>
+                    <td>
+                        <div class="photo"><?=CHtml::image($info['src'], null, array('style'=>$info['style']))?></div>
+                        <p class="capitalize">Фото №<?=++$counter?></p>
+                    </td>
                     <td class="img-count">
                         <form action="#" method="post">
                             <input type="text" class="img-count" data-id="<?=$model->id?>" data-url="<?=Yii::app()->createUrl("order/orderTemp/update", array("id"=>$model->id))?>" name="OrderTemp[img_count]" value="<?=$model->img_count?>"/>
-<!--                            <input type="hidden" name="OrderTemp[id]"/>-->
                         </form>
                     </td>
                     <td>

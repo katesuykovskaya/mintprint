@@ -210,7 +210,7 @@ header menu a {
     text-align: center;
     position: relative;
 }
-.photo-wrap .photo {
+.photo {
     height: 97px;
     width: 97px;
     display: inline-block;
@@ -711,7 +711,9 @@ td.img-count input {
 /*float: none;*/
 /*clear: both;*/
 /*}*/
-
+.capitalize {
+    text-transform: capitalize;
+}
 .hidden {
     display: none !important;
     visibility: hidden;

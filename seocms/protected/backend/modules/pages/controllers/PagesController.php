@@ -453,6 +453,7 @@ class PagesController extends Controller
                          * page translation instance was created, it will be created after page save automatically,
                          * but not during adding new language support
                          * */
+                        echo CVarDumper::dump($model, 7, true);
                         if($model->translation === null)
                             $model->translation = new PagesTranslate;
                         $label = CHtml::activeLabel($model->translation, $field['label']);

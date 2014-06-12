@@ -69,7 +69,12 @@ class Vk {
             ];
             $apiUrl = 'https://api.vk.com/method/';
             $req = $vk::get($apiUrl.'photos.getAlbums?'.urldecode(http_build_query(array_merge($photoParams, $params))).'&access_token='.$token);
-            $data = $req->json()['response'];
+            $response = $req->json();
+            if(isset($response['error'])) {
+                unset(Yii::app()->session['vk_token']);
+                return null;
+            }
+            $data = $response['response'];
             return $data;
         } catch(Exception $e) {
             echo $e->getMessage();

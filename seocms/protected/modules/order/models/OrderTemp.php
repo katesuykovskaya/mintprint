@@ -153,4 +153,42 @@ class OrderTemp extends CActiveRecord
         ));
         return $this;
     }
+
+    public function getCropStyle() {
+        $photo = &$this;
+        if($photo['original_width']) {
+            $width = 97 / $photo['img_width'] * 100;
+            $width = $photo['original_width'] * $width / 100;
+
+            $marginTop = $photo['img_y'] / $photo['original_width'] * 100;
+            $marginTop = $width * $marginTop / 100;
+
+            $marginLeft = $photo['img_x'] / $photo['original_width'] * 100;
+            $marginLeft = $width * $marginLeft / 100;
+
+            $style = 'width:'.$width.'px;margin-top: -'.$marginTop.'px;margin-left:-'.$marginLeft.'px;';
+            $src = $photo['img_url'];
+        }
+        else {
+            if($photo['thumb_width'] == $photo['thumb_height'])
+            {
+                $style = 'width: 97px;height: 97px;';
+            }
+            else if($photo['thumb_width'] > $photo['thumb_height'])
+            {
+                $marginLeft = round(($photo['thumb_width'] - 97) / 2);
+                $style = 'height: 97px;margin-left: -'.$marginLeft.'px;';
+            }
+            else if($photo['thumb_width'] < $photo['thumb_height'])
+            {
+                $marginTop = round(($photo['thumb_height'] - 97) / 2);
+                $style = 'width: 97px;margin-top: -'.$marginTop.'px;';
+            }
+            $src = $photo['thumb_url'];
+        }
+        return array(
+            'style' => $style,
+            'src'   => $src
+        );
+    }
 }
