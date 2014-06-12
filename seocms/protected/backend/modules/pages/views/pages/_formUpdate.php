@@ -14,18 +14,16 @@ Yii::app()->clientScript->registerCssFile('/css/lightbox.css');
     'htmlOptions'=>array('enctype'=>'multipart/form-data'),
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
-	<?php echo $form->errorSummary($model);
-        
-          echo CHtml::label('Parent', 'parent');
-            $listdata = CHtml::listData(
-                            StaticPages::model()->with(array('translation',array(
-                                'joinType'=>'LEFT JOIN',
-                                'on'=>'translation.t_lang=:lang',
-                                'params'=>array(':lang'=>Yii::app()->language),
-                            )))->findAll(),'translation.page_id','translation.t_title');
-            echo CHtml::dropDownList('parent', 'parent', $listdata,array('selected'=>$model->parent()->find()));
+<?php
+    echo CHtml::label(Yii::t('backend','Родитель'), 'parent');
+    $listdata = CHtml::listData(
+                StaticPages::model()->with(array('translation',array(
+                    'joinType'=>'LEFT JOIN',
+                    'on'=>'translation.t_lang=:lang',
+                    'params'=>array(':lang'=>Yii::app()->language),
+                )))->findAll(),'translation.page_id','translation.t_title');
+//echo CVarDumper::dump($listdata, 7, true);
+    echo CHtml::dropDownList('parent', 'parent', $listdata,array('selected'=>$model->parent()->find(),'class'=>'input-xxlarge'));
         
     $this->widget('bootstrap.widgets.TbTabs', array(
         'type'=>'tabs', // 'tabs' or 'pills'
@@ -37,19 +35,17 @@ Yii::app()->clientScript->registerCssFile('/css/lightbox.css');
         $imageParams =   array(
             'resize' => array('width' => 100, 'height' => 100,'master'=>EasyImage::RESIZE_NONE),
             'background' => '#ffffff',
-//            'type' => 'jpg',
             'savePath'=>'/uploads/StaticPages/'.$model->page_id.'/',
         );
-        $imageName = '/uploads/StaticPages/'.$model->page_id.DIRECTORY_SEPARATOR.$model->img;
-
+        $imageName = Yii::getPathOfAlias('webroot').'/uploads/StaticPages/'.$model->page_id.DIRECTORY_SEPARATOR.$model->img;
         echo '<a href="/uploads/StaticPages/'.$model->page_id.DIRECTORY_SEPARATOR.$model->img.'" data-lightbox="'.$model->img.'">
-                            '.Yii::app()->easyImage->thumbOf($imageName,$imageParams).'</a>';
+                            '.ZHtml::thumbnail($imageName,$imageParams).'</a>';
 
         echo '<span class="clearfix"></span>';
         echo CHtml::link(Yii::t('backend','Удалить').' <i class="icon-remove"></i>',
                         '#',array(
                         'id'=>'delImg','data-id'=>$model->page_id,
-                        'data-url'=>$this->createUrl('/backend/pages/pages/delImage',array('language'=>Yii::app()->language)),
+                        'data-url'=>$this->createUrl('backend/pages/pages/delImage',array('language'=>Yii::app()->language)),
                         'data-name'=>Yii::app()->easyImage->getHashedName($imageName,$imageParams,true)
             )
         );
@@ -70,7 +66,7 @@ Yii::app()->clientScript->registerCssFile('/css/lightbox.css');
 <div class="well">
     <h4 class="page-header"><?=Yii::t('backend','Загруженные файлы:')?></h4>
 <?php
-$this->widget('application.backend.modules.attach.widgets.FileWidget');
+    $this->widget('application.backend.modules.attach.widgets.FileWidget');
 ?>
 </div>
 <?php endif?>

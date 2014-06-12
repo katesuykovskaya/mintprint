@@ -55,13 +55,16 @@ class UploadHandler
         if($this->setFileSession()){
             $fileSession = Yii::app()->session['files'];
             $this->options = array(
-                'script_url' => Yii::app()->request->hostInfo.'/backend/attach/default/create/',
+//            'script_url' => $this->get_full_url().'/backend/attach/default/create/',
+                'script_url' => 'http://twoends.home/backend/attach/default/create/',
+//                'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/uploads/',
                 'upload_dir' => $fileSession['files']['tempUrl'],
+//                'upload_url' => $this->get_full_url().'/uploads/',
                 'upload_url' => $fileSession['files']['webTmp'],
 
                 /*ability to create own dir structure*/
                 'user_dirs' => false,
-                /* если юзать параметры из сесссии напрямую - надо убирать true */
+    /* если юзать параметры из сесссии напрямую - надо убирать true */
 
                 /* protected function get_user_path() edited to make own path */
                 'content_path' => $fileSession['files']['webTmp'],
@@ -150,11 +153,11 @@ class UploadHandler
 //                    'max_width' => 800,
 //                    'max_height' => 600
 //                ),
-//                    'small' => array(
-//                        'upload_dir' =>$fileSession['files']['tempUrl'].'small/',
-//                        'max_width' => 300,
-//                        'max_height' => 150
-//                    ),
+                    'small' => array(
+                        'upload_dir' =>$fileSession['files']['tempUrl'].'small/',
+                        'max_width' => 300,
+                        'max_height' => 150
+                    ),
                     'thumbnail' => array(
                         // Uncomment the following to use a defined directory for the thumbnails
                         // instead of a subdirectory based on the version identifier.
@@ -166,7 +169,6 @@ class UploadHandler
                         // Uncomment the following to force the max
                         // dimensions and e.g. create square thumbnails:
                         'upload_dir'=>$fileSession['files']['tempUrl'].'thumbnail',
-                        'upload_url' => '/thumbnail/',
                         'crop' => true,
                         'max_width' => 80,
                         'max_height' => 80
@@ -246,7 +248,7 @@ class UploadHandler
 //            else
                 return $this->get_user_id().'/';
         }
-        return '/';
+        return '';
     }
 
     /**
@@ -292,7 +294,7 @@ class UploadHandler
         if (empty($version)) {
             $version_path = '';
         } else {
-            $version_url = rtrim($_SESSION['files']['files']['webUrl'],'/').@$this->options['image_versions'][$version]['upload_url'];
+            $version_url = @$this->options['image_versions'][$version]['upload_url'];
             if ($version_url) {
                 return $version_url.$this->get_user_path().rawurlencode($file_name);
             }

@@ -1,7 +1,7 @@
 <div class="row">
     <ul class="breadcrumb span6">
-        <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend',['language'=>Yii::app()->language]))?></li>
-        <li><span class="divider">/</span><?=CHtml::link(Yii::t('backend','Меню сайта'),$this->createUrl('/backend/menugen/sitemenu/index',['language'=>Yii::app()->language]))?></li>
+        <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend',array('language'=>Yii::app()->language)))?></li>
+        <li><span class="divider">/</span><?=CHtml::link(Yii::t('backend','Меню сайта'),$this->createUrl('backend/menugen/sitemenu/index',array('language'=>Yii::app()->language)))?></li>
         <li><span class="divider">/</span><?=$model->translation[Yii::app()->language]['t_text']?></li>
     </ul>
 </div>
@@ -18,7 +18,7 @@
         <?php
             echo CHtml::link(
                 Yii::t('backend','Создать'),
-                $this->createUrl('/backend/menugen/sitemenu/createItem',array('language'=>Yii::app()->language,'type'=>$type)),
+                $this->createUrl('backend/menugen/sitemenu/createItem',array('language'=>Yii::app()->language,'type'=>$type)),
                 array('class'=>'btn btn-success')
             );
         ?>
@@ -181,7 +181,7 @@
         if(confirm("<?=Yii::t('backend','Это действие изменит статус текущего пункта меню и всех дочерних пунктов!')?>")){
             $.ajax({
                 type:"POST",
-                url:"<?=$this->createUrl('/backend/menugen/sitemenu/toglemenu',array('language'=>Yii::app()->language))?>",
+                url:"<?=$this->createUrl('backend/menugen/sitemenu/toglemenu',array('language'=>Yii::app()->language))?>",
                 data:{
                     state:$(this).data('state'),
                     itemid:$(this).data('source_id'),
@@ -253,7 +253,7 @@
 
             $.ajax({
                 type:"POST",
-                url:"<?=$this->createUrl('/backend/menugen/sitemenu/remove');?>",
+                url:"<?=$this->createUrl('backend/menugen/sitemenu/remove');?>",
                 data:{
                     id : $(this).data('id'),
                     token: "<?=Yii::app()->request->csrfToken?>"

@@ -18,7 +18,24 @@ class ZHtml extends CHtml
                 $values[$value]=Yii::t('backend',$value);
         }
         return $values;
-    } 
+    }
+
+    public static function thumbnail($file, $params = array(), $htmlOptions = array()) {
+        try {
+            if(empty($file)) throw new CException('empty');
+            if(!is_file($file)) throw new CException('no file');
+            $image = Yii::app()->easyImage->thumbOf($file, $params, $htmlOptions);
+            return $image;
+        }
+        catch(CException $e) {
+            $file = Yii::getPathOfAlias('webroot').'/img/no-image.gif';
+            return Yii::app()->easyImage->thumbOf($file, array(
+                "resize" => array("width"=>100,"master"=>EasyImage::RESIZE_WIDTH),
+                "savePath"=>"/img/",
+                "quality" => 80,
+            ));
+        }
+    }
 }
 
 

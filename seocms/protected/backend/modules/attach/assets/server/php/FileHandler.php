@@ -1368,9 +1368,9 @@ class FileHandler
             $storage = $this->options['storage'];
             if($storage){
                 $fileSession = Yii::app()->session['files'];
-                $sql = "select path, file_name,hidden,attachment_id,position from Attachments
+                $sql = "select path,hidden,attachment_id,position from Attachments
                         where attachment_entity='".$fileSession['files']['entity']."'
-                        AND entity_id = '".$fileSession['files']['entity_id']."' AND content_type='attach'
+                        AND entity_id = '".$fileSession['files']['entity_id']."'
                         order by position";
                 $result = Yii::app()->db->createCommand($sql)->queryAll();
 
@@ -1379,9 +1379,8 @@ class FileHandler
                     $item = new StdClass;
                     $item->attachment_id = $v['attachment_id'];
                     $item->position = $v['position'];
-                    $item->name = $v['file_name'];
-                    $item->size = is_file($this->options['upload_dir'].$v['path']) ? filesize($this->options['upload_dir'].$v['path']) : 0;
-                    $item->path = $v['path'];
+                    $item->name = $v['path'];
+                    $item->size = filesize($this->options['upload_dir'].$v['path']);
                     if(!empty($this->options['image_versions'])){
                         foreach($this->options['image_versions'] as $key=>$version){
                             if(!empty($key))
@@ -1475,7 +1474,7 @@ class FileHandler
             $file_path = $this->get_upload_path($file_name);
             $success = is_file($file_path) && $file_name[0] !== '.' && unlink($file_path);
 //            Attachment::model()->deleteByAttributes(array('path'=>$file_name,'entity_id'=>$fileSession['entity_id']));
-            $sql = "delete from Attachments where file_name='".$file_name."' AND entity_id='".$fileSession['files']['entity_id']."'";
+            $sql = "delete from Attachments where path='".$file_name."' AND entity_id='".$fileSession['files']['entity_id']."'";
             Yii::app()->db->createCommand($sql)->execute();
             if ($success) {
                 foreach($this->options['image_versions'] as $version => $options) {

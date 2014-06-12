@@ -7,8 +7,7 @@ class DefaultController extends Controller
     public function filters()
     {
         return array(
-//            'rights'
-            array('auth.filters.AuthFilter'),
+            'rights'
         );
     }
 

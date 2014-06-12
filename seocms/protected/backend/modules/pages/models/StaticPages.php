@@ -66,7 +66,7 @@ class StaticPages extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-            'translation'=>array(self::HAS_ONE,'PagesTranslate','page_id'),
+            'translation'=>array(self::HAS_MANY,'PagesTranslate','page_id', 'index'=>'t_lang'),
 		);
 	}
 
@@ -115,6 +115,7 @@ class StaticPages extends CActiveRecord
      */
     private function updateMenuUrl($model,$postTitle=null,$language)
     {
+        Yii::import('application.backend.modules.menugen.models.*');
         if($postTitle){
             $menumodel = SitemenuTranslate::model()->findByAttributes(array('t_url'=>$model->t_translit,'t_lang'=>$language));
                 if(isset($menumodel)){
@@ -148,6 +149,7 @@ class StaticPages extends CActiveRecord
                         'fieldType'=>'textField',
                         'value'=>'',
                         'htmlOptions'=>array(
+                            'class'=>'input-xxlarge'
                         ),
                     ),
                     't_desc'=>array(
@@ -155,6 +157,7 @@ class StaticPages extends CActiveRecord
                         'fieldType'=>'textField',
                         'value'=>'',
                         'htmlOptions'=>array(
+                            'class'=>'input-xxlarge'
                         ),
                     ),
                     't_h1'=>array(
@@ -162,6 +165,7 @@ class StaticPages extends CActiveRecord
                         'fieldType'=>'textField',
                         'value'=>'',
                         'htmlOptions'=>array(
+                            'class'=>'input-xxlarge'
                         ),
                     ),
                     't_content'=>array(
@@ -169,8 +173,6 @@ class StaticPages extends CActiveRecord
                         'fieldType'=>'textArea',
                         'value'=>'',
                         'htmlOptions'=>array(
-                            'data-entity'=>'StaticPages',
-                            'data-entityid'=> !$this->isNewRecord ? $this->page_id : null,
                             'class'=>'tinyEditor'
                         ),
                     ),
@@ -179,6 +181,7 @@ class StaticPages extends CActiveRecord
                         'fieldType'=>'textField',
                         'value'=>'',
                         'htmlOptions'=>array(
+                            'class'=>'input-xxlarge'
                         ),
                     ),
                     't_mtitle'=>array(
@@ -186,6 +189,7 @@ class StaticPages extends CActiveRecord
                         'fieldType'=>'textField',
                         'value'=>'',
                         'htmlOptions'=>array(
+                            'class'=>'input-xxlarge'
                         ),
                     ),
                     't_mdesc'=>array(
@@ -193,6 +197,8 @@ class StaticPages extends CActiveRecord
                         'fieldType'=>'textArea',
                         'value'=>'',
                         'htmlOptions'=>array(
+                            'class'=>'input-xxlarge',
+                            'rows'=>6
                         ),
                     ),
                     't_mkeywords'=>array(
@@ -200,6 +206,8 @@ class StaticPages extends CActiveRecord
                         'fieldType'=>'textArea',
                         'value'=>'',
                         'htmlOptions'=>array(
+                            'class'=>'input-xxlarge',
+                            'rows'=>6
                         ),
                     ),
                 ),
@@ -215,14 +223,17 @@ class StaticPages extends CActiveRecord
                 $lang = new PagesTranslate;
                 $lang->page_id = $this->page_id;
                 $lang->t_lang = $language['langcode'];
-
+//                die(CVarDumper::dump($this->translateAttributes, 7, true));
                 foreach($this->translateAttributes as $field) {
                     if($field['label']==='t_translit') {
-                        $phrase = isset($_POST['PagesTranslate']['t_title'][$language['langcode']])
-                            ? Translit::cyrillicToLatin ($_POST['PagesTranslate']['t_title'][$language['langcode']])
+                        $phrase = !empty($_POST['PagesTranslate']['t_translit'][$language['langcode']])
+                            ? $_POST['PagesTranslate']['t_translit'][$language['langcode']] :
+                            isset($_POST['PagesTranslate']['t_title'][$language['langcode']]) ?
+                                Translit::cyrillicToLatin ($_POST['PagesTranslate']['t_title'][$language['langcode']])
                             : null;
+//                        die($phrase);
                         $translit = PagesTranslate::model()->findByAttributes(array('t_translit'=>$phrase))
-                            ? $this->page_id.'-'.$phrase
+                            ? $phrase.'-'.$this->page_id
                             : $phrase;
                         $lang->t_translit = $translit;
                     } else {
@@ -251,13 +262,16 @@ class StaticPages extends CActiveRecord
 
                 foreach($this->translateAttributes as $field) {
                     if($field['label'] ==='t_translit'){
-                        /**
-                         * @todo update menu url
-                         */
-//                        $this->updateMenuUrl($lang,$_POST['t_title'],$language['langcode']);
-                        $lang->t_translit = isset($_POST['t_title'])
-                            ? Translit::cyrillicToLatin ($_POST['t_title'][$language['langcode']])
-                            : null;
+                        $this->updateMenuUrl($lang,$_POST['t_title'],$language['langcode']);
+                        if(!empty($_POST['t_translit'][$language['langcode']])) {
+                            $lang->t_translit = $_POST['t_translit'][$language['langcode']];
+                        }elseif(isset($_POST['t_title'][$language['langcode']])) {
+                            $lang->t_translit = Translit::cyrillicToLatin ($_POST['t_title'][$language['langcode']]);
+                        } else
+                            $lang->t_translit = null;
+//                        $lang->t_translit = isset($_POST['t_title'])
+//                            ? Translit::cyrillicToLatin ($_POST['t_title'][$language['langcode']])
+//                            : null;
                     } else {
                         $lang->$field['label'] = isset($_POST[$field['label']][$language['langcode']])
                             ? $_POST[$field['label']][$language['langcode']]
@@ -315,30 +329,29 @@ class StaticPages extends CActiveRecord
         
     public function selectArray($grid = false)
     {
-         $pageArray = StaticPages::model()->with(array('translation',array(
-                            'joinType'=>'LEFT JOIN',
-                            'on'=>'translation.t_lang=:lang',
-                            'params'=>array(':lang'=>Yii::app()->language),
-                        )))->findAll(
-                                array('order'=>'lft')
-                                );
+        $pageArray = Yii::app()->db->createCommand()
+            ->select()
+            ->from('static_pages')
+            ->leftJoin('translate_pages','static_pages.page_id=translate_pages.page_id')
+            ->where('translate_pages.t_lang=:lang',array(':lang'=>Yii::app()->language))
+            ->order(array('static_pages.lft desc'))
+            ->queryAll();
+
         $optionsArray = array();
 
         $level = 0;
 
-        if(!$grid)
-        {
-            foreach ($pageArray as $page)
-            {
-                    $pageText = "<option value=".$page->translation->page_id.">".str_repeat(' - ', $page->level).$page->translation->t_title."</option>";
-                    $optionsArray[$page->translation->page_id] = $pageText;
-            }
-        } else{
-            foreach ($pageArray as $page)
-            {
-                    $optionsArray[$page->translation->page_id] = str_repeat(' - ', $page->level).$page->translation->t_title;
+        if(!empty($pageArray)){
+            foreach ($pageArray as $key=>$page){
+                if($grid)
+                    $optionsArray[$page['page_id']] = str_repeat(' - ', $page['level']).$page['t_title'];
+                else {
+                    $pageText = "<option value=".$page['page_id'].">".str_repeat(' - ', $page['level']).$page['t_title']."</option>";
+                    $optionsArray[$page['page_id']] = $pageText;
+                }
             }
         }
+
         return $optionsArray;
     }
 

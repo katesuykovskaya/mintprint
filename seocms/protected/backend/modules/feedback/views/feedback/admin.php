@@ -1,6 +1,6 @@
 <div class="row">
     <ul class="breadcrumb span6">
-        <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend',['language'=>Yii::app()->language]))?></li>
+        <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend',array('language'=>Yii::app()->language)))?></li>
         <li><span class="divider">/</span><?=Yii::t('backend','Настройка отправки почты')?></li>
     </ul>
 </div>
@@ -17,35 +17,35 @@
      echo '<br />';
      
      echo CHtml::label(Yii::t('backend','Хост'), 'host');
-     echo CHtml::textField('host',isset($arr['transportOptions']['host']) ? $arr['transportOptions']['host'] : '',['class'=>'input-xxlarge']);
+     echo CHtml::textField('host',isset($arr['transportOptions']['host']) ? $arr['transportOptions']['host'] : '',array('class'=>'input-xxlarge'));
      echo '<br />';
 
      echo CHtml::label(Yii::t('backend','Порт'), 'port');
-     echo CHtml::textField('port',isset($arr['transportOptions']['port']) ? $arr['transportOptions']['port'] : '',['class'=>'input-xxlarge']);
+     echo CHtml::textField('port',isset($arr['transportOptions']['port']) ? $arr['transportOptions']['port'] : '',array('class'=>'input-xxlarge'));
      echo '<br />';
 
      echo CHtml::label(Yii::t('backend','Имя пользователя'), 'username');
-     echo CHtml::textField('username',isset($arr['transportOptions']['username']) ? $arr['transportOptions']['username'] : '',['class'=>'input-xxlarge']);
+     echo CHtml::textField('username',isset($arr['transportOptions']['username']) ? $arr['transportOptions']['username'] : '', array('class'=>'input-xxlarge'));
      echo '<br />';
 
      echo CHtml::label(Yii::t('backend','Пароль'), 'password');
-     echo CHtml::textField('password',isset($arr['transportOptions']['password']) ? $arr['transportOptions']['password'] : '',['class'=>'input-xxlarge']);
+     echo CHtml::textField('password',isset($arr['transportOptions']['password']) ? $arr['transportOptions']['password'] : '',array('class'=>'input-xxlarge'));
      echo '<br />';
 
      echo CHtml::label(Yii::t('backend','Шифрование'), 'encryption');
-     echo CHtml::textField('encryption',isset($arr['transportOptions']['encryption']) ? $arr['transportOptions']['encryption'] : '',['class'=>'input-xxlarge']);
+     echo CHtml::textField('encryption',isset($arr['transportOptions']['encryption']) ? $arr['transportOptions']['encryption'] : '', array('class'=>'input-xxlarge'));
      echo '<br />';
 
      echo CHtml::label(Yii::t('backend','Кодировка'), 'charset');
-     echo CHtml::textField('charset',$arr['charset'],['class'=>'input-xxlarge']);
+     echo CHtml::textField('charset',$arr['charset'],array('class'=>'input-xxlarge'));
      echo '<br />';
 
      echo CHtml::label(Yii::t('backend','Почтовый адрес администратора'), 'adminEmail');
-     echo CHtml::textField('adminEmail',$arr['adminEmail'],['class'=>'input-xxlarge']);
+     echo CHtml::textField('adminEmail',$arr['adminEmail'],array('class'=>'input-xxlarge'));
      echo '<br />';
 
      echo CHtml::label(Yii::t('backend','Группа рассылки'), 'mailGroup');
-     echo CHtml::textArea('mailGroup',implode(';',$arr['mailGroup']),['class'=>'input-xxlarge']);
+     echo CHtml::textArea('mailGroup',implode(';',$arr['mailGroup']),array('class'=>'input-xxlarge'));
      echo '<br />';
 
          $this->widget('bootstrap.widgets.TbTabs', array(
@@ -56,7 +56,7 @@
             echo '<hr />';
 
 
-     echo CHtml::submitButton(Yii::t('backend','Изменить'),['class'=>'btn']);
+     echo CHtml::submitButton(Yii::t('backend','Изменить'), array('class'=>'btn'));
 
      echo CHtml::endForm();
 

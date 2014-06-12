@@ -64,9 +64,9 @@ class Slider extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'img' => Yii::t('backend', 'Изображение'),
-			'show' => Yii::t('backend', 'Показывать'),
-			'move' => 'Move',
+			'img' => 'Изображение',
+			'show' => 'Показывать',
+			'move' => 'Порядок',
 		);
 	}
 
@@ -91,7 +91,7 @@ class Slider extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
 //            'pagination'=>array(
-//                'route'=>Yii::app()->urlManager->createUrl('/backend/slider/slider/admin',array('language'=>Yii::app()->language)),
+//                'route'=>Yii::app()->urlManager->createUrl('backend/slider/slider/admin',array('language'=>Yii::app()->language)),
 //                'pageVar'=>'page',
 //                'params'=>isset($_GET['url']) ? array('url'=>urlencode($_GET['url'])) : array(),
 //                'pagesize'=>10,

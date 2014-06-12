@@ -19,7 +19,7 @@ $type = 'mainmenu';
         <?php
             echo CHtml::link(
                 Yii::t('backend','Создать'),
-                $this->createUrl('/backend/menugen/sitemenu/createItem',array('language'=>Yii::app()->language)),
+                $this->createUrl('backend/menugen/sitemenu/createItem',array('language'=>Yii::app()->language)),
                 array('class'=>'btn btn-success')
             );
         ?>
@@ -192,7 +192,7 @@ $type = 'mainmenu';
         var curRow = $(this).closest("tr");
         $.ajax({
             type:"POST",
-            url:"<?=$this->createUrl('/backend/menugen/sitemenu/toglemenu',array('language'=>Yii::app()->language))?>",
+            url:"<?=$this->createUrl('backend/menugen/sitemenu/toglemenu',array('language'=>Yii::app()->language))?>",
             data:{
                 state:$(this).data('state'),
                 itemid:$(this).data('source_id'),
@@ -260,7 +260,7 @@ $type = 'mainmenu';
 
         $.ajax({
             type:"POST",
-            url:"<?=$this->createUrl('/backend/menugen/sitemenu/remove');?>",
+            url:"<?=$this->createUrl('backend/menugen/sitemenu/remove');?>",
             data:{
                 id : $(this).data('id'),
                 token: "<?=Yii::app()->request->csrfToken?>"

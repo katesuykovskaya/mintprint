@@ -48,8 +48,7 @@ class DefaultController extends Controller
     public function filters()
     {
         return array(
-//            'rights',
-            array('auth.filters.AuthFilter'),
+            'rights',
         );
     }
 
@@ -65,7 +64,7 @@ class DefaultController extends Controller
 
     public function loadModel($id)
     {
-        $model = Usersmenu::model()->findByPk($id);
+        $model=  Usersmenu::model()->findByPk($id);
         if($model===null)
             throw new CHttpException(404,'The requested page does not exist.');
         return $model;
@@ -75,8 +74,8 @@ class DefaultController extends Controller
     {
         $role = isset($_POST['dropname']) ? $_POST['dropname'] : 'no POST[dropname]';
 
-        if($role) {
-
+        if($role)
+        {
             $new = $this->createAuthArray($role);
             $menuArray = Usersmenu::model()->findAllByAttributes(array('role'=>$role));
             $visArray = Usersmenu::model()->findAllByAttributes(array('role'=>$role,'visible'=>1));
@@ -84,19 +83,24 @@ class DefaultController extends Controller
             $workArray = array();
             $visibleArray = array();
 
-            foreach($menuArray as $obj) {
+            foreach($menuArray as $obj)
+            {
                     $workArray[] = $obj->text;
             }
 
-            foreach($visArray as $obj2) {
+            foreach($visArray as $obj2)
+            {
                 $visibleArray[] = $obj2->text;
             }
 
             echo '<ul>';
-            foreach($new as $key=>$action) {
+            foreach($new as $key=>$action)
+            {
 
-                if(in_array($action,$workArray)) {
-                    if(in_array($action,$visibleArray)) {
+                if(in_array($action,$workArray))
+                {
+                    if(in_array($action,$visibleArray))
+                    {
                         echo '<li>';
                             echo CHtml::checkBox($action,true,array('value'=>$action));
                             echo CHtml::link(' <i class="icon-thumbs-up"></i> ',array('#'),array(
@@ -151,10 +155,10 @@ class DefaultController extends Controller
             if($translate->save(false))
             {
                 Yii::app()->user->setFlash('menu_success',Yii::t('backend','Saved '.$source));
-                $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+                $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
             } else {
                 Yii::app()->user->setFlash('menu_error',Yii::t('backend','Not saved, error occured!'));
-                $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+                $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
             }
         } else {
             $action = isset($_POST['phrase']) ? $_POST['phrase'] : null;
@@ -181,36 +185,18 @@ class DefaultController extends Controller
 
     private function createAuthArray($role)
     {
-//        $authorizer = Rights::getAuthorizer();
-//        $permisions = $authorizer->getPermissions($role);
+        $authorizer = Rights::getAuthorizer();
+        $permisions = $authorizer->getPermissions($role);
         $pattern ='^[a-z,A-Z]\.[a-z,A-Z]?^';
-//        foreach ($permisions as $key=>$value) {
-//            if(preg_match($pattern, $key)) {
-//                $this->taskArray[] = $key;
-//            } else {
-//                $this->taskArray = $this->createAuthArray($key);
-//            }
-//        }
-
-//        $testArr = [];
-        $permissions = Yii::app()->db->createCommand()
-            ->select('child')
-            ->from('AuthItemChild')
-            ->where('parent=:parent',[':parent'=>$role])
-            ->queryAll();
-
-//        echo CVarDumper::dump($permissions,5,true);
-
-        if(!empty($permissions))
-            foreach($permissions as $key=>$value) {
-                $this->taskArray[] = $value['child'];
-                if(preg_match($pattern, $value['child'])) {
-                    unset($permissions[$key]);
-                } else {
-                    $this->taskArray = $this->createAuthArray($value['child']);
-                }
+        foreach ($permisions as $key=>$value)
+        {
+            if(preg_match($pattern, $key))
+            {
+                $this->taskArray[] = $key;
+            } else {
+                $this->taskArray = $this->createAuthArray($key);
             }
-
+        }
         return array_unique($this->taskArray);
     }
 
@@ -338,7 +324,7 @@ class DefaultController extends Controller
                 }
             }
 
-            $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+            $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
         }
     }
 
@@ -347,7 +333,7 @@ class DefaultController extends Controller
         If(!empty($model))
         {
             Yii::app()->user->setFlash('menu_error',Yii::t('backend','Menu already exists'));
-            $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+            $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
         }
         $menuArr = $this->createAuthArray($role);
 
@@ -366,7 +352,7 @@ class DefaultController extends Controller
         }
 
         Yii::app()->user->setFlash('menu_success', Yii::t('backend','Menu was created!'));
-        $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+        $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
     }
 
     private function deleteMenu($role)
@@ -375,10 +361,10 @@ class DefaultController extends Controller
         if($result)
         {
             Yii::app()->user->setFlash('menu_success', Yii::t('backend','Menu was deleted!'));
-            $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+            $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
         } else {
             Yii::app()->user->setFlash('menu_error', Yii::t('backend','Menu was not deleted!'));
-            $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+            $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
         }
     }
 

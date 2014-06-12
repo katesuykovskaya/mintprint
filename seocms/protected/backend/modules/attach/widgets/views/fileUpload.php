@@ -8,20 +8,20 @@
                 <!-- The fileinput-button span is used to style the file input field as button -->
                 <span class="btn btn-success fileinput-button">
                     <i class="glyphicon glyphicon-plus"></i>
-                    <span><?=Yii::t('backend','Добавить')?></span>
+                    <span>Add files...</span>
                     <input type="file" name="files[]" multiple>
                 </span>
                 <button type="submit" class="btn btn-primary start">
                     <i class="glyphicon glyphicon-upload"></i>
-                    <span><?=Yii::t('backend','Загрузить')?></span>
+                    <span>Start upload</span>
                 </button>
                 <button type="reset" class="btn btn-warning cancel">
                     <i class="glyphicon glyphicon-ban-circle"></i>
-                    <span><?=Yii::t('backend','Отменить')?></span>
+                    <span>Cancel upload</span>
                 </button>
                 <button type="button" class="btn btn-danger delete">
                     <i class="glyphicon glyphicon-trash"></i>
-                    <span><?=Yii::t('backend','Удалить')?></span>
+                    <span>Delete</span>
                 </button>
                 <input type="checkbox" class="toggle">
                 <!-- The global file processing state -->
@@ -43,8 +43,7 @@
     <br>
 </div>
 <!-- The blueimp Gallery widget -->
-<!--<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">-->
-<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
     <div class="slides"></div>
     <h3 class="title"></h3>
     <a class="prev">‹</a>

@@ -17,13 +17,13 @@
 
 	<div id="category">
 		<?php echo $form->labelEx($model,Yii::t('main','Категория')); ?>
-        <?php echo $form->dropDownList($model,'category',ZHtml::enumItem(SourceMessage::model(),'category'),['class'=>'input-xxlarge']);?>
+        <?php echo $form->dropDownList($model,'category',ZHtml::enumItem(SourceMessage::model(),'category'),array('class'=>'input-xxlarge'));?>
         <?php echo '<br />'; ?>
 	</div>
 
 	<div>
 		<?php echo $form->labelEx($model,Yii::t('main','Текст')); ?>
-		<?php echo $form->textArea($model,'message',['class'=>'input-xxlarge','rows'=>6]); ?>
+		<?php echo $form->textArea($model,'message',array('class'=>'input-xxlarge','rows'=>6)); ?>
 		<?php echo $form->error($model,'message'); ?>
 	</div>
 
@@ -31,12 +31,12 @@
         foreach(Yii::app()->params['languages'] as $language)
         {
             echo CHtml::label(Yii::t('language',$language['lang']),'SourceMessage_'.$language["langcode"]);
-            echo CHtml::textField('SourceMessage['.$language["langcode"].']','',['class'=>'input-xxlarge']);
+            echo CHtml::textField('SourceMessage['.$language["langcode"].']','',array('class'=>'input-xxlarge'));
         }
     ?>
 
 	<div class="buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('main','Создать') : Yii::t('main','Сохранить'),['class'=>'btn']); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('main','Создать') : Yii::t('main','Сохранить'),array('class'=>'btn')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

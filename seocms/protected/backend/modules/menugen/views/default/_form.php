@@ -34,11 +34,11 @@ Yii::app()->clientScript->scriptMap['bootstrap.min.css'] = false;
             
             ( ($createRoot!='true') ? 
           
-            Yii::app()->urlManager->createUrl('/backend/menugen/default/create') :
+            Yii::app()->urlManager->createUrl('backend/menugen/default/create') :
 
-            Yii::app()->urlManager->createUrl('/backend/menugen/default/createRoot')):
+            Yii::app()->urlManager->createUrl('backend/menugen/default/createRoot')):
 
-            Yii::app()->urlManager->createUrl('/backend/menugen/default/update');
+            Yii::app()->urlManager->createUrl('backend/menugen/default/update');
  
 $val_error_msg=Yii::t('backend','Error.UserMenu was not saved.');
 

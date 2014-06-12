@@ -39,8 +39,8 @@ class PagesTranslate extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
                         
-            array('id, page_id, t_lang, t_title, t_desc, t_h1, t_content, t_mtitle, t_mdesc, t_mkeywords, t_translit', 'safe', 'on'=>'insert, update'),
-			array('id, published, page_id, t_lang, t_title, t_desc, t_h1, t_content, t_mtitle, t_mdesc, t_mkeywords, level', 'safe', 'on'=>'search'),
+            array('id, page_id, t_lang, t_title, t_desc, t_h1, t_content, t_mtitle, t_mdesc, t_mkeywords, t_translit, t_imgmeta', 'safe', 'on'=>'insert, update'),
+			array('id, published, page_id, t_lang, t_title, t_desc, t_h1, t_content, t_mtitle, t_mdesc, t_mkeywords, t_imgmeta, level', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -127,9 +127,8 @@ class PagesTranslate extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
                         'pagination'=>array(
-                            'route'=>Yii::app()->urlManager->createUrl('/backend/pages/pages/grid',array('language'=>Yii::app()->language)),
-                            'pageVar'=>'page',
-                            'params'=>isset($_GET['url']) ? array('url'=>urlencode($_GET['url'])) : array(),
+                            'route'=>Yii::app()->urlManager->createUrl('backend/pages/pages/grid',array('language'=>Yii::app()->language)),
+                            'pageVar'=>'page', 'params'=>isset($_GET['url']) ? array('url'=>urlencode($_GET['url']),'language'=>Yii::app()->language) : array('language'=>Yii::app()->language),'params'=>isset($_GET['url']) ? array('url'=>urlencode($_GET['url'])) : array(),
                             'pagesize'=>25,
                         ),
                         
@@ -160,6 +159,7 @@ class PagesTranslate extends CActiveRecord
                         'fieldType'=>'textField',
                         'value'=>'',
                         'htmlOptions'=>array(
+                            'class'=>'input-xxlarge'
                         ),
                     ),
                     't_desc'=>array(
@@ -167,6 +167,7 @@ class PagesTranslate extends CActiveRecord
                         'fieldType'=>'textField',
                         'value'=>'',
                         'htmlOptions'=>array(
+                            'class'=>'input-xxlarge'
                         ),
                     ),
                     't_h1'=>array(
@@ -174,6 +175,7 @@ class PagesTranslate extends CActiveRecord
                         'fieldType'=>'textField',
                         'value'=>'',
                         'htmlOptions'=>array(
+                            'class'=>'input-xxlarge'
                         ),
                     ),
                     't_content'=>array(
@@ -189,6 +191,7 @@ class PagesTranslate extends CActiveRecord
                         'fieldType'=>'textField',
                         'value'=>'',
                         'htmlOptions'=>array(
+                            'class'=>'input-xxlarge'
                         ),
                     ),
                     't_mtitle'=>array(
@@ -196,6 +199,7 @@ class PagesTranslate extends CActiveRecord
                         'fieldType'=>'textField',
                         'value'=>'',
                         'htmlOptions'=>array(
+                            'class'=>'input-xxlarge'
                         ),
                     ),
                     't_mdesc'=>array(
@@ -203,6 +207,8 @@ class PagesTranslate extends CActiveRecord
                         'fieldType'=>'textArea',
                         'value'=>'',
                         'htmlOptions'=>array(
+                            'class'=>'input-xxlarge',
+                            'rows'=>6
                         ),
                     ),
                     't_mkeywords'=>array(
@@ -210,6 +216,8 @@ class PagesTranslate extends CActiveRecord
                         'fieldType'=>'textArea',
                         'value'=>'',
                         'htmlOptions'=>array(
+                            'class'=>'input-xxlarge',
+                            'rows'=>6
                         ),
                     ),
                 ),

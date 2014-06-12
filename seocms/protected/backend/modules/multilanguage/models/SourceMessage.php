@@ -95,8 +95,8 @@ class SourceMessage extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
             'pagination'=>array(
-                'route'=>Yii::app()->urlManager->createUrl('/backend/multilanguage/source/admin',array('language'=>Yii::app()->language)),
-                'params'=>isset($_GET['url']) ? ['url'=>urlencode($_GET['url']),'language'=>Yii::app()->language] : ['language'=>Yii::app()->language],
+                'route'=>Yii::app()->urlManager->createUrl('backend/multilanguage/source/admin',array('language'=>Yii::app()->language)),
+                'params'=>isset($_GET['url']) ? array('url'=>urlencode($_GET['url']),'language'=>Yii::app()->language) : array('language'=>Yii::app()->language),
                 'pageVar'=>'page',
                 'pagesize'=>20,
             ),

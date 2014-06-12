@@ -38,7 +38,6 @@ class FileUploadWidget extends CWidget{
                 'webTmp'=>$this->webTmp,
                 'webUrl'=>$this->webUrl,
                 'filePath'=>$this->filePath,
-                'token'=>$this->filesToken,
             )
         );
         Yii::app()->session['files'] = $filesArray;

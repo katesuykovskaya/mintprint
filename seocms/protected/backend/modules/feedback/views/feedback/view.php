@@ -55,4 +55,4 @@
 </fieldset>
 <hr />
 
-<a href="<?=$this->createUrl('/backend/feedback/feedback/maillist',array('language'=>Yii::app()->language))?>" class="btn"><?=Yii::t('backend','Назад')?></a>
+<a href="<?=$this->createUrl('backend/feedback/feedback/maillist',array('language'=>Yii::app()->language))?>" class="btn"><?=Yii::t('backend','Назад')?></a>

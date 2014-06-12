@@ -9,6 +9,7 @@
  * @property string $t_blockquote
  * @property string $t_cite
  * @property string $t_language
+ * @property string $t_href
  */
 class SliderTranslate extends CActiveRecord
 {
@@ -38,13 +39,14 @@ class SliderTranslate extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('t_id, t_desc, t_language', 'required'),
+			array('t_id, t_desc, t_href, t_language', 'required'),
 			array('t_id', 'numerical', 'integerOnly'=>true),
-			array('t_desc', 'length', 'max'=>255),
+			array('t_desc, t_href', 'length', 'max'=>255),
+//            array('t_href', 'url'),
 			array('t_language', 'length', 'max'=>2),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, t_id, t_desc, t_language', 'safe', 'on'=>'search'),
+			array('id, t_id, t_desc, t_language, t_href',  'safe', 'on'=>'search'),
 		);
 	}
 
@@ -67,8 +69,9 @@ class SliderTranslate extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			't_id' => 'T',
-			't_desc' => Yii::t('backend', 'Описание'),
-			't_language' => 'T Language',
+			't_desc' => 'Описание',
+            't_href' => 'Ссылка',
+			't_language' => 'Язык',
 		);
 	}
 
@@ -86,6 +89,7 @@ class SliderTranslate extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('t_id',$this->t_id);
 		$criteria->compare('t_desc',$this->t_desc,true);
+        $criteria->compare('t_href',$this->t_href,true);
 		$criteria->compare('t_language',$this->t_language,true);
 
 		return new CActiveDataProvider($this, array(

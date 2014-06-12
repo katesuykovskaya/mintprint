@@ -1,7 +1,6 @@
 <?php
 
-//class FeedbackController extends RightsBaseController
-class FeedbackController extends Controller
+class FeedbackController extends RightsBaseController
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -15,8 +14,7 @@ class FeedbackController extends Controller
 	public function filters()
 	{
 		return array(
-//            'rights'
-            array('auth.filters.AuthFilter'),
+            'rights'
         );
 	}
 
@@ -256,7 +254,7 @@ class FeedbackController extends Controller
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax'])){
-            $this->redirect($this->createUrl('/backend/feedback/feedback/maillist'),array('language'=>Yii::app()->language));
+            $this->redirect($this->createUrl('backend/feedback/feedback/maillist'),array('language'=>Yii::app()->language));
         }
 	}
 //
@@ -277,7 +275,7 @@ class FeedbackController extends Controller
 	public function actionAdmin()
 	{
                 $this->layout = '//layouts/main';
-                $path = Yii::getPathOfAlias('application.backend.config');
+                $path = Yii::getPathOfAlias('application.common.config');
                 $file = $path.'/mail.php';
                 
                  if(Yii::app()->request->isPostRequest){

@@ -7,8 +7,9 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class AttachmentBehavior extends CActiveRecordBehavior
-{
+class AttachmentBehavior extends CActiveRecordBehavior {
+
+
     public $entity_id;
     public $upload_path;
 
@@ -18,11 +19,13 @@ class AttachmentBehavior extends CActiveRecordBehavior
      */
     public function delete_files($target) {
         if(is_dir($target)){
-            $files = glob($target . '*', GLOB_MARK); //GLOB_MARK adds a slash to directories returned
+            $files = glob( $target . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
 
-            foreach( $files as $file ) {
+            foreach( $files as $file )
+            {
                 $this->delete_files( $file );
             }
+
             rmdir( $target );
         } elseif(is_file($target)) {
             unlink( $target );
@@ -37,18 +40,10 @@ class AttachmentBehavior extends CActiveRecordBehavior
      */
     protected function moveFiles($tmpPath,$uploadDir,$model)
     {
-//        Yii::import('application.backend.modules.attach.models.Attachment');
         $allFiles = is_dir($tmpPath) ? scandir($tmpPath,1) : null;
         if($allFiles){
-            foreach($allFiles as $file) {
-                $version = array_search($file,$_SESSION['files']['files']['versions']);
-
-                if($version === false && !is_dir($tmpPath.$file)){
-//                    $test = explode($model.'/',$tmpPath);
-
-                    $testArr = explode($_SESSION['files']['files']['filePath'],$uploadDir.$file);
-                    $type = explode('/',$testArr[1])[0];
-                    $test = explode($_SESSION['files']['files']['filePath'],$uploadDir.$file)[1];
+            foreach($allFiles as $file){
+                if(!is_dir($tmpPath.$file)){
                     $newPath = $uploadDir.$file;
                     if(is_dir($uploadDir)){
                         rename($tmpPath.$file,$newPath);
@@ -57,20 +52,16 @@ class AttachmentBehavior extends CActiveRecordBehavior
                         rename($tmpPath.$file,$newPath);
                     }
                     Yii::import('application.backend.modules.attach.models.Attachment');
-                    $modelExist = Attachment::model()->findByAttributes(array('path'=>$file,'entity_id'=>(int)$this->entity_id,'content_type'=>$test));
+                    $modelExist = Attachment::model()->findByAttributes(array('path'=>$file,'entity_id'=>(int)$this->entity_id));
 
                     if(!$modelExist){
                         $fileExt = pathinfo($newPath,PATHINFO_EXTENSION);
                         $attachment = new Attachment;
                         $attachment->attachment_entity = get_class($this->owner);
                         $attachment->entity_id = $model;
-//                        $attachment->path = $file;
-//                        $attachment->content_type = $test;
-                        $attachment->path = $test;
-                        $attachment->file_name = $file;
-                        $attachment->content_type = ($type === '' || $type === $file) ? 'attach' : $type;
+                        $attachment->path = $file;
 
-                        switch(strtolower($fileExt)){
+                        switch($fileExt){
                             case 'jpg':
                             case 'jpeg':
                             case 'png':

@@ -4,7 +4,7 @@
 
 <div class="row">
     <ul class="breadcrumb span6">
-        <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend',['language'=>Yii::app()->language]))?></li>
+        <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend', array('language'=>Yii::app()->language)))?></li>
         <li><span class="divider">/</span><?=Yii::t('backend','Генерация backend-меню')?></li>
     </ul>
 </div>
@@ -35,11 +35,11 @@
 
 <div class="well span4">
     <h4><?=Yii::t('backend','Доступы для роли: ')?></h4>
-    <?php echo CHtml::form($this->createUrl('/menugen/default/previewMenu',array('language'=>Yii::app()->language)));?>
+    <?php echo CHtml::form($this->createUrl('menugen/default/previewMenu',array('language'=>Yii::app()->language)));?>
     <?php echo CHtml::dropDownList('usermenu','usermenu',CHtml::listData(AuthItem::model()->findAll('type=2'),'name','name'),array(
         'ajax'=>array(
             'type'=>'post',
-            'url'=>$this->createUrl('/backend/menugen/default/ajaxUserItems',array('language'=>Yii::app()->language)),
+            'url'=>$this->createUrl('backend/menugen/default/ajaxUserItems',array('language'=>Yii::app()->language)),
             'update'=>'#ajaxRoles',
             'data' => array('dropname'=> 'js: $("#usermenu option:selected").val()'),
         ),
@@ -55,11 +55,11 @@
 
 <div class="well span4">
     <h4><?=Yii::t('backend','Выберите роль: ')?></h4>
-    <?php echo CHtml::form($this->createUrl('/backend/menugen/default/previewMenu',array('language'=>Yii::app()->language)));?>
+    <?php echo CHtml::form($this->createUrl('backend/menugen/default/previewMenu',array('language'=>Yii::app()->language)));?>
     <?php echo CHtml::dropDownList('rolemenu','rolemenu',CHtml::listData(AuthItem::model()->findAll('type=2'),'name','name'),array(
         'ajax'=>array(
             'type'=>'post',
-            'url'=>$this->createUrl('/backend/menugen/default/previewMenu',array('language'=>Yii::app()->language)),
+            'url'=>$this->createUrl('backend/menugen/default/previewMenu',array('language'=>Yii::app()->language)),
             'update'=>'#previewMenu',
             'data' => array('dropname'=> 'js: $("#rolemenu option:selected").val()'),
         ),
@@ -76,7 +76,7 @@
 
 <?php
     $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'myModal'));
-    echo CHtml::beginForm($this->createUrl('/backend/menugen/default/translateActions',array('language'=>Yii::app()->language)));
+    echo CHtml::beginForm($this->createUrl('backend/menugen/default/translateActions',array('language'=>Yii::app()->language)));
 ?>
 
 <?php

@@ -8,8 +8,6 @@
  * @property string $attachment_entity
  * @property integer $entity_id
  * @property string $type
- * @property string $content_type
- * @property string $file_name
  * @property string $path
  * @property integer $position
  * @property string $description
@@ -37,7 +35,7 @@ class Attachment extends CActiveRecord
 			array('attachment_entity', 'length', 'max'=>8),
 			array('type', 'length', 'max'=>5),
 			array('path', 'length', 'max'=>255),
-            array('options, content_type, file_name','safe'),
+            array('options','safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('attachment_id, attachment_entity, entity_id, type, path, description', 'safe', 'on'=>'search'),

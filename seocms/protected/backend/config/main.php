@@ -2,7 +2,7 @@
 Yii::setPathOfAlias('backend', dirname(dirname(__FILE__)));
 return CMap::mergeArray(
 (require dirname(dirname(__FILE__))."/../common/config/main.php"), array(
-'name'=>'My Cool Project',
+'name'=>'Fitness City',
 'sourceLanguage'=>'ru',
 'language'=>'ru',
 'theme'=>'unicorn',
@@ -11,24 +11,24 @@ return CMap::mergeArray(
 'viewPath'=>dirname(dirname(__FILE__)).'/views',
 'runtimePath'=>dirname(dirname(__FILE__)).'/runtime',
 'import'=>array(
-        'backend.models.*',
+            'backend.models.*',
         'backend.components.*',
 //        'application.models.*',
 //        'application.components.*',
         'backend.vendors.*',
         'backend.modules.users.models.*',
-//        'backend.modules.rights.*',
-//        'backend.modules.rights.models.*',
+        'backend.modules.rights.*',
+        'backend.modules.rights.models.*',
 //        'backend.modules.backendmenu.models.*',
 //        'backend.modules.rights.components.*',
 //            loading swift mailer extension yii-mail
         'application.extensions.yii-mail.YiiMailMessage',
         'ext.easyimage.EasyImage',
 ),
-//'aliases'=>array(
-//    //If you manually installed it
-//    'xupload' => 'application.backend.extensions.xupload',
-//),
+'aliases'=>array(
+    //If you manually installed it
+    'xupload' => 'application.backend.extensions.xupload',
+),
 'modules'=>require(dirname(__FILE__) . '/modules.php'),
 'preload'=>array(
 //     'log',
@@ -82,12 +82,11 @@ return CMap::mergeArray(
                 'backend/<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 
                 /*rules for rights*/
-//                'backend/rights'=>'rights/assignment/view',
-                'backend/rights'=>'auth/assignment/index',
+                'backend/rights'=>'rights/assignment/view',
                 '<language:[a-zA-Z]{2}>/backend/rights'=>'rights/assignment/view',
                 'backend/rights/<controller:\w+>/<action:\w+>'=>'rights/<controller>/<action>',
                 '<language:[a-zA-Z]{2}>/backend/rights/<controller:\w+>/<action:\w+>'=>'rights/<controller>/<action>',
-                /*end of rights urlsdfkgjdflkgfkg*/
+                /*end of rights urls*/
 
                 /*modules section*/
                 '<language:[a-zA-Z]{2}>/backend/<module>/<controller:\w+>/<action:\w+>/<id:\d+>'=>'<module>/<controller>/view',
@@ -103,7 +102,7 @@ return CMap::mergeArray(
 
             ),
 ),
-	'mail'=>require(dirname(__FILE__) . '/mail.php'),
+	//'mail'=>require(dirname(__FILE__) . '/mail.php'),
 //	'messages'=>array(
 //    'class'=>'CDbMessageSource',
 //    'forceTranslation'=>true,
