@@ -43,13 +43,8 @@ return array(
             'connectionID'=>'db',
             'autoCreateSessionTable'=>false,
             'autoStart'=>true,
-            'timeout'=>3600 * 24,
+            'timeout'=>3600 * 24 * 7,
         ),
-        'errorHandler'=>array(
-            // use 'site/error' action to display errors
-            'errorAction'=>'site/error',
-        ),
-
         'messages'=>array(
             'class'=>'CDbMessageSource',
             'forceTranslation'=>true,
