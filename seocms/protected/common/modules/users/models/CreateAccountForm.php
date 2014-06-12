@@ -10,8 +10,6 @@ class CreateAccountForm extends CFormModel
     public $email;
     public $password;
     public $password2;
-
-
     /**
      * Declares the validation rules.
      * The rules state that username and password are required,

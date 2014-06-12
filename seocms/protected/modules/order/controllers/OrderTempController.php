@@ -155,8 +155,20 @@ class OrderTempController extends Controller
         $this->layout = '//layouts/no-bg';
         Yii::import('application.common.modules.users.models.CreateAccountForm');
         $createAccountModel = new CreateAccountForm;
+        $orderFormModel = new OrderForm;
+        $config = $this->module->config;
+
+        if(isset($_POST['OrderForm'])) {
+            $orderFormModel->attributes = $_POST['OrderForm'];
+            if($orderFormModel->validate()) {
+                die($orderFormModel->getErrors());
+            }
+        }
+
         $this->render('buyerInfo', array(
-            'createAccountModel' => $createAccountModel
+            'createAccountModel' => $createAccountModel,
+            'orderFormModel' => $orderFormModel,
+            'config' => $config
         ));
     }
 

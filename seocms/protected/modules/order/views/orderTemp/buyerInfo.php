@@ -4,6 +4,7 @@
  * User: Kate
  * Date: 12.06.14
  * Time: 10:49
+ * @var $this OrderTempController
  */
 ?>
 <section class="content buyer-info-form">
@@ -17,52 +18,29 @@
                     <a href="#" class="continue-button"><?=Yii::t('frontend', 'Войти')?></a>
                 </div>
                 <div class="left create-profile-wrap">
-                    <h2><?=Yii::t('frontend', 'создать новый профиль')?></h2>
-<!--                    <label>--><?//=Yii::t('frontend', 'Электронная почта')?><!--</label>-->
-<!--                    <label>--><?//=Yii::t('frontend', 'Пароль')?><!--</label>-->
-<!--                    <label>--><?//=Yii::t('frontend', 'Еще раз пароль')?><!--</label>-->
-                    <?php
-                    $form=$this->beginWidget('CActiveForm', array(
-                        'id'=>'create-profile-form',
-                        'enableClientValidation'=>true,
-                        'clientOptions'=>array(
-                            'validateOnSubmit'=>true,
-                        ),
-                    )); ?>
-                    <?php echo $form->errorSummary($createAccountModel); ?>
-
-                    <div>
-                        <?php echo $form->labelEx($createAccountModel,'email'); ?>
-                        <?php echo $form->textField($createAccountModel,'email', array(
-                            'placeholder'=>'почта@mail.ru'
-                        )); ?>
-                    </div>
-
-                    <div>
-                        <?php echo $form->labelEx($createAccountModel,'password'); ?>
-                        <?php echo $form->passwordField($createAccountModel,'password', array(
-                            'placeholder'=>'******'
-                        )); ?>
-                    </div>
-
-                    <div>
-                        <?php echo $form->labelEx($createAccountModel,'password2'); ?>
-                        <?php echo $form->passwordField($createAccountModel,'password2', array(
-                            'placeholder'=>'******'
-                        )); ?>
-                    </div>
-
-                    <div class="buttons">
-                        <?php echo CHtml::submitButton('Продолжить', array('class'=>'')); ?>
-                    </div>
-
-                    <?php $this->endWidget(); ?>
+                    <?php $this->renderPartial('application.common.modules.users.views.users._createAccount', array(
+                        'createAccountModel'=>$createAccountModel
+                    ))?>
                 </div>
             </div>
-
+            <div class="order-head-wrap">
+                <h2><?=Yii::t('frontend', 'вы и ваш адрес')?></h2>
+                <?php $this->renderPartial('application.modules.order.views.order._order', array(
+                    'orderFormModel'=>$orderFormModel
+                ))?>
+            </div>
         </div>
         <div class="left total-basket-info">
-            <h2><?=Yii::t('frontend', 'вы и ваш адрес')?></h2>
+            <p class="green-text"><?=Yii::t('frontend', 'Распечатать ваши замечательные фотографии')?></p>
+            <p class="grey-text"><?=Yii::t('frontend', 'будет стоить - ')?></p>
+            <div id="priceWrap" class="relative">
+                <span id="price"><?=OrderTemp::CollectPrice($config['price'])?></span>
+                <sup><?=$config['currency']?></sup>
+            </div>
+            <p class="grey-text">
+                Через неделю фотографии пришлют по указанному адресу. Задавайте вопросы по телефону <?=Yii::t('frontend', 'PHONE')?>
+            </p>
+            <a class="back-button" href="javascript: history.back(); return false">назад</a>
         </div>
     </div>
 
