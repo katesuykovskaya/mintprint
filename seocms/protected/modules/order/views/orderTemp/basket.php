@@ -69,7 +69,7 @@
         </div>
         <div class="overflow-hidden">
             <a class="back-button" href="javascript: history.back(); return false;"><?=Yii::t('frontend', 'Назад')?></a>
-            <a class="continue-button"><?=Yii::t('frontend', 'Следующий шаг')?></a>
+            <a href="<?=Yii::app()->createUrl('order/orderTemp/buyerInfo')?>" class="continue-button"><?=Yii::t('frontend', 'Следующий шаг')?></a>
         </div>
     </div>
 </section>

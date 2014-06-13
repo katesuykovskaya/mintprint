@@ -4,7 +4,7 @@
 
 <div class="row">
     <ul class="breadcrumb span6">
-        <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend',['language'=>Yii::app()->language]))?></li>
+        <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend',array('language'=>Yii::app()->language)))?></li>
         <li><span class="divider">/</span><?=Yii::t('backend','Обратная связь. Администрирование')?></li>
     </ul>
 </div>
@@ -76,8 +76,8 @@
                     ),
                 'type'=>'raw',
                 'value'=>'Chtml::link("<i class=icon-remove></i>",
-                                    Yii::app()->urlManager->createUrl("/backend/feedback/feedback/delete",array("id"=>$data->id,"language"=>Yii::app()->language)),array("confirm"=>Yii::t("backend","Удалить?"))).
-                          Chtml::link("<i class=icon-search></i>",Yii::app()->urlManager->createUrl("/backend/feedback/feedback/view",array("id"=>$data->id,"language"=>Yii::app()->language)))',
+                                    Yii::app()->urlManager->createUrl("backend/feedback/feedback/delete",array("id"=>$data->id,"language"=>Yii::app()->language)),array("confirm"=>Yii::t("backend","Удалить?"))).
+                          Chtml::link("<i class=icon-search></i>",Yii::app()->urlManager->createUrl("backend/feedback/feedback/view",array("id"=>$data->id,"language"=>Yii::app()->language)))',
                 'htmlOptions'=>array('style'=>'text-align: center'),
             )
         ),

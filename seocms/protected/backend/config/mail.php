@@ -6,12 +6,12 @@
   array (
     'host' => 'smtp.gmail.com',
     'port' => '465',
-    'username' => 'alexey.smolanov@seotm.com',
-    'password' => 'superyii2013',
+    'username' => 'kate.s@seotm.com',
+    'password' => 'rfnzceqrjdcrfz2013',
     'encryption' => 'tls',
   ),
   'charset' => 'utf8',
-  'adminEmail' => 'root@root.zt.ua',
+  'adminEmail' => 'kate.s@seotm.com',
   'mailGroup' => 
   array (
     0 => '',

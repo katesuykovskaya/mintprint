@@ -25,7 +25,8 @@ class TinyMceWidget extends CWidget {
                 Yii::app()->clientScript->registerScriptFile('/js_plugins/tinymce/tinymce.min.js');
                 Yii::app()->clientScript->registerScript('sc1','
                     tinymce.init({
-//                  selector: "'.$this->attribute.'",
+//                    selector: "'.$this->attribute.'",
+                    relative_urls: false,
                     mode : "specific_textareas",
                     editor_selector : "'.$this->attribute.'",
                     theme: "modern",
@@ -34,7 +35,7 @@ class TinyMceWidget extends CWidget {
                     plugins: [
                         "advlist autolink autoresize link image lists charmap print preview hr anchor pagebreak spellchecker",
                         "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                        "save table contextmenu directionality emoticons template paste textcolor youTube test"
+                        "save table contextmenu directionality emoticons template paste textcolor"
                     ],
                     language: "'.$this->language.'",
                     autoresize_min_height: 300,
@@ -62,16 +63,10 @@ class TinyMceWidget extends CWidget {
                         "Webdings=webdings;"+
                         "Wingdings=wingdings,zapf dingbats",
             //        content_css: "/js_plugins/tinymce/plugins/filemanager/css/content.css",
-                    toolbar: "code insertfile undo redo | styleselect | fontselect | fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | youTube | test | print preview media fullpage | forecolor backcolor emoticons",
+                    toolbar: "code insertfile undo redo | styleselect | fontselect | fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
                     style_formats: [
                         {title: "Bold text", inline: "b"},
                         {title: "Red text", inline: "span", styles: {color: "#ff0000"}},
-                        {title: "Header1", block: "h1"},
-                        {title: "Header2", block: "h2"},
-                        {title: "Header3", block: "h3"},
-                        {title: "Header4", block: "h4"},
-                        {title: "Header5", block: "h5"},
-                        {title: "Header6", block: "h6"},
                         {title: "Red header", block: "h1", styles: {color: "#ff0000"}},
                         {title: "Example 1", inline: "span", classes: "example1"},
                         {title: "Example 2", inline: "span", classes: "example2"},

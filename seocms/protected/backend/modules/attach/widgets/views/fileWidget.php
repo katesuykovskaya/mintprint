@@ -52,7 +52,7 @@
     <div class="slides"></div>
     <h3 class="title"></h3>
     <a class="prev">‹</a>
-    <a class="next">›</a>
+    <a class="next">›</a> c
     <a class="close">×</a>
     <a class="play-pause"></a>
     <ol class="indicator"></ol>

@@ -7,14 +7,9 @@ return array(
         'common.components.*',
         'common.vendors.*',
         'common.modules.users.models.*',
-//        'common.modules.rights.*',
-//        'common.modules.rights.models.*',
-//        'common.modules.rights.components.*',
-        'common.modules.auth.*',
-        'common.modules.auth.models.*',
-        'common.modules.auth.components.*',
-        'common.modules.auth.filters.*',
-        'common.modules.auth.controllers.*',
+        'common.modules.rights.*',
+        'common.modules.rights.models.*',
+        'common.modules.rights.components.*',
 //            loading swift mailer extension yii-mail
         'application.extensions.yii-mail.YiiMailMessage',
         'ext.easyimage.EasyImage',
@@ -26,38 +21,19 @@ return array(
 //    ),
     'modules'=>require(dirname(__FILE__) . '/modules.php'),
     'components'=>array(
-        'db'=>require dirname(__FILE__).'/database.php',
-//        'user'=>array(
-//            'class'=>'RWebUser', //used module Rights instead of basic class CWebUser
-//            // enable cookie-based authentication
-////            'stateKeyPrefix'=>'common',
-//            'allowAutoLogin'=>true,
-//            'autoRenewCookie'=>true,
-//            'authTimeout'=>7200,
-//        ),
+        'db'=>require(dirname(__FILE__) . '/database.php'),
         'user'=>array(
-            'class' => 'auth.components.AuthWebUser',
-            'admins' => array('admin', 'foo', 'bar'), // users with full access
+            'class'=>'RWebUser', //used module Rights instead of basic class CWebUser
+            // enable cookie-based authentication
+//            'stateKeyPrefix'=>'common',
             'allowAutoLogin'=>true,
             'autoRenewCookie'=>true,
-            'authTimeout'=>7200,
+            'authTimeout'=>3600 * 24,
         ),
-//        'authManager'=>array(
-//            'class'=>'RDbAuthManager', //used Rights's class instead of basic CDbAuthManager
-//            'defaultRoles'=>array('Guest'),
-//            'connectionID'=>'db',
-//        ),
         'authManager'=>array(
-            'class'=>'auth.components.CachedDbAuthManager',
-            'cachingDuration'=>3600,
-//            'class'=>'RDbAuthManager', //used Rights's class instead of basic CDbAuthManager
-//            'defaultRoles'=>array('Guest'),
-//            'connectionID'=>'db',
-            'behaviors' => array(
-                'auth' => array(
-                    'class' => 'auth.components.AuthBehavior',
-                ),
-            ),
+            'class'=>'RDbAuthManager', //used Rights's class instead of basic CDbAuthManager
+            'defaultRoles'=>array('Guest'),
+            'connectionID'=>'db',
         ),
         'errorHandler'=>array(
             'errorAction'=>'site/error',
@@ -67,10 +43,8 @@ return array(
             'connectionID'=>'db',
             'autoCreateSessionTable'=>false,
             'autoStart'=>true,
-//            'timeout'=>'1440',
-            'timeout'=>60*60*24*7,
+            'timeout'=>3600 * 24 * 7,
         ),
-
         'messages'=>array(
             'class'=>'CDbMessageSource',
             'forceTranslation'=>true,
@@ -97,6 +71,7 @@ return array(
             //'cacheTime' => 2592000,
             //'retinaSupport' => false,
         ),
+        'mail'=>require(dirname(__FILE__) . '/mail.php'),
     ),
-    'params'=>['languages'=>require(dirname(__FILE__) . '/languages.php'),],
+    'params'=>array('languages'=>require(dirname(__FILE__) . '/languages.php'),),
 );

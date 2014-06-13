@@ -3,14 +3,14 @@
 /* @var $model Slider */
 
 $this->breadcrumbs=array(
-    'Sliders'=>array('backend/slider/slider/admin', 'language'=>Yii::app()->language),
+    'Sliders'=>array('/backend/slider/slider/admin', 'language'=>Yii::app()->language),
 	'Manage',
 );
 ?>
 
 <div class="row">
     <ul class="breadcrumb span6">
-        <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend',['language'=>Yii::app()->language]))?></li>
+        <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend', array('language'=>Yii::app()->language)))?></li>
         <li><span class="divider">/</span><?=Yii::t('backend','Управление слайдером')?></li>
     </ul>
 </div>
@@ -20,7 +20,7 @@ $this->breadcrumbs=array(
 
 <div class="span10 clearfix">
     <?php echo CHtml::link(Yii::t('backend','Создать слайд'),
-        $this->createUrl('/backend/slider/slider/create',['language'=>Yii::app()->language]),['class'=>'btn btn-success','style'=>'margin-bottom:40px'])?>
+        $this->createUrl('/backend/slider/slider/create',array('language'=>Yii::app()->language)),array('class'=>'btn btn-success','style'=>'margin-bottom:40px'))?>
 </div>
 
 <?php $this->widget('bootstrap.widgets.TbExtendedGridView', array(
@@ -28,20 +28,21 @@ $this->breadcrumbs=array(
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
     'type'=>'striped bordered',
-    'htmlOptions'=>['class'=>'span12 clearfix'],
+    'htmlOptions'=>array('class'=>'span12 clearfix'),
     'sortableRows'=>true,
     'sortableAttribute' => 'id',
     'sortableAjaxSave' => true,
     'sortableAction' => 'backend/slider/slider/imageSortable',
-    'afterSortableUpdate' => '',
+    'afterSortableUpdate' => 'js:function(){return true;}',
 	'columns'=>array(
 		array(
             'name'=>'id',
             'filter'=>false,
+            'sortable'=>false,
         ),
         array(
             'name'=>'img',
-            'value'=>'$data->img ? Yii::app()->easyImage->thumbOf(Yii::getPathOfAlias("webroot")."/uploads/Slider/".$data->id."/".$data->img,
+            'value'=>'$data->img ? ZHtml::thumbnail(Yii::getPathOfAlias("webroot")."/uploads/Slider/".$data->id."/".$data->img,
                 array(
                     "resize" => array("width" => 300, "height"=>200, "master"=>EasyImage::RESIZE_AUTO),
                     "savePath"=>"/uploads/Slider/".$data->id."/",
@@ -49,6 +50,7 @@ $this->breadcrumbs=array(
                 )) : " "',
             'type'=>'html',
             'filter'=>false,
+            'sortable'=>false,
             'htmlOptions'=>array('class'=>'span5 text-center')
         ),
 		array(
@@ -56,6 +58,7 @@ $this->breadcrumbs=array(
             'type'=>'html',
             'value'=>'$data->show ? "<i>visible</i>" : "<i>No</i>"',
             'filter'=>false,
+            'sortable'=>false,
             'htmlOptions'=>array('class'=>'span2')
 //            'filter'=>CHtml::activeDropDownList($model, 'show', array('1'=>'Visiblwe', '0'=>'not vis'), array('prompt'=>'choose'))
         ),
@@ -66,16 +69,23 @@ $this->breadcrumbs=array(
                 'class'=>'span6'
             )
         ),
+        array(
+            'name'=>'translation.t_href',
+            'value'=>'isset($data->translation[Yii::app()->language]) ? $data->translation[Yii::app()->language]->t_href : ""',
+            'htmlOptions'=>array(
+                'class'=>'span4'
+            )
+        ),
 		array(
 			'class'=>'CButtonColumn',
             'template'=>'{update} {delete}',
             'header'=>Yii::t('backend', 'Действия'),
             'buttons'=>array(
                 'update'=>array(
-                    'url'=>'Yii::app()->controller->createUrl("slider/slider/update",array("id"=>$data->id))',
+                    'url'=>'Yii::app()->controller->createUrl("/backend/slider/slider/update",array("id"=>$data->id, "language"=>Yii::app()->language))',
                 ),
                 'delete'=>array(
-                    'url'=>'Yii::app()->controller->createUrl("slider/slider/delete",array("id"=>$data->id))',
+                    'url'=>'Yii::app()->controller->createUrl("/backend/slider/slider/delete",array("id"=>$data->id, "language"=>Yii::app()->language))',
                 ),
             ),
 		),

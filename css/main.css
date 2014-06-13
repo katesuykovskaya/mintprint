@@ -253,6 +253,15 @@ h1 {
     line-height: 16px;
     font-weight: 600;
 }
+.total-basket-info .back-button {
+    width: 130px;
+    margin-top: 20px;
+}
+.grey-text {
+    color: #C3C3C5;
+    font-size: 12px;
+    line-height: 16px;
+}
 #priceWrap {
     color: #19BDC3;
     font-size: 66px;
@@ -676,19 +685,37 @@ footer li a {
 .green-button,
 .back-button {
     background-color: #6CC7B4;
+    border: none;
     border-bottom: 3px solid #6DBACB;
+    border-right: 2px solid #6DBACB;
     border-radius: 20px;
     padding: 5px 25px;
     display: inline-block;
     color: black;
+    /* width: 100%; */
+}
+.buttons-block {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.buttons-block .back-button {
+    padding: 5px 75px;
+}
+.buttons-block .continue-button {
+    padding: 5px 75px;
 }
 .continue-button {
     background: #18BDC3;
+    border: none;
     border-bottom: 3px solid #3195B2;
     border-radius: 20px;
     padding: 5px 25px;
     display: inline-block;
     color: black;
+    border-right: 2px solid #3195B2;
+    font-size: 16px;
+    font-family: PoiretOne;
+    text-transform: uppercase;
 }
 #totalPrice {
     font-size: 36px;
@@ -700,6 +727,89 @@ td.img-count {
 td.img-count input {
     width: 70px;
     
+}
+.buyer-info-form {
+    /*padding-left: 50px;*/
+}
+.buyer-info-form h2 {
+    color: #575556;
+    font-weight: normal;
+}
+.buyer-info-form h1+p {
+    color: #9C9E9F;
+    font-size: 12px;
+}
+.forms-start {
+    margin-top: 30px;
+}
+.tree-forms {
+    width: 555px;
+    /* border: 1px solid black; */
+}
+.total-basket-info {
+    width: 200px;
+    background: white;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 35px 55px 35px 25px;
+}
+.order-head-wrap {
+    margin-top: 40px;
+    padding-right: 55px;
+}
+.enter-wrap {
+    width: 270px;
+}
+.block-wrap {
+    width: 230px;
+}
+.middle-block-wrap {
+    width: 115px;
+}
+.small-block-wrap {
+    width: 85px;
+}
+.enter-wrap .continue-button {
+    margin-top: 40px;
+    text-align: center;
+    padding: 5px 80px;
+}
+.create-profile-wrap {
+    width: 230px;
+}
+.tree-forms label {
+    display: block;
+    font-size: 14px;
+    color: #88898C;
+    text-transform: none;
+    font-family: "Open Sans";
+    margin-top: 18px;
+    margin-bottom: 4px;
+}
+.tree-forms label .required {
+    color: #84CCBE;
+}
+.tree-forms [type="text"],
+.tree-forms [type="password"] {
+    height: 30px;
+    width: 100%;
+    border: 1px solid #D7D9D9;
+    background: white;
+    border-radius: 10px;
+    font-size: 12px;
+    line-height: 30px;
+    text-indent: 10px;
+}
+[type="text"]:disabled {
+    background: #E6E7E7;
+}
+#create-profile-form input[type="submit"] {
+    text-transform: uppercase;
+    padding: 5px 0;
+    width: 230px;
+    margin-top: 20px;
+    font-family: PoiretOne;
+    font-size: 16px;
 }
 /* ==========================================================================
    Helper classes
@@ -741,7 +851,7 @@ td.img-count input {
     /* display: table-cell; */
 }
 .overflow-hidden .left {
-    min-height: 107px;
+    /* min-height: 107px; */
 }
 /*
  * Hide only visually, but have it available for screenreaders: h5bp.com/v

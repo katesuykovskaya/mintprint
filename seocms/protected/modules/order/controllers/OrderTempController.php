@@ -142,7 +142,7 @@ class OrderTempController extends Controller
             'session_id' => Yii::app()->session->sessionID,
         );
         if(!Yii::app()->user->isGuest)
-            $attr['user_id'] = Yii::app()->user_id;
+            $attr['user_id'] = Yii::app()->user->id;
         $models = OrderTemp::model()->findAllByAttributes($attr);
         $config = $this->module->config;
         $this->render('basket', array(
@@ -150,6 +150,27 @@ class OrderTempController extends Controller
             'config'=>$config
         ));
 	}
+
+    public function actionBuyerInfo() {
+        $this->layout = '//layouts/no-bg';
+        Yii::import('application.common.modules.users.models.CreateAccountForm');
+        $createAccountModel = new CreateAccountForm;
+        $orderFormModel = new OrderForm;
+        $config = $this->module->config;
+
+        if(isset($_POST['OrderForm'])) {
+            $orderFormModel->attributes = $_POST['OrderForm'];
+            if($orderFormModel->validate()) {
+                die($orderFormModel->getErrors());
+            }
+        }
+
+        $this->render('buyerInfo', array(
+            'createAccountModel' => $createAccountModel,
+            'orderFormModel' => $orderFormModel,
+            'config' => $config
+        ));
+    }
 
 	/**
 	 * Manages all models.

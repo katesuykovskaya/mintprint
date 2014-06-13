@@ -1,6 +1,5 @@
 <?php
 
-//class PagesController extends RightsBaseController
 class PagesController extends Controller
 {
 	/**
@@ -15,10 +14,8 @@ class PagesController extends Controller
 	public function filters()
 	{
 		return array(
-            array('auth.filters.AuthFilter - login'),
-//			'accessControl', // perform access control for CRUD operations
-//			'postOnly + delete', // we only allow deletion via POST request
-//                    'rights',
+            'rights'
+//            array('auth.filters.AuthFilter'),
 		);
 	}
 
@@ -28,29 +25,19 @@ class PagesController extends Controller
             'editor'=>'application.backend.components.EditorAction'
         );
     }
+        
+    public function actionPageTree()
+    {
+        $baseUrl=Yii::app()->request->baseUrl;
+        $this->render('pageTree',array(
+            'baseUrl'=>$baseUrl,
+        ));
+    }
 
-//	/**
-//	 * Displays a particular model.
-//	 * @param integer $id the ID of the model to be displayed
-//	 */
-//	public function actionView($id)
-//	{
-//		$this->render('view',array(
-//			'model'=>$this->loadModel($id),
-//		));
-//	}
-        
-        public function actionPageTree()
-        {
-            $baseUrl=Yii::app()->request->baseUrl;
-            $this->render('pageTree',array(
-                'baseUrl'=>$baseUrl,
-            ));
-        }
-        
-       public function actionFetchTree(){
-           StaticPages::printULTree();
-        }
+    public function actionFetchTree()
+    {
+       StaticPages::printULTree();
+    }
 
     /**
 	 * Creates a new model.
@@ -58,13 +45,13 @@ class PagesController extends Controller
 	 */
 	public function actionCreate()
 	{
-                
+
         $translate = new PagesTranslate;
         $count = Yii::app()->db->createCommand("select count(page_id) from static_pages")->queryScalar();
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-                
+
         if(isset($_POST['parent']))
         {
             $parent = intval($_POST['parent']);
@@ -97,7 +84,100 @@ class PagesController extends Controller
 		));
        }
 
-	/**
+    /**
+     * @param $model
+     * @param bool $param  - if true - create new Model instance, else - load model from DB
+     * @return array - array with data to store in Yii booster's each tab content
+     */
+    public function tabsArray($model,$param = true)
+    {
+        $tabsArray = array();
+        foreach(Yii::app()->params['languages'] as $language)
+        {
+            if($param) {
+                if(Yii::app()->language == $language['langcode']) {
+                    $tabsArray[] = array(
+                        'label'=>$language['lang'],
+                        'content'=>
+                            $this->getTabContent(
+                                $model,
+                                $language['langcode']
+                            ),
+                        'active'=>true
+                    );
+                } else {
+                    $tabsArray[] = array(
+                        'label'=>$language['lang'],
+                        'content'=>
+                            $this->getTabContent(
+                                $model,
+                                $language['langcode']
+                            )
+                    );
+                }
+            } else {
+                if(Yii::app()->language == $language['langcode']) {
+                    $tabsArray[] = array(
+                        'label'=>$language['lang'],
+                        'content'=>
+                            $this->getTabContent(
+                                $this->loadMultilangModel($model->page_id,$language['langcode']),
+                                $language['langcode'],$param=false
+                            ),
+                        'active'=>true
+                    );
+                } else {
+                    $tabsArray[] = array(
+                        'label'=>$language['lang'],
+                        'content'=>
+                            $this->getTabContent(
+                                $this->loadMultilangModel($model->page_id,$language['langcode']),
+                                $language['langcode'],
+                                $param=false)
+                    );
+                }
+            }
+        }
+        return $tabsArray;
+    }
+
+    public function getTabContent($model,$lang,$param = true)
+    {
+        $fieldsArray = $model->translateAttributes;
+        $content = '';
+
+        if($param) {
+            foreach($fieldsArray as $key=>$field) {
+                $label = CHtml::activeLabel($model, Yii::t('backend',$field['label']));
+                $formField = 'active'.ucfirst($field['fieldType']);
+                $textField = CHtml::$formField($model, $field['label'].'['.$lang.']',$field['htmlOptions']);
+
+                $content .= $label.$textField;
+            }
+        } else {
+            foreach($fieldsArray as $key=>$field) {
+                /* $model->translation can be NULL if the new project language was added and no
+                 * page translation instance was created, it will be created after page save automatically,
+                 * but not during adding new language support
+                 * */
+                if($model->translation === null)
+                    $model->translation = new PagesTranslate;
+                $tmodel = $model->translation[$lang];
+                $label = CHtml::activeLabel($tmodel, Yii::t('backend',$field['label']));
+
+                $formField = 'active'.ucfirst($field['fieldType']);
+                $htmlOptions = $field['htmlOptions'];
+                $htmlOptions['name'] = $field['label'].'['.$lang.']';
+                $textField = CHtml::$formField($tmodel, $field['label'],$htmlOptions).'<hr />';
+
+                $content .= $label.$textField;
+            }
+        }
+
+        return $content;
+    }
+
+    /**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
@@ -123,8 +203,10 @@ class PagesController extends Controller
                         $model->img->saveAs($imgDir.$model->img->name);
                     }
                 }
+
                 $this->redirect(array('/pages/pages/grid'));
             }
+
 		}
 
 		$this->render('update',array(
@@ -181,32 +263,6 @@ class PagesController extends Controller
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
-
-//	/**
-//	 * Lists all models.
-//	 */
-//	public function actionIndex()
-//	{
-//		$dataProvider=new CActiveDataProvider('StaticPages');
-//		$this->render('index',array(
-//			'dataProvider'=>$dataProvider,
-//		));
-//	}
-
-//	/**
-//	 * Manages all models.
-//	 */
-//	public function actionAdmin()
-//	{
-//		$model=new StaticPages('search');
-//		$model->unsetAttributes();  // clear any default values
-//		if(isset($_GET['StaticPages']))
-//			$model->attributes=$_GET['StaticPages'];
-//
-//		$this->render('admin',array(
-//			'model'=>$model,
-//		));
-//	}
 
     public function actionGrid()
 	{
@@ -335,145 +391,6 @@ class PagesController extends Controller
 		return $model;
 	}
         
-    /**
-     * @param $model
-     * @param bool $param  - if true - create new Model instance, else - load model from DB
-     * @return array - array with data to store in Yii booster's each tab content
-     */
-    public function tabsArray($model,$param = true)
-        {
-            $tabsArray = array();
-            foreach(Yii::app()->params['languages'] as $language)
-            {
-                if($param) {
-                    if(Yii::app()->language == $language['langcode']) {
-                        $tabsArray[] = array(
-                                            'label'=>$language['lang'],
-                                            'content'=>
-                                                $this->getTabContent(
-                                                    $model,
-                                                    $language['langcode']
-                                                ),
-                                            'active'=>true
-                                            );
-                    } else {
-                        $tabsArray[] = array(
-                                            'label'=>$language['lang'],
-                                            'content'=>
-                                                $this->getTabContent(
-                                                    $model,
-                                                    $language['langcode']
-                                                )
-                                            );
-                    }
-                } else {
-                    if(Yii::app()->language == $language['langcode']) {
-                        $tabsArray[] = array(
-                                            'label'=>$language['lang'],
-                                            'content'=>
-                                                $this->getTabContent(
-                                                        $this->loadMultilangModel($model->page_id,$language['langcode']),
-                                                        $language['langcode'],$param=false
-                                                        ),
-                                            'active'=>true
-                                            );
-                    } else {
-                        $tabsArray[] = array(
-                                            'label'=>$language['lang'],
-                                            'content'=>
-                                                $this->getTabContent(
-                                                        $this->loadMultilangModel($model->page_id,$language['langcode']),
-                                                        $language['langcode'],
-                                                        $param=false)
-                                            );
-                    }
-                }
-            }
-            return $tabsArray;
-        }
-        
-//        public function tinyToTabs($model,$field,$lang)
-//        {
-//            $name = $model->scenario == 'insert' ? 'PagesTranslate['.$field.']['.$lang.']' : $field.'['.$lang.']' ;
-////                 $editor = $this->widget('ext.tinymce.TinyMce', array(
-////                        'model' => $model,
-////                        'attribute' => $field,
-////                        'language'=>$lang,
-////                        // Optional config
-////                        'compressorRoute' => 'tinyMce/compressor',
-////                        //'spellcheckerUrl' => array('tinyMce/spellchecker'),
-////                        // or use yandex spell: http://api.yandex.ru/speller/doc/dg/tasks/how-to-spellcheck-tinymce.xml
-////              //          'spellcheckerUrl' => 'http://speller.yandex.net/services/tinyspell',
-////                        'fileManager' => array(
-////                            'class' => 'ext.elFinder.TinyMceElFinder',
-////                            //route to class with action connector (class or controller)
-////                            'connectorRoute'=>'elfinder/connector',
-////                        ),
-////                        'htmlOptions' => array(
-////                           'name'=>$name,
-////                           // 'rows' => 6,
-////                           // 'cols' => 60,
-////                            'width'=>'auto',
-////                        ),
-////                    ),true);
-//
-//            $editor = $this->widget('application.backend.extensions.tinymce.TinyMceWidget',
-//                array(
-//                    'model' => $model,
-//                    'attribute' => 'textarea',
-//                    'language'=>$lang,
-//                ),
-//                true
-//            );
-//
-//            return $editor;
-//        }
-        
-        public function getTabContent($model,$lang,$param = true)
-        {
-//            $fieldsArray = Yii::app()->params['translateAttrs'];
-            $fieldsArray = $model->translateAttributes;
-            $content = '';
-
-            if($param) {
-                foreach($fieldsArray as $key=>$field) {
-                    $label = CHtml::activeLabel($model, $field['label']);
-//                    if($field['fieldType']=='textArea')
-//                        $textField = $this->tinyToTabs($model, $field['label'], $lang);
-//                    else {
-                        $formField = 'active'.ucfirst($field['fieldType']);
-                        $textField = CHtml::$formField($model, $field['label'].'['.$lang.']',$field['htmlOptions']);
-//                    }
-
-                    $content .= $label.$textField;
-                }
-            } else {
-                    foreach($fieldsArray as $key=>$field) {
-                        /* $model->translation can be NULL if the new project language was added and no
-                         * page translation instance was created, it will be created after page save automatically,
-                         * but not during adding new language support
-                         * */
-                        echo CVarDumper::dump($model, 7, true);
-                        if($model->translation === null)
-                            $model->translation = new PagesTranslate;
-                        $label = CHtml::activeLabel($model->translation, $field['label']);
-
-//                        if($field=='t_content') {
-//                            $textField = $this->tinyToTabs($model->translation, $field, $lang);
-//                        } else {
-                            $formField = 'active'.ucfirst($field['fieldType']);
-                            $htmlOptions = $field['htmlOptions'];
-                            $htmlOptions['name'] = $field['label'].'['.$lang.']';
-                            $textField = CHtml::$formField($model->translation, $field['label'],$htmlOptions).'<hr />';
-//                        }
-
-                        $content .= $label.$textField;
-                    }
-            }
-
-            return $content;
-        }
-
     public function loadMultilangModel($id,$lang)
     {
         $model = StaticPages::model()

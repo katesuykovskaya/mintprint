@@ -1,7 +1,6 @@
 <?php
 
-//class MessageController extends RightsBaseController
-class MessageController extends Controller
+class MessageController extends RightsBaseController
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning

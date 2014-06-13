@@ -48,8 +48,7 @@ class SitemenuController extends Controller
     public function filters()
     {
         return array(
-//            'rights',
-            array('auth.filters.AuthFilter'),
+            'rights',
         );
     }
 
@@ -141,7 +140,7 @@ class SitemenuController extends Controller
 //            'on'=>'translation.t_lang=:lang',
 //            'params'=>array(':lang'=>Yii::app()->language),
 //        )))->findAll($criteria);
-        $data = Sitemenu::model()->findByAttributes(['type'=>$type]);
+        $data = Sitemenu::model()->findByAttributes(array('type'=>$type));
         $model = Sitemenu::model()->findByPk($data->root);
         $_SESSION['css'] = Sitemenu::model()->getCss();
 
@@ -167,7 +166,7 @@ class SitemenuController extends Controller
 
         if(isset($_POST['cancel']))
         {
-            $this->redirect($this->createUrl('/backend/menugen/sitemenu/mainmenu',array('language'=>Yii::app()->language)));
+            $this->redirect($this->createUrl('backend/menugen/sitemenu/mainmenu',array('language'=>Yii::app()->language)));
 
         }
         if(isset($_POST['confirm'])){
@@ -258,10 +257,10 @@ class SitemenuController extends Controller
         if($translate->save(false))
         {
             Yii::app()->user->setFlash('menu_success',Yii::t('backend','Saved '.$source));
-            $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+            $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
         } else {
             Yii::app()->user->setFlash('menu_error',Yii::t('backend','Not saved, error occured!'));
-            $this->redirect($this->createUrl('/backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
+            $this->redirect($this->createUrl('backend/menugen/default/usermenu',array('language'=>Yii::app()->language)));
         }
     }
 
@@ -609,7 +608,7 @@ class SitemenuController extends Controller
                     $this->doUpdateMenu($postArray,$redirect);
                     break;
                 case 'cancel':
-                    $this->redirect($this->createUrl('/backend/menugen/sitemenu/view',array('type'=>$redirect,'language'=>Yii::app()->language)));
+                    $this->redirect($this->createUrl('backend/menugen/sitemenu/view',array('type'=>$redirect,'language'=>Yii::app()->language)));
                     break;
                 default:
                     throw new CHttpException('404','no redirect page');
@@ -665,24 +664,48 @@ class SitemenuController extends Controller
             $lang = Yii::app()->request->getPost('lang',null);
             if($pageid)
             {
-                $connection = Yii::app()->db;
+                Yii::import('application.backend.modules.pages.models.*');
                 if($lang){
-                    $sql = 'select page_id, t_lang, t_title as t_text, t_translit as t_url, published as t_hide from translate_pages where page_id=:pageid AND t_lang=:lang';
-                    $command = $connection->createCommand($sql);
-                    $command->bindParam(':pageid',$pageid,PDO::PARAM_INT);
-                    $command->bindParam(':lang',$lang,PDO::PARAM_INT);
+                    $newArr = array();
+                    $page = StaticPages::model()->with('translation')->findByPk($pageid);
+                    $ancestors = $page->ancestors()->findAll(array(
+                        'condition'=>'page_id != 1'
+                    ));
+                    $parents = '';
+                    foreach($ancestors as $parent) {
+                        $parents .= $parent->translation[$lang]->t_translit.'/';
+                    }
+                    $url = $lang == Yii::app()->sourceLanguage ? '/' : '/'.$lang.'/';
+                    $url .= $parents.$page->translation[$lang]->t_translit.'/';
+                    $newArr[$lang] = array(
+                        'page_id' => $pageid,
+                        't_lang' => $lang,
+                        't_text' => $page->translation[$lang]->t_title,
+                        't_url' => $url,
+                        't_hide' => $page->translation[$lang]->published
+                    );
                 }
                 else {
-                    $sql = 'select page_id, t_lang, t_title as t_text, t_translit as t_url, published as t_hide from translate_pages where page_id=:pageid';
-                    $command = $connection->createCommand($sql);
-                    $command->bindParam(':pageid',$pageid,PDO::PARAM_INT);
-                }
-
-                $arr = $command->queryAll();
-                foreach($arr as $key=>$value)
-                {
-                    $newArr[$value['t_lang']]=$value;
-
+                    $newArr = array();
+                    $page = StaticPages::model()->with('translation')->findByPk($pageid);
+                    $ancestors = $page->ancestors()->findAll(array(
+                        'condition'=>'page_id != 1'
+                    ));
+                    foreach(Yii::app()->params['languages'] as $language => $value) {
+                        $parents = '';
+                        foreach($ancestors as $parent) {
+                            $parents .= $parent->translation[$language]->t_translit.'/';
+                        }
+                        $url = $language == Yii::app()->sourceLanguage ? '/' : '/'.$language.'/';
+                        $url .= $parents.$page->translation[$language]->t_translit.'/';
+                        $newArr[$language] = array(
+                            'page_id' => $pageid,
+                            't_lang' => $language,
+                            't_text' => $page->translation[$language]->t_title,
+                            't_url' => $url,
+                            't_hide' => $page->translation[$language]->published
+                        );
+                    }
                 }
                 echo CJSON::encode($newArr);
                 Yii::app()->end();

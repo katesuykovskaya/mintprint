@@ -30,10 +30,9 @@ class UsersModule extends CWebModule
 
 		// import the module-level models and components
 		$this->setImport(array(
-//			'users.models.*',
-//			'users.components.*',
-//            'application.modules.backendmenu.models.*' // не есть правильно, не должно зависеть жестко от другого компонента
-            'application.backend.modules.users.models.*'
+			'users.models.*',
+			'users.components.*',
+            'application.modules.backendmenu.models.*' // не есть правильно, не должно зависеть жестко от другого компонента
 		));
 	}
 

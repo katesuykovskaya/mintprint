@@ -1,7 +1,6 @@
 <?php
 
-//class UsersController extends RightsBaseController
-class UsersController extends Controller
+class UsersController extends RightsBaseController
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -15,9 +14,8 @@ class UsersController extends Controller
 	public function filters()
 	{
 		return array(
-//		    'rights',
-            array('auth.filters.AuthFilter - login'),
-        );
+		'rights',
+                );
 	}
 	/**
 	 * Displays a particular model.
@@ -29,27 +27,32 @@ class UsersController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
-
-    public function actionAdminka()
+        public function actionAdminka()
 	{
             $this->layout = '//layouts/adminka';
 		$this->render('adminka');
 	}
+        
+        public function actionVkLogin()
+        {
+            $this->render('vk');
+        }
+
         /**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
 	public function actionCreate()
 	{
-		$model=new User();
+		$model=new Users();
                 $model->scenario = 'insert';
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['User']))
+		if(isset($_POST['Users']))
 		{
-			$model->attributes=$_POST['User'];
+			$model->attributes=$_POST['Users'];
             $model->role = $_POST['userRole'];
             $obj = new bCrypt();
             $model->token = $obj->hash(time());
@@ -77,7 +80,7 @@ class UsersController extends Controller
         if(Yii::app()->request->getParam('id',null))
         {
             $id = Yii::app()->request->getParam('id',null);
-            $model = User::model()->findByPk((int)$id);
+            $model = Users::model()->findByPk((int)$id);
             $active = $model->active;
             $model->active = $active == 0 ? 1 : 0;
             $model->save(false);
@@ -103,19 +106,21 @@ class UsersController extends Controller
             // validate user input and redirect to the previous page if valid
             if($model->validate())
             {
-                $user = User::model()->findByPk((int)$_POST['ConfirmForm']['userid']);
-                    $user->pass = $obj->hash($model->password);
-                    $user->active = 1;
-                    $user->token = null;
-                    $user->save(false);
-                $this->redirect($this->createUrl('/backend/users/users/login'));
+                $user = Users::model()->findByPk((int)$_POST['ConfirmForm']['userid']);
+                $user->pass = $obj->hash($model->password);
+                $user->active = 1;
+                $user->token = null;
+                if($user->save(false))
+                    $this->redirect($this->createUrl('backend/users/users/login'));
+                else
+                    die('error111');
             }
         }
         // display the login form
 
         if(isset($_GET['token']))
         {
-            $data = User::model()->findByAttributes(array('token'=>$_GET['token']));
+            $data = Users::model()->findByAttributes(array('token'=>$_GET['token']));
             if(count($data)!=1 && $data->token != null)
                 throw new CHttpException('404','Запись уже активирована или не существует, обратитесь к администратору.');
             else
@@ -137,9 +142,9 @@ class UsersController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['User']))
+		if(isset($_POST['Users']))
 		{
-			$model->attributes=$_POST['User'];
+			$model->attributes=$_POST['Users'];
             $model->role = $_POST['userRole'];
             $items = AuthAssignment::model()->findByAttributes(array('userid'=>$model->user_id));
             if($items!=null)
@@ -176,7 +181,7 @@ class UsersController extends Controller
 
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('User');
+		$dataProvider=new CActiveDataProvider('Users');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -187,39 +192,39 @@ class UsersController extends Controller
 	 */
 	public function actionAdmin()
 	{
-        $this->layout = '//layouts/main';
-		$model=new User('search');
+            $this->layout = '//layouts/main';
+		$model=new Users('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['User']))
-			$model->attributes=$_GET['User'];
+		if(isset($_GET['Users']))
+			$model->attributes=$_GET['Users'];
 
 		$this->render('admin',array(
 			'model'=>$model,
 		));
 	}
         
-    public function actionPermissions($role='')
-    {
-        $this->layout = '//layouts/main';
-
-
-        $this->layout = '//layouts/main';
-    $model=new AuthItem('search');
-    $model->unsetAttributes();  // clear any default values
+        public function actionPermissions($role='')
+        {
+            $this->layout = '//layouts/main';
+          
+            
+            $this->layout = '//layouts/main';
+		$model=new AuthItem('search');
+		$model->unsetAttributes();  // clear any default values
 //                if(isset($_GET['role']))
 //                    $model->name = $_GET['role'];
-
-            if(isset($_GET['AuthItem']))
-        $model->attributes=$_GET['AuthItem'];
-
-         $tableData = User::model()->getAllAssignments();
-         $all = User::model()->getAllActions();
-              $this->render('permissions',array(
-                  'model'=>$model,
-                  'newArr'=>$tableData,
-                  'all'=>$all,
-              ));
-    }
+                
+                if(isset($_GET['AuthItem']))
+			$model->attributes=$_GET['AuthItem'];
+             
+             $tableData = Users::model()->getAllAssignments();   
+             $all = Users::model()->getAllActions();
+                  $this->render('permissions',array(
+                      'model'=>$model,
+                      'newArr'=>$tableData,
+                      'all'=>$all,
+                  ));
+        }
 
         /**
 	 * Returns the data model based on the primary key given in the GET variable.
@@ -228,7 +233,7 @@ class UsersController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=User::model()->findByPk($id);
+		$model=Users::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -240,7 +245,7 @@ class UsersController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='User-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='users-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
@@ -287,7 +292,7 @@ class UsersController extends Controller
     {
         $id = Yii::app()->request->getParam('user',null);
         if($id){
-            $model = User::model()->findByPk($id);
+            $model = Users::model()->findByPk($id);
             $model->active = 0;
             $obj = new bCrypt();
             $model->token = $obj->hash(time());

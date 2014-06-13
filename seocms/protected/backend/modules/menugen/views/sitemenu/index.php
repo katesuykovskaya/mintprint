@@ -1,6 +1,6 @@
 <div class="row">
     <ul class="breadcrumb span6">
-        <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend',['language'=>Yii::app()->language]))?></li>
+        <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend',array('language'=>Yii::app()->language)))?></li>
         <li><span class="divider">/</span><?=Yii::t('backend','Меню для сайта')?></li>
     </ul>
 </div>
@@ -10,7 +10,7 @@
     <div class="span3">
         <?php
         echo CHtml::link(Yii::t('backend','Создать меню'),
-            $this->createUrl('/backend/menugen/sitemenu/create',array('language'=>Yii::app()->language)),
+            $this->createUrl('backend/menugen/sitemenu/create',array('language'=>Yii::app()->language)),
             array('class'=>'btn btn-success','id'=>'createBtn')
         );?>
     </div>
@@ -24,7 +24,7 @@
 
             <tr id="<?=$row['type']?>">
                 <td><?php echo CHtml::link('<i class="icon-remove" data-toggle="tooltip" title='.Yii::t('backend','delete').'></i>',$this->createUrl('#'),array('id'=>'delLink','data-type'=>$row['type']))?></td>
-                <td><?php echo CHtml::link($row['t_text'],$this->createUrl('/backend/menugen/sitemenu/view',array('type'=>$row['type'],'language'=>Yii::app()->language)))?></td>
+                <td><?php echo CHtml::link($row['t_text'],$this->createUrl('backend/menugen/sitemenu/view',array('type'=>$row['type'],'language'=>Yii::app()->language)))?></td>
             </tr>
 
         <?php endforeach;?>

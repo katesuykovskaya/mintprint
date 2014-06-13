@@ -223,7 +223,7 @@ class Sitemenu extends CActiveRecord
                     if($value['fieldType']=='checkBox'){
                         $val = isset($model->translation[$language][$value['label']]) ? $model->translation[$language][$value['label']] : '';
                         $field = CHtml::checkBox($value['label'].'['.$language.']',$val == 1 ? true : false, array('value'=>$value['value'])
-                            ,isset($value['htmlOptions']) ? $value['htmlOptions'] : []).'<br />';
+                            ,isset($value['htmlOptions']) ? $value['htmlOptions'] : array()).'<br />';
                     } elseif ($value['fieldType']==='dropDownList'){
                         $field = '<select id="test">';
                         foreach($value['value'] as $key=>$val){
@@ -233,7 +233,7 @@ class Sitemenu extends CActiveRecord
                     } else {
                         $val = isset($model->translation[$language][$value['label']]) ? $model->translation[$language][$value['label']] : '';
                         $field = CHtml::$value['fieldType']($value['label'].'['.$language.']',$val,array('id'=>$value['label'].'_'.$language)
-                            ,isset($value['htmlOptions']) ? $value['htmlOptions'] : []).'<br />';
+                            ,isset($value['htmlOptions']) ? $value['htmlOptions'] : array()).'<br />';
                     }
 
                     $content .= $label.$field;
@@ -312,7 +312,7 @@ class Sitemenu extends CActiveRecord
             }
         } else {
             echo CHtml::link(Yii::t('backend','Создать меню'),
-                Yii::app()->urlManager->createUrl('/backend/menugen/sitemenu/createmenu',array('language'=>Yii::app()->language)),
+                Yii::app()->urlManager->createUrl('backend/menugen/sitemenu/createmenu',array('language'=>Yii::app()->language)),
                 array('class'=>'btn'));
         }
     }
@@ -357,8 +357,19 @@ class Sitemenu extends CActiveRecord
                 {
                     if($value['fieldType']=='checkBox')
                         $model->$value['label'] = isset($_POST[$value['label']][$key]) ? 1 : 0;
-                    else
-                        $model->$value['label'] = isset($_POST[$value['label']][$key]) ? $_POST[$value['label']][$key] : null;
+                    else {
+                        if(isset($_POST[$value['label']][$key])) {
+                            $url = $_POST[$value['label']][$key];
+                            // all relative urls must starts with "/"
+                            if($value['label'] == 't_url')
+                                if(strncmp($url, '/', 1) && strncmp($url, 'http://', 7)) {
+                                    $url = '/'.$url;
+                                }
+                        } else
+                            $url = null;
+                        $model->$value['label'] = $url;
+                    }
+//                        $model->$value['label'] = isset($_POST[$value['label']][$key]) ? $_POST[$value['label']][$key] : null;
                 }
                 $model->save(false);
             }
@@ -377,8 +388,19 @@ class Sitemenu extends CActiveRecord
                 {
                     if($value['fieldType']=='checkBox')
                         $model->$value['label'] = isset($_POST[$value['label']][$key]) ? 1 : 0;
-                    else
-                        $model->$value['label'] = isset($_POST[$value['label']][$key]) ? $_POST[$value['label']][$key] : null;
+                    else {
+                        if(isset($_POST[$value['label']][$key])) {
+                            $url = $_POST[$value['label']][$key];
+                            // all relative urls must starts with "/"
+                            if($value['label'] == 't_url')
+                                if(strncmp($url, '/', 1) && strncmp($url, 'http://', 7)) {
+                                    $url = '/'.$url;
+                                }
+                        } else
+                            $url = null;
+                        $model->$value['label'] = $url;
+                    }
+//                        $model->$value['label'] = isset($_POST[$value['label']][$key]) ? $_POST[$value['label']][$key] : null;
                 }
 
                 $model->save(false);
@@ -471,7 +493,7 @@ class Sitemenu extends CActiveRecord
 
             }
 
-        echo '<td><span class="text">'.CHtml::link($item->translation[Yii::app()->language]->t_text,Yii::app()->urlManager->createUrl('/backend/menugen/sitemenu/updatemenu',
+        echo '<td><span class="text">'.CHtml::link($item->translation[Yii::app()->language]->t_text,Yii::app()->urlManager->createUrl('backend/menugen/sitemenu/updatemenu',
                 array('id'=>$item->id,'language'=>Yii::app()->language)
             ));
         echo '</span></td>
@@ -577,7 +599,7 @@ class Sitemenu extends CActiveRecord
 
             }
 
-            echo '<td><span class="text">'.CHtml::link($item->translation[Yii::app()->language]->t_text,Yii::app()->urlManager->createUrl('/backend/menugen/sitemenu/updatemenu',
+            echo '<td><span class="text">'.CHtml::link($item->translation[Yii::app()->language]->t_text,Yii::app()->urlManager->createUrl('backend/menugen/sitemenu/updatemenu',
                     array('id'=>$item->id,'language'=>Yii::app()->language)
                 ));
             echo '</span></td>
@@ -663,14 +685,14 @@ class Sitemenu extends CActiveRecord
                 if($childrenNum != 0){
                     echo '<tr id=row-'.$item->id.' parent='.$parent->id.' data-rowid='.$item->id.' children="'.$childrenString.'" descendants="'.$descendantsString.'" style="padding-left:0;">';
                     echo '<td class="mainAjax"></td>
-                          <td><span class="text" style="padding-left: '.$padding.'px;">'.CHtml::link($item->translation[Yii::app()->language]->t_text,Yii::app()->urlManager->createUrl('/backend/menugen/sitemenu/updatemenu',
+                          <td><span class="text" style="padding-left: '.$padding.'px;">'.CHtml::link($item->translation[Yii::app()->language]->t_text,Yii::app()->urlManager->createUrl('backend/menugen/sitemenu/updatemenu',
                             array('id'=>$item->id,'language'=>Yii::app()->language)
                         ));
                     echo '</span></td>';
                 } else {
                     echo '<tr id=row-'.$item->id.' parent='.$parent->id.' data-rowid='.$item->id.' style="padding-left:0;">';
                     echo '<td class="mainAjax"></td>
-                          <td><span class="text" style="padding-left: '.$padding.'px;">'.CHtml::link($item->translation[Yii::app()->language]->t_text,Yii::app()->urlManager->createUrl('/backend/menugen/sitemenu/updatemenu',
+                          <td><span class="text" style="padding-left: '.$padding.'px;">'.CHtml::link($item->translation[Yii::app()->language]->t_text,Yii::app()->urlManager->createUrl('backend/menugen/sitemenu/updatemenu',
                             array('id'=>$item->id,'language'=>Yii::app()->language)
                             ));
                     echo '</span></td>';

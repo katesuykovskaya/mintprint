@@ -1,12 +1,12 @@
 <?php
  return array (
-  'en' => 
+  /*'en' =>
   array (
     'langcode' => 'en',
     'lang' => 'English',
     'country' => 'GB',
     'countrycode' => 'GB',
-  ),
+  ),*/
   'ru' => 
   array (
     'langcode' => 'ru',

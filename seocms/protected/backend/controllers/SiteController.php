@@ -1,15 +1,13 @@
 <?php
 
-//class SiteController extends RightsBaseController
-class SiteController extends Controller
+class SiteController extends RightsBaseController
 {
 
     public function filters()
 	{
 		return array(
-//		    'rights',
-            array('auth.filters.AuthFilter'),
-        );
+		'rights',
+                );
 	}
 	/**
 	 * Declares class-based actions.
@@ -38,22 +36,7 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-        //$socialArray = Yii::app()->getModule('social')->getConfig();
-
-        if(isset($_GET['auth'])) {
-            $token = $_GET['token'];
-            $authClass = ucfirst($_GET['auth']);
-            Yii::import(Yii::getPathOfAlias('application.backend.modules.social.components.'.$authClass));
-            $provider = new $authClass();
-            if($authClass !== 'Google')
-                $data = $provider->getPhotos($token);
-            else
-                $data = $provider->getInfo($token);
-
-            $this->renderPartial('_photos',['data'=>$data]);
-        }
-
-        $this->render('index',['socialArray'=>array()]);
+        $this->render('index');
 	}
 
 

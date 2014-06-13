@@ -117,13 +117,13 @@ class Feedback extends CActiveRecord
             array(
                 'criteria'=>$criteria,
                 'sort'=>array(
-                    'route'=>Yii::app()->urlManager->createUrl('/backend/feedback/feedback/maillist',array('language'=>Yii::app()->language)),
+                    'route'=>Yii::app()->urlManager->createUrl('backend/feedback/feedback/maillist',array('language'=>Yii::app()->language)),
                     'params'=>(isset($_GET['url'])) ? array('url'=>urlencode($_GET['url'])) : array(),
                     'defaultOrder' => 'create_date DESC',
                 ),
                 'pagination'=>array(
-                    'route'=>Yii::app()->urlManager->createUrl('/backend/feedback/feedback/maillist',array('language'=>Yii::app()->language)),
-                    'params'=>isset($_GET['url']) ? ['url'=>urlencode($_GET['url']),'language'=>Yii::app()->language] : ['language'=>Yii::app()->language],
+                    'route'=>Yii::app()->urlManager->createUrl('backend/feedback/feedback/maillist',array('language'=>Yii::app()->language)),
+                    'params'=>isset($_GET['url']) ? array('url'=>urlencode($_GET['url']),'language'=>Yii::app()->language) : array('language'=>Yii::app()->language),
                     'pageVar'=>'page',
                     'pageSize'=> Yii::app()->user->getState('pageSize',Yii::app()->params['defaultPageSize']),
                 ),

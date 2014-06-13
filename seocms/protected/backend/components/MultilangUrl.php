@@ -30,7 +30,8 @@ class MultilangUrl {
         $model = self::loadModel(self::$_search_attr, self::$_modelTranslation, self::$_index_field_name);
 //        echo CVarDumper::dump($model, 5, true);
         foreach($langs as $key => $lang) {
-            if(isset($model[$key]) && !empty($model[$key]->$urlName)) {
+
+            if(!(empty($model)) && isset($model[$key]) && !empty($model[$key]->$urlName)) {
                 $translit = $model[$key]->$urlName;
                 if($key != Yii::app()->sourceLanguage)
                     $url = $key;
@@ -40,21 +41,15 @@ class MultilangUrl {
                 $url .= '/'.$translit;
                 if(!empty(self::$_sufix)) $url .= self::$_sufix;
             } else
-                $url = Yii::app()->createUrl(self::$errorPage, ['language'=>$key]);
-
+                $url = Yii::app()->createUrl(self::$errorPage, array('language'=>$key));
+            if(empty($model)) {
+                $urls[$key] = 'lalal';
+            }
             $urls[$key] = $url;
         }
 
         return $urls;
     }
-
-//    public static function createFromUrl() {
-//        $langs = Yii::app()->params['languages'];
-//        $url = Yii::app()->request->url;
-//        foreach($langs as $key => $lang) {
-//            echo Yii::app()->createUrl($url, array('language'=>$key)).'<br>';
-//        }
-//    }
 
     public static function createFromPage($page) {
         $urls = array();

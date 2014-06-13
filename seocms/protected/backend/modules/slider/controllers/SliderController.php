@@ -16,9 +16,9 @@ class SliderController extends Controller
 	{
 		return array(
 //			'accessControl', // perform access control for CRUD operations
-//			'postOnly + delete', // we only allow deletion via POST request
-//            'rights'
-            array('auth.filters.AuthFilter'),
+			'postOnly + delete', // we only allow deletion via POST request
+            'rights'
+//            array('auth.filters.AuthFilter'),
 		);
 	}
 
@@ -49,17 +49,6 @@ class SliderController extends Controller
 //	}
 
 	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-//	public function actionView($id)
-//	{
-//		$this->render('view',array(
-//			'model'=>$this->loadModel($id),
-//		));
-//	}
-
-	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
@@ -70,27 +59,38 @@ class SliderController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
+        if(isset($_POST['save'])) $task = 'save';
+        elseif(isset($_POST['confirm'])) $task = 'confirm';
+        elseif(isset($_POST['cancel'])) $task = 'cancel';
+
 
 		if(isset($_POST['Slider']))
 		{
-            $model->attributes=$_POST['Slider'];
-            $lastModel = Slider::model()->findByAttributes(array(), array('order'=>'move DESC'));
-            $model->move = $lastModel->move + 1;
-            $model->img = CUploadedFile::getInstance($model,'img');
-            if($model->save()) {
-                if($model->img){
-                    $imgDir = Yii::getPathOfAlias('webroot').'/uploads/'.get_class($model).DIRECTORY_SEPARATOR.$model->id.DIRECTORY_SEPARATOR;
-                    if(is_dir($imgDir)){
-                        $model->img->saveAs($imgDir.$model->img->name);
-                    } else {
-                        mkdir($imgDir, 0777, true);
-                        $model->img->saveAs($imgDir.$model->img->name);
+            if(isset($_POST['save'])) $task = 'save';
+            elseif(isset($_POST['confirm'])) $task = 'confirm';
+            elseif(isset($_POST['cancel'])) $task = 'cancel';
+            elseif(isset($_POST['delete'])) $task = 'delete';
+            switch($task) {
+                case 'save':
+                    if($this->saveSlide($model)) {
+                        $this->redirect($this->createUrl($_POST['save_url'],array(
+                            'language'=>Yii::app()->language,
+                        )));
                     }
-                }
-                $this->redirect($this->createUrl('/backend/slider/slider/update',array(
-                    'language'=>Yii::app()->language,
-                    'id'=>$model->id
-                )));
+                    break;
+                case 'confirm':
+                    if($this->saveSlide($model)) {
+                        $this->redirect($this->createUrl($_POST['confirm_url'],array(
+                            'language'=>Yii::app()->language,
+                            'id'=>$model->id
+                        )));
+                    }
+                    break;
+                default:
+                    $this->redirect($this->createUrl('/backend/slider/slider/admin',array(
+                        'language'=>Yii::app()->language,
+                    )));
+                    break;
             }
 		}
 
@@ -108,35 +108,42 @@ class SliderController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-        $modelTranslate = $model->translation[Yii::app()->language];
-        if($modelTranslate === null) $modelTranslate = new SliderTranslate;
+        $modelTranslate = isset($model->translation[Yii::app()->language]) ? $model->translation[Yii::app()->language] : new SliderTranslate;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Slider']))
 		{
-            $model->attributes=$_POST['Slider'];
-            $img = CUploadedFile::getInstance($model,'img');
-            if($img) {
-                $model->img = $img;
-            }
-            if($model->save()) {
-                if($img){
-                    $model->img = $img;
-                    $imgDir = Yii::getPathOfAlias('webroot').'/uploads/'.get_class($model).DIRECTORY_SEPARATOR.$model->id.DIRECTORY_SEPARATOR;
-                    if(is_dir($imgDir)){
-                        $model->img->saveAs($imgDir.$model->img->name);
-                    } else {
-                        mkdir($imgDir, 0777, true);
-                        $model->img->saveAs($imgDir.$model->img->name);
-                    }
+            if(isset($_POST['save'])) $task = 'save';
+            elseif(isset($_POST['confirm'])) $task = 'confirm';
+            elseif(isset($_POST['cancel'])) $task = 'cancel';
+            elseif(isset($_POST['delete'])) $task = 'delete';
+                switch($task) {
+                    case 'save':
+                        if($this->saveSlide($model)) {
+                            $this->redirect($this->createUrl($_POST['save_url'],array(
+                                'language'=>Yii::app()->language,
+                            )));
+                        }
+                        break;
+                    case 'confirm':
+                        if($this->saveSlide($model)) {
+                            $this->redirect($this->createUrl($_POST['confirm_url'],array(
+                                'language'=>Yii::app()->language,
+                                'id'=>$model->id
+                            )));
+                        }
+                        break;
+                    case 'delete':
+                        $this->actionDelete((int)$id);
+                        break;
+                    default:
+                        $this->redirect($this->createUrl('/backend/slider/slider/admin',array(
+                            'language'=>Yii::app()->language,
+                        )));
+                        break;
                 }
-                $this->redirect($this->createUrl('/backend/slider/slider/update',array(
-                    'language'=>Yii::app()->language,
-                    'id'=>$model->id
-                )));
-            }
 		}
 
 		$this->render('update',array(
@@ -144,6 +151,31 @@ class SliderController extends Controller
             'modelTranslate'=>$modelTranslate
 		));
 	}
+
+    public function saveSlide($model) {
+        $model->attributes = $_POST['Slider'];
+        if($model->isNewRecord) {
+            $lastModel = Slider::model()->findByAttributes(array(), array('order'=>'move DESC'));
+            $model->move = $lastModel->move + 1;
+        }
+        $img = CUploadedFile::getInstance($model,'img');
+        if($img) {
+            $model->img = $img;
+        }
+        if($model->save()) {
+            if($img){
+                $imgDir = Yii::getPathOfAlias('webroot').'/uploads/'.get_class($model).DIRECTORY_SEPARATOR.$model->id.DIRECTORY_SEPARATOR;
+                if(is_dir($imgDir)){
+                    $img->saveAs($imgDir.$model->img->name);
+                } else {
+                    mkdir($imgDir, 0777, true);
+                    $img->saveAs($imgDir.$model->img->name);
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 
 	/**
 	 * Deletes a particular model.
@@ -158,19 +190,8 @@ class SliderController extends Controller
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('/backend/slider/slider/admin', 'language'=>Yii::app()->language));
 	}
-
-	/**
-	 * Lists all models.
-	 */
-//	public function actionIndex()
-//	{
-//		$dataProvider=new CActiveDataProvider('Slider');
-//		$this->render('index',array(
-//			'dataProvider'=>$dataProvider,
-//		));
-//	}
 
 	/**
 	 * Manages all models.
@@ -247,28 +268,35 @@ class SliderController extends Controller
         $order = $_POST['newOrder'];
         $res = true;
         foreach($order as $pos=>$id) {
-            $q = "UPDATE `Slider` SET `move` = '$pos' WHERE `id` = '$id'";
-            $command = Yii::app()->db->createCommand($q)->execute();
-            if(!$command) { $res = false; die(json_encode(array('res'=>false))); }
+            $index = $pos + 1;
+            $command = Yii::app()->db->createCommand();
+            if($command->update(
+                'Slider', array(
+                    'move'=>$index,
+                ),'id=:id', array(':id'=>$id)
+            )){};
+//            $command->execute();
+//            if(!$res) { die(json_encode(array('res'=>false))); }
         }
         if($res) die(json_encode(array('res'=>true)));
     }
 
     function deleteDirectory($dirname) {
-        if (is_dir($dirname))
+        if (is_dir($dirname)) {
             $dir_handle = opendir($dirname);
-        if (!$dir_handle)
-            return false;
-        while($file = readdir($dir_handle)) {
-            if ($file != "." && $file != "..") {
-                if (!is_dir($dirname."/".$file))
-                    unlink($dirname."/".$file);
-                else
-                    $this->deleteDirectory($dirname.'/'.$file);
+            if (!$dir_handle)
+                return false;
+            while($file = readdir($dir_handle)) {
+                if ($file != "." && $file != "..") {
+                    if (!is_dir($dirname."/".$file))
+                        unlink($dirname."/".$file);
+                    else
+                        $this->deleteDirectory($dirname.'/'.$file);
+                }
             }
+            closedir($dir_handle);
+            rmdir($dirname);
+            return true;
         }
-        closedir($dir_handle);
-        rmdir($dirname);
-        return true;
     }
 }

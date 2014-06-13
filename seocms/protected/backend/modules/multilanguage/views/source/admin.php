@@ -1,6 +1,6 @@
 <div class="row">
     <ul class="breadcrumb span6">
-        <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend',['language'=>Yii::app()->language]))?></li>
+        <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend',array('language'=>Yii::app()->language)))?></li>
         <li><span class="divider">/</span><?=Yii::t('backend','Мультиязычность. Словарь.')?></li>
     </ul>
 </div>
@@ -76,10 +76,10 @@
                         'header'=>Yii::t('backend','Удаление'),
                         'buttons'=>array(
                             'delete'=>array(
-                                'url'=>'Yii::app()->urlManager->createUrl("/backend/multilanguage/source/delete",array("id"=>$data->id,"language"=>Yii::app()->language))'
+                                'url'=>'Yii::app()->urlManager->createUrl("backend/multilanguage/source/delete",array("id"=>$data->id,"language"=>Yii::app()->language))'
                             ),
                             'update'=>array(
-                                'url'=>'Yii::app()->urlManager->createUrl("/backend/multilanguage/source/update",array("id"=>$data->id,"language"=>Yii::app()->language))'
+                                'url'=>'Yii::app()->urlManager->createUrl("backend/multilanguage/source/update",array("id"=>$data->id,"language"=>Yii::app()->language))'
                             ),
                             'view'=>array(
                                 'visible'=>'0',
