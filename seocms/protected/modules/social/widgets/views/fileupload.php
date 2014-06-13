@@ -17,7 +17,7 @@ $this->widget('ext.EAjaxUpload.EAjaxUpload',
             'multiple' => true,
             'onComplete'=>"js:function(id, fileName, responseJSON)
             {
-                ajaxLoadPhoto(responseJSON.originalPath, responseJSON.iconPath, responseJSON.id);
+                ajaxLoadPhoto(responseJSON.originalPath, responseJSON.iconPath, responseJSON.id, responseJSON.sum);
 
 //                console.log(responseJSON);
 

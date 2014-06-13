@@ -38,7 +38,11 @@ else
                 'type'=>'get',
                 'data'=>'js:{'.$aConf['album_id'].' : '.$album[$aConf['album_id']].'}',
                 'beforeSend'=>'js:function(){$(".loader'.$provider.'-'.$key.'").css("display", "block")}',
-                'complete'=>'js:function(){$(".loader'.$provider.'-'.$key.'").css("display", "none")}',
+                'complete'=>'js:function(){$(".loader'.$provider.'-'.$key.'").css("display", "none");$(".image-wrap").draggable({
+                cursor: "move",
+                scroll: false,
+                helper: "clone",
+                containment: ".content"});}',
                 'update'=>'.'.$provider.'-tab .viewport',
             ),array(
                 'class'=>'album-thumb'

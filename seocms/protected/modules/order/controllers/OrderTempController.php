@@ -116,9 +116,9 @@ class OrderTempController extends Controller
         if(Yii::app()->request->isAjaxRequest) {
             $model = $this->loadModel($_POST['OrderTemp']['id']);
             $model->delete();
-            if(!empty($_POST['OrderTemp']['type']) && $_POST['OrderTemp']['type'] == 'upload'){
-                $img_url = str_replace('http://' . $_SERVER['SERVER_NAME'], Yii::getPathOfAlias('webroot'), $_POST['OrderTemp']['img_url']);
-                $thumb_url = str_replace('http://' . $_SERVER['SERVER_NAME'], Yii::getPathOfAlias('webroot'), $_POST['OrderTemp']['thumb_url']);
+            if($model->type == 'upload'){
+                $img_url = str_replace('http://' . $_SERVER['SERVER_NAME'], Yii::getPathOfAlias('webroot'), $model->img_url);
+                $thumb_url = str_replace('http://' . $_SERVER['SERVER_NAME'], Yii::getPathOfAlias('webroot'), $model->thumb_url);
                 unlink($img_url);
                 unlink($thumb_url);
             }

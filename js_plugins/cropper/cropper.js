@@ -485,11 +485,11 @@
             if ($.isPlainObject(data) && !$.isEmptyObject(data)) {
                 data = Cropper.fn.transformData(data, this.image.ratio);
 
-                if (data.x1 && data.x1 <= cropper.width) {
+                if (data.x1 != undefined && data.x1 <= cropper.width) {
                     dragger.left = data.x1;
                 }
 
-                if (data.y1 && data.y1 <= cropper.height) {
+                if (data.y1 != undefined && data.y1 <= cropper.height) {
                     dragger.top = data.y1;
                 }
 

@@ -1,4 +1,26 @@
 $(document).ready(function(){
+    //draggable photo
+    $('.image-wrap').draggable({
+        cursor: "move",
+        scroll: false,
+        helper: "clone",
+        containment: ".content"
+     }
+    );
+    $('.all-photos-thumbs').droppable({
+        activeClass: "ui-state-hover",
+        hoverClass: "ui-state-active",
+        drop: function( event, ui ) {
+            var img = ui.draggable.find('img').clone();
+
+            dragAndClickPhoto(img);
+
+
+            return false;
+        }
+    });
+    //end draggable photo
+
     //add all photo
     $('.addAllPhoto').click(function(){
         $(".all-photos-thumbs > div:not(div.full):gt(2)").remove();
@@ -16,17 +38,7 @@ $(document).ready(function(){
     $(".my-viewport").on('click', '.image-wrap',  function(e){
         e.preventDefault();
         var img = $(this).find('img').clone();
-        img[0].setAttribute('data-thumb', img.attr('src'));
-        SendAjax(img);
-        var newImg = createPhoto(img);
-
-
-        $('.all-photos-thumbs').prepend(newImg);
-
-        if($(".all-photos-thumbs > div:not(div.full)").length > 3)
-        {
-            $(".all-photos-thumbs > .photo-wrap:last").remove();
-        }
+        dragAndClickPhoto(img);
     });
 
 
@@ -39,9 +51,6 @@ $(document).ready(function(){
             url: '/order/orderTemp/delete',
             type: 'post',
             data: {
-                'OrderTemp[img_url]': $(this).parent().find('img').data('original'),
-                'OrderTemp[thumb_url]': $(this).parent().find('img').data('tnumb'),
-                'OrderTemp[type]': $(this).parent().find('img').data('type'),
                 'OrderTemp[id]': $(this).data('id')
             },
             success: function(response) {
@@ -59,25 +68,38 @@ $(document).ready(function(){
     });
 
 });
+
+function dragAndClickPhoto(img){
+
+    SendAjax(img);
+    var newImg = createPhoto(img);
+    $('.all-photos-thumbs').prepend(newImg);
+
+    if($(".all-photos-thumbs > div:not(div.full)").length > 3)
+    {
+        $(".all-photos-thumbs > .photo-wrap:last").remove();
+    }
+}
 //load photos local
-function ajaxLoadPhoto(originPath, iconPath, id)
+function ajaxLoadPhoto(originPath, iconPath, id, sum)
 {
     var img = document.createElement("img");
     img.setAttribute("src", iconPath);
-    img.setAttribute("data-thumb", iconPath);
-    img.setAttribute("data-original", originPath);
-    img.setAttribute("data-type", 'upload');
     img.onload = function() {
         var newImg = createPhoto($(img));
         $(newImg).find('.remove').attr('data-id', id);
         $(newImg).find('.photo')[0].setAttribute('href', '/order/orderTemp/update?id='+id);
         $('.all-photos-thumbs').prepend(newImg);
     };
+
+    $('#price').text(sum);
+
     if($(".all-photos-thumbs > div:not(div.full)").length > 3)
     {
         $(".all-photos-thumbs > .photo-wrap:last").remove();
     }
 }
+
 function createPhoto(img)
 {
     var size = JSON.parse(getImgSize(img));

@@ -196,9 +196,12 @@ header menu a {
     margin-right: 5px;
 }
 .all-photos-thumbs {
-    width: 350px;
+    width: 342px;
     /* border: 1px solid greenyellow; */
-    margin-right: 25px;
+    margin-right: 33px;
+}
+.all-photos-thumbs .photo-wrap:nth-child(3n+3){
+    margin-right: 0;
 }
 .photo-wrap {
     width: 110px;
@@ -471,7 +474,13 @@ footer li a {
     width: 304px;
     height: 410px;
     overflow: hidden;
-    position: relative;
+    /*position: relative;*/
+}
+.ui-state-hover{
+    background-color: rgba(255,0,0,0.5);
+}
+.ui-state-active{
+    background-color: rgba(0,255,66,0.5);
 }
 .overview {
     list-style: none;

@@ -7,5 +7,5 @@
  */
 return array(
     'price' => 1,
-    'currency' => 'грн.'
+    'currency' => 'грн.',
 );

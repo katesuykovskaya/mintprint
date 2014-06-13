@@ -27,8 +27,17 @@ Yii::app()->clientScript->registerScriptFile('/js/draggablePhotos.js');
             if(!Yii::app()->user->isGuest)
                 $attr['user_id'] = Yii::app()->user_id;
             $model = OrderTemp::model()->resent()->findAllByAttributes($attr);
+
+            $countIconWithPhoto =  count($model);
+
+            if($countIconWithPhoto >= 9){
+                $emptyIcon = 3;
+            }else{
+                $emptyIcon = 12 - $countIconWithPhoto;
+            }
 //            CVarDumper::dump($model, 5,true);
 //            $start = time(true);
+
             ?>
             <?php foreach($model as $photo):
                 $info = $photo->cropStyle;
@@ -40,72 +49,25 @@ Yii::app()->clientScript->registerScriptFile('/js/draggablePhotos.js');
                     </a>
                 </div>
             <?php endforeach;
+
 //            echo time(true) - $start;
+            for ($i = 1; $i <= $emptyIcon; $i++) {
+                if($i == 1){?>
+                    <div class="photo-wrap">
+                        <div class="photo">
+                            <img class="no-image" src="/img/insert-image.jpg" alt=""/>
+                        </div>
+                    </div>
+                <?php }else{ ?>
+                    <div class="photo-wrap">
+                        <div class="photo">
+                            <img class="no-image" src="/img/no-image.jpg" alt=""/>
+                        </div>
+                    </div>
+                <?php }
+            }
+
             ?>
-
-            <div class="photo-wrap">
-                <div class="photo">
-                <img class="no-image" src="/img/insert-image.jpg" alt=""/>
-                </div>
-            </div>
-            <div class="photo-wrap">
-                <div class="photo">
-                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
-                </div>
-            </div>
-            <div class="photo-wrap">
-                <div class="photo">
-                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
-                </div>
-            </div>
-            <div class="photo-wrap">
-                <div class="photo">
-                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
-                </div>
-            </div>
-            <div class="photo-wrap">
-                <div class="photo">
-                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
-                </div>
-            </div>
-
-            <div class="photo-wrap">
-                <div class="photo">
-                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
-                </div>
-            </div>
-
-            <div class="photo-wrap">
-                <div class="photo">
-                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
-                </div>
-            </div>
-
-            <div class="photo-wrap">
-                <div class="photo">
-                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
-                </div>
-            </div>
-            <div class="photo-wrap">
-                <div class="photo">
-                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
-                </div>
-            </div>
-            <div class="photo-wrap">
-                <div class="photo">
-                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
-                </div>
-            </div>
-            <div class="photo-wrap">
-                <div class="photo">
-                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
-                </div>
-            </div>
-            <div class="photo-wrap">
-                <div class="photo">
-                    <img class="no-image" src="/img/no-image.jpg" alt=""/>
-                </div>
-            </div>
 
         </div>
         <div class="left social-photo-widget">

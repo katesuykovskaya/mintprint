@@ -6,7 +6,7 @@
  * Time: 17:30
  */
 ?>
-<div>
+
     <?php $data = $photos['data'];
     foreach($data as $val): ?>
         <a class="image-wrap">
@@ -17,4 +17,12 @@
     if(!empty($photos['pagination'])):?>
         <a class="instagram-more" href="<?=$photos['pagination']['next_url']?>">View more...</a>
     <?php endif; ?>
-</div>
+
+<script>
+   $('.image-wrap').draggable({
+       cursor: "move",
+       scroll: false,
+       helper: "clone",
+       containment: ".content"
+   });
+</script>

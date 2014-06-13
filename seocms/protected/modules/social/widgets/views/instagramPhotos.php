@@ -7,6 +7,5 @@
  * @var $photos array
  * @var $this SocialPhotoWidget
  */?>
-<div id="photosinstagram">
+
    <?php $this->render('_instagramPhotos', array('photos'=>$photos))?>
-</div>

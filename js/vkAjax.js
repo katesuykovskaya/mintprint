@@ -27,8 +27,9 @@ $(document).ready(function(){
             url: '/social/default/instagramViewMore',
             data:{url: _this.attr('href')},
             success: function(response) {
-                $('#photosinstagram .instagram-more').remove();
-                $('#photosinstagram').append(response);
+
+                $('.instagram-tab .viewport .instagram-more').before(response);
+                $('.instagram-tab .viewport .instagram-more').last().remove();
             }
         });
     });
