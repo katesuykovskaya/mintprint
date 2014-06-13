@@ -811,6 +811,21 @@ td.img-count input {
     font-family: PoiretOne;
     font-size: 16px;
 }
+.errorSummary {
+    border: 2px solid #ae0000;
+    color: #ae0000;
+    background: #ff6761;
+    padding: 4px;
+}
+.confirm-table {
+    border-collapse: collapse;
+    text-transform: none;
+    font-family: "Open Sans";
+}
+.confirm-table td {
+    border: 1px solid #000000;
+    padding: 4px 10px;
+}
 /* ==========================================================================
    Helper classes
    ========================================================================== */

@@ -27,7 +27,8 @@ class OrderForm extends CFormModel {
     {
         return array(
             // username and password are required
-            array('name, phone, address, city, region, email, agree', 'required'),
+            array('name, phone, address, city, region, email', 'required'),
+            array('agree', 'required', 'message'=>'Вы должны сонласиться с правилами сервиса!'),
             array('email', 'email'),
             array('newPostAddress', 'length', 'max'=>255, 'allowEmpty'=>true),
             array('delivery', 'in', 'range'=>array('newPost', 'post')),

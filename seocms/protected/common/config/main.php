@@ -28,7 +28,7 @@ return array(
 //            'stateKeyPrefix'=>'common',
             'allowAutoLogin'=>true,
             'autoRenewCookie'=>true,
-            'authTimeout'=>3600 * 24,
+            'authTimeout'=>3600 * 24 * 7,
         ),
         'authManager'=>array(
             'class'=>'RDbAuthManager', //used Rights's class instead of basic CDbAuthManager

@@ -25,7 +25,7 @@ Yii::app()->clientScript->registerScriptFile('/js/draggablePhotos.js');
                 'session_id'=>Yii::app()->session->sessionID,
             );
             if(!Yii::app()->user->isGuest)
-                $attr['user_id'] = Yii::app()->user_id;
+                $attr['user_id'] = Yii::app()->user->id;
             $model = OrderTemp::model()->resent()->findAllByAttributes($attr);
 
             $countIconWithPhoto =  count($model);

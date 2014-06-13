@@ -133,7 +133,7 @@ class OrderTempController extends Controller
 	}
 
 	/**
-	 * Lists all models.
+	 * Step 1.
 	 */
 	public function actionBasket()
 	{
@@ -151,6 +151,25 @@ class OrderTempController extends Controller
         ));
 	}
 
+    /**
+     * Step 3
+     */
+    public function actionConfirm() {
+        $this->layout = '//layouts/no-bg';
+        $photos = OrderTemp::model()->findByAttributes(array(
+            'session_id'=>Yii::app()->session->sessionID
+        ));
+        $orderForm = new OrderForm;
+        $order = Yii::app()->session['OrderHead'];
+        $this->render('confirmOrder', array(
+            'orderForm'=>$orderForm,
+            'order'=>$order
+        ));
+    }
+
+    /**
+     * Step 2
+     */
     public function actionBuyerInfo() {
         $this->layout = '//layouts/no-bg';
         Yii::import('application.common.modules.users.models.CreateAccountForm');
@@ -161,7 +180,8 @@ class OrderTempController extends Controller
         if(isset($_POST['OrderForm'])) {
             $orderFormModel->attributes = $_POST['OrderForm'];
             if($orderFormModel->validate()) {
-                die($orderFormModel->getErrors());
+                Yii::app()->session['OrderHead'] = $_POST['OrderForm'];
+                $this->redirect(Yii::app()->createUrl('order/orderTemp/confirm'));
             }
         }
 

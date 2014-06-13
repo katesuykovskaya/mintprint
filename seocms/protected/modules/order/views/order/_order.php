@@ -86,11 +86,11 @@ $form=$this->beginWidget('CActiveForm', array(
         </div>
     </div>
     <div>
-        <?=CHtml::label(CHtml::radioButton('OrderForm[agree]', true, array(
+        <?=CHtml::label($form->checkBox($orderFormModel, 'agree', array(
             'value'=>1,
             'uncheckValue'=>null
         )).'С правилами сервиса соглашаюсь'.'<span class="required">*</span>', null)?>
-        <?=CHtml::label(CHtml::radioButton('OrderForm[sign]', true, array(
+        <?=CHtml::label(CHtml::checkBox('OrderForm[sign]', true, array(
                 'value'=>1,
                 'uncheckValue'=>null
             )).'Присылайте мне акции то Mint Print на эл. почту', null)?>
