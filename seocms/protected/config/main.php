@@ -39,7 +39,7 @@ return CMap::mergeArray(
             'useStrictParsing'=>true,
             'matchValue'=>false,
 			'rules'=>array(
-                ''=>'site/index',
+                ''=>'site/home',
                 '<controller:\w+>/<id:\d+>'=>'<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',

@@ -16,7 +16,7 @@
 <body>
     <div class="header-and-content-wrap">
         <header>
-            <div class="header-wrap">
+            <div class="header-wrap ">
                 <menu>
                     <ul>
                         <li><a href="#">оплата и доставка</a></li>
@@ -32,6 +32,9 @@
             </div>
             <div class="header-bg"></div>
         </header>
+        <?php
+        //CVarDumper::dump($this, 5, true);
+        ?>
         <?=$content?>
     </div>
     <footer>
