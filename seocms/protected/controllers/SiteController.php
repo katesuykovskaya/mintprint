@@ -36,6 +36,11 @@ class SiteController extends Controller
         ));
 	}
 
+    public function actionHome() {
+        $this->layout = '//layouts/home';
+        $this->render('home');
+    }
+
     public function actionEdit() {
         $this->render('edit');
     }

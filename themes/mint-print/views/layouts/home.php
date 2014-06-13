@@ -1,41 +1,22 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Kate
+ * Date: 29.05.14
+ * Time: 14:15
+ */
+?>
 <!DOCTYPE html>
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" href="/css/home.css"/>
-    <script src="/js/vendor/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" href="/css/main.css"/>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
 </head>
-<body>
-<div class="header-and-content-wrap home-page">
-    <header>
-        <div class="header-wrap">
-            <menu>
-                <ul>
-                    <li><a href="#">оплата и доставка</a></li>
-                    <li><a href="#">новости</a></li>
-                    <li><a href="#">главная</a></li>
-                    <li><a href="#">о нас</a></li>
-                </ul>
-            </menu>
-            <div class="right-buttons">
-                <a id="profile" class="profile" href="#"></a>
-                <a id="basket" class="basket" href="#"></a>
-            </div>
-        </div>
-        <div class="header-bg"></div>
-    </header>
-    <section class="content overflow-hidden" id="content">
-        <div class="title-home">MINT PRINT<span>ПЕЧАТЬ ФОТОГРАФИИ ИЗ СОЦСЕТЕЙ</span></div>
-        <div class="buttons-soc">
-            <a href="#" class="inst"></a>
-            <a href="#" class="fb"></a>
-            <a href="#" class="vk"></a>
-        </div>
-        <a href="#" class="print-button">давайте печатать!</a>
-        <div class="desc-button-print">Shoot  Print  Never forget</div>
-    </section>
-</div>
+<body style="background: #382b22 url('/img/bg-main-page.jpg') top center;font-family: PoiretOne;text-transform: uppercase;background-repeat: no-repeat;background-position-y: 18px;">
+
+    <?=$content?>
+
 <footer>
     <div class="footer-text-wrap">
         <div class="footer-top-bg"></div>
@@ -68,8 +49,11 @@
         </div>
     </div>
 </footer>
+</body>
+</html>
 <script>
     $(document).ready(function(){
+        //menu
         var menu = $('header menu ul').eq(0);
         var index = Math.floor(menu.children().length / 2) - 1;
         var li = $('<li></li>', {'class': 'middle-leaf'}).insertAfter(menu.children('li').eq(index));
@@ -78,5 +62,3 @@
         }).appendTo(li);
     });
 </script>
-</body>
-</html>
