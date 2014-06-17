@@ -86,10 +86,22 @@ class OrderHeadController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+        Yii::app()->clientScript->registerCssFile('/css/backend.css');
+
 		$model=$this->loadModel($id);
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+        if(!file_exists('uploads/Order/thumb/'.$id)){
+                foreach($model->body as $key=>$item){
+                    $path = str_replace('http://'.$_SERVER['SERVER_NAME'], "",$item['path']);
+                    getimagesize(Yii::app()->easyImage->thumbOf($path, array(
+                        "resize" => array("width"=>97, 'height' => 97),
+                        "savePath"=>'uploads/Order/thumb/'.$id.'/',
+                        'save'=>$item['id'],
+                        "quality" => 80,
+                    )));
+
+                }
+        }
 
 		if(isset($_POST['OrderHead']))
 		{
@@ -97,6 +109,10 @@ class OrderHeadController extends Controller
 			if($model->save())
                 $this->redirect($this->createUrl('/backend/order/orderHead/admin',['language'=>Yii::app()->language]));
 		}
+
+        $model->price = $model->price." грн";
+
+//        die(print_r($model->attributes['price']));
 
 		$this->render('update',array(
 			'model'=>$model,

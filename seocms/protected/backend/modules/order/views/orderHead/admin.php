@@ -1,7 +1,13 @@
-<?php
-/* @var $this OrderHeadController */
-/* @var $model OrderHead */
+<div class="row">
+    <ul class="breadcrumb span6">
+        <li><?=CHtml::link(Yii::t('backend','Главная'),$this->createUrl('backend', array('language'=>Yii::app()->language)))?></li>
+        <li><span class="divider">/</span><?=Yii::t('backend','Администрирование заказов')?></li>
+    </ul>
+</div>
 
+<h3 class="page-header"><?php echo Yii::t('backend','Администрирование заказов');?></h3>
+
+<?
 
  $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 	'id'=>'order-head-grid',
