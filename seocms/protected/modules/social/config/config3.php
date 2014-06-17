@@ -42,6 +42,11 @@ return [
             'album_size'    => 'size',
             'page_size'     => 20
         )
+        ,'photos'=>array(
+            'original' => 'src_xxbig',
+            'originalSecond' => 'src_big',
+            'thumbnail' => 'src'
+        )
     ],
     'instagram'=>[
         'authUrl'=>'https://api.instagram.com/oauth/authorize/',
@@ -62,6 +67,11 @@ return [
             'redirect_uri' => 'http://mint-print.seotm.biz/social/default/auth?authprovider=instagram',
             'code'=>$code,
         ],
+        'photos'=>array(
+            'original' => 'standard_resolution',
+            'originalSecond' => 'standard_resolution',
+            'thumbnail' => 'thumbnail'
+        )
     ],
     'fb'=>[
         'authUrl'=>'https://www.facebook.com/dialog/oauth',

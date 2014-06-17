@@ -889,10 +889,16 @@ footer li a {
     font-size: 16px;
 }
 .errorSummary {
-    border: 2px solid #ae0000;
+    border: 1px solid #ae0000;
     color: #ae0000;
     background: #ff6761;
     padding: 4px;
+}
+.errorMessage {
+    border: 2px solid #ae0000;
+    color: #ae0000;
+    background: rgba(255, 105, 99, 0.70);
+    padding: 2px;
 }
 .confirm-info {
     width: 325px;

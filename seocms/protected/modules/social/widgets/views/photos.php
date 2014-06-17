@@ -7,7 +7,7 @@
  * @var $album array
  * @var $album_config array
  */
-//echo CVarDumper::dump($album, 7, true);
+//echo CVarDumper::dump($photos, 7, true);
 $pageSize = $album_config['page_size'];
 $url = '/social/default/photosFromAlbum';
 $albumsUrl = '/social/default/albums';

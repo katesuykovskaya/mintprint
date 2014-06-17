@@ -30,9 +30,11 @@ class OrderForm extends CFormModel {
             array('name, phone, address, city, region, email', 'required'),
             array('agree', 'required', 'message'=>'Вы должны сонласиться с правилами сервиса!'),
             array('email', 'email'),
+            array('index', 'indexOnPost', 'message'=>'Необходимо заполнить индекс'),
+            array('index', 'numerical'),
             array('newPostAddress', 'length', 'max'=>255, 'allowEmpty'=>true),
             array('delivery', 'in', 'range'=>array('newPost', 'post')),
-            array('name, city, region', 'match', 'pattern'=>'/^[a-zA-Z\s]+$/', 'message'=>'Только буквы!'),
+            array('name, city, region', 'match', 'pattern'=>'/^[a-zA-Z\p{Cyrillic}\d\s\-\.]+$/u', 'message'=>'Только буквы, цифры и пробельные символы!'),
             // rememberMe needs to be a boolean
             // password needs to be authenticated
         );
@@ -54,5 +56,10 @@ class OrderForm extends CFormModel {
             'index'     =>  Yii::t('frontend', 'Индекс'),
             'delivery'  =>  Yii::t('frontend', 'Доставка'),
         );
+    }
+
+    public function indexOnPost($attribute, $params) {
+        if($this->delivery == 'post' && empty($this->index)) $this->addError($attribute, $params['message']);
+        return true;
     }
 }
