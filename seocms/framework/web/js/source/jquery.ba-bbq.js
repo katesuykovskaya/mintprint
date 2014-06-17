@@ -254,6 +254,7 @@
       // matches[1] = url part that precedes params, not including trailing ?/#
       // matches[2] = params, not including leading ?/#
       // matches[3] = if in 'querystring' mode, hash including leading #, otherwise ''
+        console.log(url);
       matches = url.match( is_fragment ? /^([^#]*)\#?(.*)$/ : /^([^#?]*)\??([^#]*)(#?.*)/ );
 
       // Get the hash if in 'querystring' mode, and it exists.
