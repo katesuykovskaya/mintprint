@@ -46,7 +46,7 @@ class OrderController extends Controller
 //            die(json_encode(array('res'=>false)));
 //        }
         $model = new OrderBody;
-        $model->path = $saved;
+        $model->path = str_replace(Yii::getPathOfAlias('webroot'), "", $saved);
         $model->count = $image['img_count'];
         $model->id_order = $idOrder;
         $res = $model->save();
