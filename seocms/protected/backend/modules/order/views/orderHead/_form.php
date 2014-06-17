@@ -82,3 +82,15 @@
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+
+<div class="wrapper-photos">
+    <?php
+    foreach($model->body as $key=>$item){
+        echo '<img src="/uploads/Order/thumb/'.$model->id."/".$item['id'].'.'. substr(strrchr($item['path'], '.'), 1).'" />';
+    }
+    ?>
+    <form action="/backend/order/orderHead/dowload/">
+
+    </form>
+</div>
+
