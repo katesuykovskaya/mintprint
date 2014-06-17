@@ -115,6 +115,16 @@ class OrderTemp extends CActiveRecord
 		));
 	}
 
+    public function afterDelete() {
+        if($this->type == 'upload') {
+            $img_url = str_replace('http://' . $_SERVER['SERVER_NAME'], Yii::getPathOfAlias('webroot'), $this->img_url);
+            $thumb_url = str_replace('http://' . $_SERVER['SERVER_NAME'], Yii::getPathOfAlias('webroot'), $this->thumb_url);
+            unlink($img_url);
+            unlink($thumb_url);
+        }
+        return parent::afterDelete();
+    }
+
     public function beforeSave() {
         if($this->isNewRecord) {
             $this->session_id = Yii::app()->session->sessionID;

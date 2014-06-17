@@ -116,12 +116,6 @@ class OrderTempController extends Controller
         if(Yii::app()->request->isAjaxRequest) {
             $model = $this->loadModel($_POST['OrderTemp']['id']);
             $model->delete();
-            if($model->type == 'upload'){
-                $img_url = str_replace('http://' . $_SERVER['SERVER_NAME'], Yii::getPathOfAlias('webroot'), $model->img_url);
-                $thumb_url = str_replace('http://' . $_SERVER['SERVER_NAME'], Yii::getPathOfAlias('webroot'), $model->thumb_url);
-                unlink($img_url);
-                unlink($thumb_url);
-            }
             $singlePrice = $this->module->config['price'];
             die (json_encode(array('res'=>true, 'sum' => OrderTemp::CollectPrice($singlePrice))));
         }
@@ -155,16 +149,17 @@ class OrderTempController extends Controller
      * Step 3
      */
     public function actionConfirm() {
-        $this->layout = '//layouts/no-bg';
         $photos = OrderTemp::model()->findAllByAttributes(array(
             'session_id'=>Yii::app()->session->sessionID
         ));
         $orderForm = new OrderForm;
         $order = Yii::app()->session['OrderHead'];
+        $config = $this->module->config;
         $this->render('confirmOrder', array(
             'orderForm'=>$orderForm,
             'order'=>$order,
-            'photos'=>$photos
+            'photos'=>$photos,
+            'config'=>$config
         ));
     }
 
