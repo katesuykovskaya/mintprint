@@ -880,6 +880,35 @@ td.img-count input {
     border: 1px solid #000000;
     padding: 4px 10px;
 }
+.confirm-all-photos {
+    width: 700px;
+    overflow: hidden;
+}
+.confirm-all-photos .photo {
+
+}
+.confirm-photo-wrap {
+    margin: 4px;
+    float: left;
+    position: relative;
+}
+.confirm-photo-wrap .result {
+    position: absolute;
+    width: 97px;
+    height: 97px;
+    top: 6px;
+    left: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.confirm-photo-wrap .result-loading {
+    background-color: rgba(255, 255, 255, 0.4);
+    background-image: url('/img/load_bar.gif');
+}
+.confirm-photo-wrap .result-success {
+    background-image: url('/img/button-ok.png');
+    background-color: rgba(255, 255, 255, 0.4);
+}
 /* ==========================================================================
    Helper classes
    ========================================================================== */

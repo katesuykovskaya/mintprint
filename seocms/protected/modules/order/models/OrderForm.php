@@ -52,6 +52,7 @@ class OrderForm extends CFormModel {
             'region'    =>  Yii::t('frontend', 'Область'),
             'newPostAddress'=> Yii::t('frontend', 'Ближайшее отделение Новой Почты'),
             'index'     =>  Yii::t('frontend', 'Индекс'),
+            'delivery'  =>  Yii::t('frontend', 'Доставка'),
         );
     }
 }
