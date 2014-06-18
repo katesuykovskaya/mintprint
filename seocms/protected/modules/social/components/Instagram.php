@@ -40,16 +40,18 @@ class Instagram {
     public function getPhotos($token)
     {
         $insta = new Guzzle\Http\Client();
-        $instaMediaUrl = 'https://api.instagram.com/v1/users/self/feed';
-
+//        $instaMediaUrl = 'https://api.instagram.com/v1/users/self/feed';
+        $instaMediaUrl = 'https://api.instagram.com/v1/users/self/media/recent/';
         try {
 //            echo $instaMediaUrl.'?access_token='.$token;
             $requestM = $insta->get($instaMediaUrl.'?access_token='.$token);
+//            die(CVarDumper::dump($requestM->send(), 8, true));
             $data = $requestM->send()->json();
 //            die(CVarDumper::dump($data, 5, true));
             return $data;
         } catch (Exception $e) {
             echo $e->getMessage();
+//            die();
         }
     }
 
