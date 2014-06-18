@@ -112,7 +112,46 @@ class OrderHeadController extends Controller
 
         $model->price = $model->price." грн";
 
-//        die(print_r($model->attributes['price']));
+        if(isset($_POST['download'])){
+
+            $error = "";
+
+                    if(count($model->body))
+                    {
+            // проверяем выбранные файлы
+                        $zip = new ZipArchive(); // подгружаем библиотеку zip
+                        $zip_name = time().".zip"; // имя файла
+                        if($zip->open($zip_name, ZIPARCHIVE::CREATE)!==TRUE)
+                        {
+                            $error .= "* Sorry ZIP creation failed at this time";
+                        }
+                        foreach($model->body as $key=>$item)
+                        {
+//                            $path = str_replace('http://'.$_SERVER['SERVER_NAME'].'/', "",$item['path']);
+                            $zip->addFile(substr($item['path'], 1)); // добавляем файлы в zip архив
+                        }
+                        $zip->close();
+
+                        if(file_exists($zip_name))
+                        {
+            // отдаём файл на скачивание
+                            header('Content-type: application/zip');
+                            header('Content-Disposition: attachment; filename="'.$zip_name.'"');
+                            readfile($zip_name);
+            // удаляем zip файл если он существует
+                            unlink($zip_name);
+                        }
+
+                    }
+                    else
+                        $error .= "folder empty";
+
+            if($error)
+                die($error);
+            else
+                die();
+
+            }
 
 		$this->render('update',array(
 			'model'=>$model,
@@ -126,8 +165,14 @@ class OrderHeadController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		$model = $this->loadModel($id);
 
+        if($model->status != "delete"){
+            $model->status = 'delete';
+            $model->save();
+        }else{
+            $model->delete();
+        }
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));

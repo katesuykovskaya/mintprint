@@ -63,6 +63,12 @@
 		<?php echo $form->error($model,'newPostAddress'); ?>
 	</div>
 
+    <div class="row">
+        <?php echo $form->labelEx($model,'status'); ?>
+        <?php echo $form->dropDownList($model,'status', array('new'=>Yii::t("backend","new"),'ready'=>Yii::t("backend","ready"),'shipped'=>Yii::t("backend","shipped"),'delete'=>Yii::t("backend","delete"))); ?>
+        <?php echo $form->error($model,'status'); ?>
+    </div>
+
 	<div class="row">
 		<?php echo $form->labelEx($model,'sign'); ?>
 		<?php echo $form->textField($model,'sign'); ?>
@@ -89,8 +95,8 @@
         echo '<img src="/uploads/Order/thumb/'.$model->id."/".$item['id'].'.'. substr(strrchr($item['path'], '.'), 1).'" />';
     }
     ?>
-    <form action="/backend/order/orderHead/dowload/">
-
+    <form method="post" >
+        <input type="submit" name="download" value="Download photos">
     </form>
 </div>
 

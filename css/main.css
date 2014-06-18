@@ -200,8 +200,8 @@ header menu a {
     min-height: 0;
 }
 .home-page .content{
-    margin-top: 25px;
-    margin-bottom: 18px;
+    margin-top: 0px;
+    margin-bottom: 0px;
     width: 850px;
 }
 .home-page .title-home{
@@ -215,7 +215,7 @@ header menu a {
     font-size: 15px;
 }
 .home-page .buttons-soc{
-    padding: 13px 0 318px 38%;
+    padding: 8px 0 318px 38%;
 }
 .home-page .buttons-soc .inst, .home-page .buttons-soc .fb, .home-page .buttons-soc .vk{
     display: block;
