@@ -45,21 +45,6 @@ class SiteController extends Controller
         $this->render('edit');
     }
 
-//    public function actionFileUpload() {
-//        $tmpFiles = $_FILES['file'];
-//        echo CVarDumper::dump($_REQUEST, 7, true);
-//        die(CVarDumper::dump($_FILES, 7, true));
-//        $dir = Yii::getPathOfAlias('webroot').'/uploads/tmp/'.Yii::app()->session->sessionID.'/';
-//        if(!file_exists($dir))
-//            mkdir($dir, 0777);
-//        $res = true;
-//        foreach($tmpFiles['tmp_name'] as $key=>$file) {
-//            $files[$key] = '/uploads/tmp/'.Yii::app()->session->sessionID.'/'.$tmpFiles['name'][$key];
-//            $res &= move_uploaded_file($file, $dir.$tmpFiles['name'][$key]);
-//        }
-//        die(json_encode(array('success'=>$res, 'files'=>$files)));
-//    }
-
     public function actionUpload()
     {
         Yii::import("ext.EAjaxUpload.qqFileUploader");
@@ -67,7 +52,7 @@ class SiteController extends Controller
         if(!file_exists($folder))
             mkdir($folder, 0777);
         $allowedExtensions = array("jpg","jpeg","gif","png");
-        $sizeLimit = 100 * 1024 * 1024;// maximum file size in bytes
+        $sizeLimit = 100 * 9216 * 1024 + 1;// maximum file size in bytes
         $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
         $result = $uploader->handleUpload($folder);
 

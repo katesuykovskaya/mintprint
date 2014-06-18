@@ -11,7 +11,7 @@ $this->widget('ext.EAjaxUpload.EAjaxUpload',
         'config'=>array(
             'action'=>Yii::app()->createUrl('site/upload'),
             'allowedExtensions'=>array("jpg","jpeg","gif","png"),//array("jpg","jpeg","gif","exe","mov" and etc...
-            'sizeLimit' => 943718401,//1000*1024*1024,// maximum file size in bytes
+            'sizeLimit' => 100 * 9216 * 1024 + 1,
             'minSizeLimit' => 1*1024,
             'auto'=>true,
             'multiple' => true,
