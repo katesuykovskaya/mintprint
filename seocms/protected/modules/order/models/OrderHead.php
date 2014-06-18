@@ -89,6 +89,19 @@ class OrderHead extends CActiveRecord
 			'sign' => 'Sign',
 		);
 	}
+
+
+    public function afterDelete()
+    {
+        $sql = "DELETE FROM OrderBody WHERE id_order = ".$this->id;
+        $connection=Yii::app()->db;
+        $command=$connection->createCommand($sql);
+        $result = $command->execute();
+        if($result){
+            //delete photos order
+        }
+    }
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
