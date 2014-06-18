@@ -11,16 +11,13 @@ $this->widget('ext.EAjaxUpload.EAjaxUpload',
         'config'=>array(
             'action'=>Yii::app()->createUrl('site/upload'),
             'allowedExtensions'=>array("jpg","jpeg","gif","png"),//array("jpg","jpeg","gif","exe","mov" and etc...
-            'sizeLimit'=>1000*1024*1024,// maximum file size in bytes
-            'minSizeLimit'=>1*1024,
+            'sizeLimit' => 943718401,//1000*1024*1024,// maximum file size in bytes
+            'minSizeLimit' => 1*1024,
             'auto'=>true,
             'multiple' => true,
             'onComplete'=>"js:function(id, fileName, responseJSON)
             {
                 ajaxLoadPhoto(responseJSON.originalPath, responseJSON.iconPath, responseJSON.id, responseJSON.sum);
-
-//                console.log(responseJSON);
-
             }",
             'messages'=>array(
                 'typeError'=>"{file} has invalid extension. Only {extensions} are allowed.",
