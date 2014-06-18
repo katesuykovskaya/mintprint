@@ -49,9 +49,30 @@
     endif;
     endforeach?>
 </div>
+
+<?php
+    if(!empty($_GET['auth'])){
+        switch($_GET['auth']){
+            case 'instagram':
+                $active = 0;
+                break;
+            case 'fb':
+                $active = 1;
+                break;
+            case 'vk':
+                $active = 2;
+                break;
+        }
+    }
+    else{
+    $active = 0;
+    }
+?>
 <script>
     $(document).ready(function(){
-        $('#socialWidget').tabs();
+        $('#socialWidget').tabs({
+            active:<?=$active?>
+        });
         var tabs = $('.tab');
         for(var i = 0; i < tabs.length; i++) {
 //            tabs.eq(i).tinyscrollbar();
