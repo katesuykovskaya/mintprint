@@ -91,14 +91,21 @@ class OrderHeadController extends Controller
 		$model=$this->loadModel($id);
 
         if(!file_exists('uploads/Order/thumb/'.$id)){
+                mkdir('uploads/Order/thumb/'.$id.'/');
                 foreach($model->body as $key=>$item){
+
                     $path = str_replace('http://'.$_SERVER['SERVER_NAME'], "",$item['path']);
-                    getimagesize(Yii::app()->easyImage->thumbOf($path, array(
-                        "resize" => array("width"=>97, 'height' => 97),
-                        "savePath"=>'uploads/Order/thumb/'.$id.'/',
-                        'save'=>$item['id'],
-                        "quality" => 80,
-                    )));
+                    $path_parts = pathinfo($path);
+                    $crop = new EasyImage($path);
+                    $crop->resize(97, 97);
+                    $crop->save('uploads/Order/thumb/'.$id.'/'.$item['id'].'.'.$path_parts['extension'], 80);
+
+//                    getimagesize(Yii::app()->easyImage->thumbOf($path, array(
+//                        "resize" => array("width"=>97, 'height' => 97),
+//                        "savePath"=>'uploads/Order/thumb/'.$id.'/',
+//                        'save'=>$item['id'],
+//                        "quality" => 80,
+//                    )));
 
                 }
         }

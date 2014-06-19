@@ -139,7 +139,7 @@
             });
 
             function SavePhoto(img) {
-                console.log(img);
+//                console.log(img);
                 var loader = img.closest('.confirm-photo-wrap').find('.result');
                 loader.addClass('result-loading');
                 $('#message').text("Идет сохранение фото №"+counter.toString());
@@ -157,6 +157,7 @@
                                 if(typeof photos[counter] != 'undefined')
                                     SavePhoto(photos.eq(counter));
                                 else {
+                                    $.fancybox.showActivity();
                                     $.ajax({
                                         url: '/order/order/result/',
                                         success: function(response){

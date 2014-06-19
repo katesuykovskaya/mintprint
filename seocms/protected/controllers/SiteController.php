@@ -57,12 +57,17 @@ class SiteController extends Controller
         $result = $uploader->handleUpload($folder);
 
         if(!empty($result['success'])){
-            $sizeImg = getimagesize(Yii::app()->easyImage->thumbOf($result['uploadDirectory'] . $result['filename'] . '.' . $result['ext'], array(
-                "resize" => array("width"=>97, 'height' => 97, "master"=>$result['master']),
-                "savePath"=>$result['uploadDirectory'],
-                'save'=>$result['filename'] . 'Icon',
-                "quality" => 80,
-            )));
+
+            $crop = new EasyImage($result['uploadDirectory'] . $result['filename'] . '.' . $result['ext']);
+            $sizeImg = $crop->resize(97, 97, $result['master']);
+            $crop->save($result['uploadDirectory'] . $result['filename'] . 'Icon' . '.' . $result['ext']);
+
+//            $sizeImg = getimagesize(Yii::app()->easyImage->thumbOf($result['uploadDirectory'] . $result['filename'] . '.' . $result['ext'], array(
+//                "resize" => array("width"=>97, 'height' => 97, "master"=>$result['master']),
+//                "savePath"=>$result['uploadDirectory'],
+//                'save'=>$result['filename'] . 'Icon',
+//                "quality" => 80,
+//            )));
 
             Yii::import('application.modules.order.models.OrderTemp');
 
@@ -71,8 +76,8 @@ class SiteController extends Controller
             $model->attributes = array(
                 'img_url'=> $path . $result['filename'] . '.' . $result['ext'],
                 'thumb_url'=> $path . $result['filename'] . 'Icon' . '.' . $result['ext'],
-                'thumb_width' => $sizeImg[0],
-                'thumb_height' => $sizeImg[1],
+                'thumb_width' => $sizeImg->width,
+                'thumb_height' => $sizeImg->height,
                 'type'=> 'upload'
             );
 

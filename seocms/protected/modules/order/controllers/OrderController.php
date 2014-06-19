@@ -29,17 +29,30 @@ class OrderController extends Controller
             } else
                 $tempPath = str_replace("http://".$_SERVER['SERVER_NAME'], Yii::getPathOfAlias('webroot'), $image['img_url']);
 
-            $saved = Yii::app()->easyImage->thumbSrcOf($tempPath, array(
-                "savePath"=>Yii::getPathOfAlias("webroot")."/uploads/Order/".$idOrder."/",
-                "save"=>ZHtml::randomString(32),
-                "quality" => 80,
-                'crop'=>array(
-                    'width'=>$image['img_width'],
-                    'height'=>$image['img_height'],
-                    'offset_x'=> $image['img_x'],
-                    'offset_y'=>$image['img_y']
-                ),
-            ));
+//            $saved = Yii::app()->easyImage->thumbSrcOf($tempPath, array(
+//                "savePath"=>Yii::getPathOfAlias("webroot")."/uploads/Order/".$idOrder."",
+////                "save"=>ZHtml::randomString(32),
+//                "quality" => 80,
+//                'crop'=>array(
+//                    'width'=>$image['img_width'],
+//                    'height'=>$image['img_height'],
+//                    'offset_x'=> $image['img_x'],
+//                    'offset_y'=>$image['img_y']
+//                ),
+//            ));
+            $path_parts = pathinfo($tempPath);
+
+            if(!file_exists(Yii::getPathOfAlias("webroot")."/uploads/Order/".$idOrder."/"))
+            {
+                mkdir(Yii::getPathOfAlias("webroot")."/uploads/Order/".$idOrder."/");
+            }
+
+
+            $crop = new EasyImage($tempPath);
+            $crop->crop($image['img_width'], $image['img_height'], $image['img_x'], $image['img_y']);
+            $crop->save(Yii::getPathOfAlias("webroot")."/uploads/Order/".$idOrder."/".$path_parts['filename'].'.'.$path_parts['extension'], 80);
+            $saved = Yii::getPathOfAlias("webroot")."/uploads/Order/".$idOrder."/".$path_parts['filename'].'.'.$path_parts['extension'];
+
             if($image['type'] == 'social')
                 unlink($tempPath);
 //        } catch(Exception $e) {
