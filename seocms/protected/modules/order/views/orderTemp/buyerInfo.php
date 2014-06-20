@@ -15,10 +15,10 @@
             <div class="overflow-hidden">
                 <div class="left enter-wrap">
                     <h2><?=Yii::t('frontend', 'уже зарегистрированы?')?></h2>
-                    <a href="#" class="continue-button"><?=Yii::t('frontend', 'Войти')?></a>
+                    <a href="<?=Yii::app()->createUrl('users/users/login')?>" class="continue-button"><?=Yii::t('frontend', 'Войти')?></a>
                 </div>
                 <div class="left create-profile-wrap">
-                    <?php $this->renderPartial('application.common.modules.users.views.users._createAccount', array(
+                    <?php $this->renderPartial('application.modules.users.views.users._createAccount', array(
                         'createAccountModel'=>$createAccountModel
                     ))?>
                 </div>

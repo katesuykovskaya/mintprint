@@ -53,41 +53,41 @@
                     <tr>
                         <td>
                             <?=CHtml::activeLabel($orderForm, 'name')?>
-                            <?=CHtml::textField('', $order['name'], array('disabled'=>true))?>
+                            <?=CHtml::textField('', $order['name'], array('disabled'=>true, 'class'=>'input-disabled-text'))?>
                         </td>
                         <td>
                             <?=CHtml::activeLabel($orderForm, 'email')?>
-                            <?=CHtml::textField('', $order['email'], array('disabled'=>true))?>
+                            <?=CHtml::textField('', $order['email'], array('disabled'=>true, 'class'=>'input-disabled-text'))?>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <?=CHtml::activeLabel($orderForm, 'phone')?>
-                            <?=CHtml::textField('', $order['phone'], array('disabled'=>true))?>
+                            <?=CHtml::textField('', $order['phone'], array('disabled'=>true, 'class'=>'input-disabled-text'))?>
                         </td>
                         <td>
                             <?=CHtml::activeLabel($orderForm, 'delivery')?>
-                            <?=CHtml::textField('', Yii::t('frontend', $order['delivery']), array('disabled'=>true))?>
+                            <?=CHtml::textField('', Yii::t('frontend', $order['delivery']), array('disabled'=>true, 'class'=>'input-disabled-text'))?>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <?=CHtml::activeLabel($orderForm, 'address')?>
-                            <?=CHtml::textField('', $order['address'], array('disabled'=>true))?>
+                            <?=CHtml::textField('', $order['address'], array('disabled'=>true, 'class'=>'input-disabled-text'))?>
                         </td>
                         <td>
                             <?=CHtml::activeLabel($orderForm, 'city')?>
-                            <?=CHtml::textField('', $order['city'], array('disabled'=>true))?>
+                            <?=CHtml::textField('', $order['city'], array('disabled'=>true, 'class'=>'input-disabled-text'))?>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <?=CHtml::activeLabel($orderForm, 'region')?>
-                            <?=CHtml::textField('', $order['region'], array('disabled'=>true))?>
+                            <?=CHtml::textField('', $order['region'], array('disabled'=>true, 'class'=>'input-disabled-text'))?>
                         </td>
                         <td>
                             <?=CHtml::activeLabel($orderForm, $order['delivery'] == 'newPost' ? 'newPostAddress' : 'index')?>
-                            <?=CHtml::textField('', $order['delivery'] == 'newPost' ? $order['newPostAddress'] : $order['index'], array('disabled'=>true))?>
+                            <?=CHtml::textField('', $order['delivery'] == 'newPost' ? $order['newPostAddress'] : $order['index'], array('disabled'=>true, 'class'=>'input-disabled-text'))?>
                         </td>
                     </tr>
                 </table>

@@ -866,8 +866,7 @@ footer li a {
 .tree-forms label .required {
     color: #84CCBE;
 }
-.tree-forms [type="text"],
-.tree-forms [type="password"] {
+.input-text {
     height: 30px;
     width: 100%;
     border: 1px solid #D7D9D9;
@@ -919,7 +918,7 @@ footer li a {
     padding: 0 10px 18px 10px;
     width: 150px;
 }
-.confirm-table [type="text"] {
+.input-disabled-text {
     border: 2px solid #E7E7E8;
     border-radius: 10px;
     /* height: 20px; */
@@ -1071,6 +1070,14 @@ footer li a {
     position: absolute;
     bottom: 25px;
     right: 31px;
+}
+.login-form {
+    width: 300px;
+}
+.login-form .green-button {
+    font-family: PoiretOne;
+    text-transform: uppercase;
+    margin-top: 15px;
 }
 /* ==========================================================================
    Helper classes

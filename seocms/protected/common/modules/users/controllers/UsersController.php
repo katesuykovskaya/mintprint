@@ -32,7 +32,7 @@ class UsersController extends RightsBaseController
             $this->layout = '//layouts/adminka';
 		$this->render('adminka');
 	}
-        
+
         public function actionVkLogin()
         {
             $this->render('vk');
@@ -206,18 +206,18 @@ class UsersController extends RightsBaseController
         public function actionPermissions($role='')
         {
             $this->layout = '//layouts/main';
-          
-            
+
+
             $this->layout = '//layouts/main';
 		$model=new AuthItem('search');
 		$model->unsetAttributes();  // clear any default values
 //                if(isset($_GET['role']))
 //                    $model->name = $_GET['role'];
-                
+
                 if(isset($_GET['AuthItem']))
 			$model->attributes=$_GET['AuthItem'];
-             
-             $tableData = Users::model()->getAllAssignments();   
+
+             $tableData = Users::model()->getAllAssignments();
              $all = Users::model()->getAllActions();
                   $this->render('permissions',array(
                       'model'=>$model,

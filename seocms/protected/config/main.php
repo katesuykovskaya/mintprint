@@ -19,7 +19,8 @@ return CMap::mergeArray(
 	'modules'=>array(
         'attach',
         'social',
-        'order'
+        'order',
+        'users'
 	),
 //    'aliases' => array(
 //        'xupload' => 'ext.xupload'
@@ -29,6 +30,14 @@ return CMap::mergeArray(
 	'components'=>array(
         'easyImage' => array(
             'class' => 'application.extensions.easyimage.EasyImage',
+        ),
+        'user'=>array(
+            'class'=>'CWebUser',
+            // enable cookie-based authentication
+//            'stateKeyPrefix'=>'common',
+            'allowAutoLogin'=>true,
+            'autoRenewCookie'=>true,
+            'authTimeout'=>3600 * 24 * 7,
         ),
 		// uncomment the following to enable URLs in path-format
 		'urlManager'=>array(

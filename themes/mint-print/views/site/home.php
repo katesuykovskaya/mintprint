@@ -10,7 +10,7 @@
                 </ul>
             </menu>
             <div class="right-buttons">
-                <a id="profile" class="profile" href="#"></a>
+                <a id="profile" class="profile" href="<?=!empty(Yii::app()->user->id) ? Yii::app()->createUrl('site/profile') : Yii::app()->createUrl('site/login')?>"><?=!empty(Yii::app()->user->id) ? Yii::app()->user->login : ''?></a>
                 <a id="basket" class="basket" href="<?=Yii::app()->createUrl('order/orderTemp/basket')?>"></a>
             </div>
         </div>

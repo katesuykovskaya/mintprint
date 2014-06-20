@@ -8,7 +8,7 @@
  */
 $form=$this->beginWidget('CActiveForm', array(
     'id'=>'order-form',
-    'enableClientValidation'=>true,
+    'enableClientValidation'=>false,
     'clientOptions'=>array(
         'validateOnSubmit'=>true,
     ),
@@ -20,28 +20,31 @@ $form=$this->beginWidget('CActiveForm', array(
         <?php echo $form->labelEx($orderFormModel,'name'); ?>
         <?=$form->error($orderFormModel, 'name')?>
         <?php echo $form->textField($orderFormModel,'name', array(
-            'class'=>'name'
+            'class'=>'input-text'
         )); ?>
     </div>
     <div class="right block-wrap">
         <?php echo $form->labelEx($orderFormModel, 'phone'); ?>
         <?=$form->error($orderFormModel, 'phone')?>
         <?php echo $form->textField($orderFormModel, 'phone', array(
-            'class'=>'phone'
+            'class'=>'input-text'
         )); ?>
     </div>
 </div>
 <div>
     <?php echo $form->labelEx($orderFormModel, 'email'); ?>
     <?=$form->error($orderFormModel, 'email')?>
-    <?php echo $form->textField($orderFormModel, 'email'); ?>
+    <?php echo $form->textField($orderFormModel, 'email', array(
+        'class'=>'input-text'
+    )); ?>
 </div>
-<?php echo CHtml::label(CHtml::radioButton('OrderForm[delivery]', $orderFormModel->delivery == 'newPost', array(
+<?php echo CHtml::label(CHtml::radioButton('OrderForm[delivery]',empty($orderFormModel->delivery) || $orderFormModel->delivery == 'newPost', array(
     'value' => 'newPost',
     'id'=>'newPost',
     'uncheckValue'=>null
 )).' Выбрать ближайшее отделение Новой Почты', null);
-$attr = empty($orderFormModel->delivery) || $orderFormModel->delivery == 'newPost' ? array() : array('disabled'=>true);
+
+$attr = empty($orderFormModel->delivery) || $orderFormModel->delivery == 'newPost' ? array('class'=>'input-text') : array('disabled'=>true, 'class'=>'input-text');
 ?>
 <div id="newPostData">
     <div>
@@ -60,11 +63,11 @@ $attr = empty($orderFormModel->delivery) || $orderFormModel->delivery == 'newPos
             <?php if($orderFormModel->delivery == 'newPost') echo $form->error($orderFormModel, 'region')?>
             <?php echo $form->textField($orderFormModel, 'region', $attr); ?>
         </div>
-        <div>
-            <?php echo $form->labelEx($orderFormModel, 'newPostAddress'); ?>
-            <?php if($orderFormModel->delivery == 'newPost') echo $form->error($orderFormModel, 'newPostAddress')?>
-            <?php echo $form->textField($orderFormModel, 'newPostAddress', $attr); ?>
-        </div>
+    </div>
+    <div>
+        <?php echo $form->labelEx($orderFormModel, 'newPostAddress'); ?>
+        <?php if($orderFormModel->delivery == 'newPost') echo $form->error($orderFormModel, 'newPostAddress')?>
+        <?php echo $form->textField($orderFormModel, 'newPostAddress', $attr); ?>
     </div>
 </div>
 <?php echo CHtml::label(CHtml::radioButton('OrderForm[delivery]', $orderFormModel->delivery == 'post', array(
@@ -72,7 +75,7 @@ $attr = empty($orderFormModel->delivery) || $orderFormModel->delivery == 'newPos
     'id'=>'post',
     'uncheckValue'=>null
 )).' Хочу получить на почтовое отделение', null);
-$attr = $orderFormModel->delivery == 'post' ? array() : array('disabled'=>true);
+$attr = $orderFormModel->delivery == 'post' ? array('class'=>'input-text') : array('disabled'=>true, 'class'=>'input-text');
 ?>
 <div id="postData">
     <div>

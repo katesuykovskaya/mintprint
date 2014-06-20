@@ -9,6 +9,10 @@
  */
 ?>
 <section class="content">
+    <?php if(empty($models)):?>
+        <p>Корзина пуста</p>
+        <a href="javascript: history.back();">Назад</a>
+    <?php else:?>
     <div class="basket-step-1">
             <?php
             $counter = 0;
@@ -65,6 +69,7 @@
             <a href="<?=Yii::app()->createUrl('order/orderTemp/buyerInfo')?>" class="continue-button"><?=Yii::t('frontend', 'Следующий шаг')?></a>
         </div>
     </div>
+    <?php endif; ?>
 </section>
 <script>
     $(document).ready(function(){

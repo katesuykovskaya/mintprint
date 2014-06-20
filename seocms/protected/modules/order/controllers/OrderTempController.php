@@ -168,11 +168,19 @@ class OrderTempController extends Controller
      */
     public function actionBuyerInfo() {
         $this->layout = '//layouts/no-bg';
-        Yii::import('application.common.modules.users.models.CreateAccountForm');
+        Yii::import('application.modules.users.models.CreateAccountForm');
         $createAccountModel = new CreateAccountForm;
         $orderFormModel = new OrderForm;
         $config = $this->module->config;
-
+/*
+        if(isset($_POST['CreateAccountForm'])) {
+            $createAccountModel->attributes = $_POST['CreateAccountForm'];
+            if($createAccountModel->validate()) {
+                $userC = new UsersController;
+                $userC->actionCreate();
+            }
+        }
+*/
         if(isset($_POST['OrderForm'])) {
             $orderFormModel->attributes = $_POST['OrderForm'];
             if($orderFormModel->validate()) {
