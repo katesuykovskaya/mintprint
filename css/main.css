@@ -188,6 +188,7 @@ header menu a {
     clear: both;
     float: none;
     /* overflow: hidden; */
+    padding-bottom: 230px;
 }
 .inner-page {
     margin-top: 60px;
@@ -1116,7 +1117,6 @@ footer li a {
     overflow: hidden;
     vertical-align: middle;
     /* display: table-cell; */
-    padding-bottom: 230px;
 }
 .overflow-hidden .left {
     /* min-height: 107px; */
@@ -1153,6 +1153,9 @@ footer li a {
     display: block;
     font-size: 8px;
     margin-top: -5px;
+}
+.span-19{
+    padding-bottom: 230px;
 }
 
 /*
