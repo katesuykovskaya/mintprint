@@ -75,6 +75,18 @@ class Vk {
                 return null;
             }
             $data = $response['response'];
+            $data[] = array(
+                'aid'=>'wall',
+                'title'=>'Фотографии со стены',
+            );
+            $data[] = array(
+                'aid'=>'profile',
+                'title'=>'Аватары',
+            );
+            $data[] = array(
+                'aid'=>'saved',
+                'title'=>'Сохраненные фотографии',
+            );
             return $data;
         } catch(Exception $e) {
             echo $e->getMessage();

@@ -70,10 +70,11 @@ class UsersController extends Controller
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if(isset($_POST['Users']))
-        {
-            $model->attributes=$_POST['Users'];
-            $model->role = $_POST['userRole'];
+//        if(isset($_POST['Users']))
+//        {
+            $model->attributes=$_POST['CreateAccountForm'];
+            $model->
+            $model->role = 'Guest';
             $obj = new bCrypt();
             $model->token = $obj->hash(time());
 //            echo CVarDumper::dump($model, $depth=10, $highlight=true);
@@ -88,7 +89,7 @@ class UsersController extends Controller
                 $this->redirect($this->createUrl('users/users/admin'));
             }
 
-        }
+//        }
 
         $this->render('create',array(
             'model'=>$model,
