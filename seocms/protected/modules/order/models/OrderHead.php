@@ -98,8 +98,23 @@ class OrderHead extends CActiveRecord
         $command=$connection->createCommand($sql);
         $result = $command->execute();
         if($result){
-            //delete photos order
+            $this->cleanAndDeleteDir(Yii::getPathOfAlias('webroot').'/uploads/Order/'.$this->id);
+            $this->cleanAndDeleteDir(Yii::getPathOfAlias('webroot').'/uploads/Order/thumb/'.$this->id);
         }
+    }
+
+    public function cleanAndDeleteDir($dir) {
+        $files = glob($dir."/*");
+        $c = count($files);
+        if (count($files) > 0) {
+            foreach ($files as $file) {
+                if (file_exists($file)) {
+                    unlink($file);
+                }
+            }
+        }
+
+        rmdir($dir);
     }
 
 	/**
