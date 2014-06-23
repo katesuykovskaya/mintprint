@@ -2,7 +2,7 @@
 <!--<div class="container">-->
 <div>
     <!-- The file upload form used as target for the file upload widget -->
-    <form id="fileshow" action="http://twoends.home/backend/attach/default/show" method="POST" enctype="multipart/form-data">
+    <form id="fileshow" action="http://<?=$_SERVER['SERVER_NAME']?>/backend/attach/default/show" method="POST" enctype="multipart/form-data">
         <!-- Redirect browsers with JavaScript disabled to the origin page -->
         <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
         <div class="fileupload-buttonbar">

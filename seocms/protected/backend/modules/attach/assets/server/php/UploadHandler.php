@@ -56,7 +56,7 @@ class UploadHandler
             $fileSession = Yii::app()->session['files'];
             $this->options = array(
 //            'script_url' => $this->get_full_url().'/backend/attach/default/create/',
-                'script_url' => 'http://twoends.home/backend/attach/default/create/',
+                'script_url' => '/backend/attach/default/create/',
 //                'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/uploads/',
                 'upload_dir' => $fileSession['files']['tempUrl'],
 //                'upload_url' => $this->get_full_url().'/uploads/',
@@ -181,6 +181,7 @@ class UploadHandler
             if ($error_messages) {
                 $this->error_messages = $error_messages + $this->error_messages;
             }
+//            die(print_r(Yii::app()->session['files']));
             if ($initialize) {
                 $this->initialize();
             }

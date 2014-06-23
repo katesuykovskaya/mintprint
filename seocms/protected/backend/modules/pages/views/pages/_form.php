@@ -53,7 +53,8 @@ $this->widget('application.backend.modules.attach.widgets.FileUploadWidget',arra
     'tempUrl'=>$webroot.'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
     'uploadUrl'=>$webroot.'/uploads/',
     'webUrl'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
-    'filePath'=>$webroot.'/uploads/'.$entity.DIRECTORY_SEPARATOR.$translate->page_id.DIRECTORY_SEPARATOR,
+    'webTmp'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
+    'filePath'=>'/uploads/'.$entity.DIRECTORY_SEPARATOR.$translate->page_id.DIRECTORY_SEPARATOR,
 ));
 
 $this->widget('application.backend.extensions.tinymce.TinyMceWidget',array(

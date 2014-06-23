@@ -81,6 +81,7 @@ $this->widget('application.backend.modules.attach.widgets.FileUploadWidget',arra
         'tempUrl'=>Yii::getPathOfAlias('webroot').'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
         'uploadUrl'=>Yii::getPathOfAlias('webroot').'/uploads/',
         'webUrl'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
+        'webTmp'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
         'filePath'=>Yii::getPathOfAlias('webroot').'/uploads/'.$entity.DIRECTORY_SEPARATOR.$model->page_id.DIRECTORY_SEPARATOR,
         'filesToken'=>$filesToken,
 ));

@@ -59,7 +59,7 @@ class FileHandler
 //                'script_url' => Yii::app()->request->hostInfo.DIRECTORY_SEPARATOR.'backend/attach/default/show/',
                 'script_url' => '/backend/attach/default/show/',
                 'upload_dir' => $fileSession['files']['filePath'],
-                'upload_url' => $fileSession['files']['webUrl'].$fileSession['files']['entity'].DIRECTORY_SEPARATOR.$fileSession['files']['entity_id'].DIRECTORY_SEPARATOR,
+                'upload_url' => '/uploads/'.$fileSession['files']['entity'].'/'.$fileSession['files']['entity_id'].'/',
 
                 /*ability to create own dir structure*/
                 'user_dirs' => false,
