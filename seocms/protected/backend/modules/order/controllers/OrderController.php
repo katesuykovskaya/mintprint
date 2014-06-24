@@ -1,6 +1,6 @@
 <?php
 
-class OrderHeadController extends Controller
+class OrderController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -16,6 +16,7 @@ class OrderHeadController extends Controller
 		return array(
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
+            'rights'
 		);
 	}
 
@@ -83,7 +84,7 @@ class OrderHeadController extends Controller
 		{
 			$model->attributes=$_POST['OrderHead'];
 			if($model->save())
-                $this->redirect($this->createUrl('/backend/order/orderHead/admin',['language'=>Yii::app()->language]));
+                $this->redirect($this->createUrl('/backend/order/order/admin',['language'=>Yii::app()->language]));
 		}
 
         $model->price = $model->price." грн";
@@ -191,6 +192,7 @@ class OrderHeadController extends Controller
 	 */
 	public function actionAdmin()
 	{
+        $this->layout = '//layouts/main';
 		$model=new OrderHead('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['OrderHead']))

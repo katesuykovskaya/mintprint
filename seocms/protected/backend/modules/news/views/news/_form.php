@@ -26,7 +26,7 @@ if($model->isNewRecord){
     ,CClientScript::POS_END);
 }
 ?>
-<div style="width: 100%">
+<div style="width: 100%; overflow: hidden">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'news-form',
@@ -85,6 +85,19 @@ $this->widget('bootstrap.widgets.TbTabs', array(
     </div>
 
 <?php
+$filesToken = sha1(uniqid(mt_rand(),true));
+$entity = 'StaticPages';
+$webroot = Yii::getPathOfAlias('webroot');
+$this->widget('application.backend.modules.attach.widgets.FileUploadWidget',array(
+    'entity'=>$entity,
+    'entity_id'=> !$model->isNewRecord ? $model->id : null,
+    'versions'=>array('small','thumbnail',''),
+    'tempUrl'=>$webroot.'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
+    'uploadUrl'=>$webroot.'/uploads/',
+    'webUrl'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
+    'webTmp'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
+    'filePath'=>'/uploads/'.$entity.DIRECTORY_SEPARATOR.$model->id.DIRECTORY_SEPARATOR,
+));
 $this->widget('application.backend.extensions.tinymce.TinyMceWidget',array(
     'language'=>Yii::app()->language,
     'attribute'=>'tinyEditor'

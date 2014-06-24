@@ -119,6 +119,7 @@ class AttachmentBehavior extends CActiveRecordBehavior {
     {
         $entity = get_class($this->owner);
         $entity_id = $this->owner->page_id;
+        Yii::import('application.backend.modules.attach.models.Attachment');
         Attachment::model()->deleteAllByAttributes(array('attachment_entity'=>$entity,'entity_id'=>$entity_id));
         $this->delete_files($this->upload_path.$entity.DIRECTORY_SEPARATOR.$entity_id.DIRECTORY_SEPARATOR);
     }

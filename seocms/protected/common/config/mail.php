@@ -11,14 +11,14 @@
     'encryption' => 'tls',
   ),
   'charset' => 'utf8',
-  'adminEmail' => 'kate.s@seotm.com',
+  'adminEmail' => 'sidorenko.a@seotm.com',
   'mailGroup' => 
   array (
-    0 => 'kate.s@seotm.com',
+    0 => 'sidorenko.a@seotm.com',
   ),
   'mailheader' => 
   array (
-    'ru' => '<p>ru header+</p>',
+    'ru' => '<p>ru header++++</p>',
   ),
   'mailfooter' => 
   array (

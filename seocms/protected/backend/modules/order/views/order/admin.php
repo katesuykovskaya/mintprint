@@ -11,6 +11,7 @@
 
  $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 	'id'=>'order-head-grid',
+     'type'=>'striped bordered',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
@@ -47,10 +48,10 @@
             'template'=>'{update}{delete}',
             'buttons' => array(
                 'update' => array(
-                    'url' => 'Yii::app()->createUrl("backend/order/orderHead/update", array("id"=>$data->id))',
+                    'url' => 'Yii::app()->createUrl("backend/order/order/update", array("id"=>$data->id))',
                 ),
                 'delete' => array(
-                    'url' => 'Yii::app()->createUrl("backend/order/orderHead/delete", array("id"=>$data->id))',
+                    'url' => 'Yii::app()->createUrl("backend/order/order/delete", array("id"=>$data->id))',
                 ),
             ),
 		),
