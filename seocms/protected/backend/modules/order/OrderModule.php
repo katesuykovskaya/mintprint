@@ -10,6 +10,7 @@ class OrderModule extends CWebModule
 		// import the module-level models and components
 		$this->setImport(array(
 			'application.modules.order.models.*',
+            'order.models.*',
 			'order.components.*',
 		));
 	}

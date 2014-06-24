@@ -21,7 +21,7 @@
     <div class="footer-text-wrap">
         <div class="footer-top-bg"></div>
         <div class="footer-text">
-            <h2>печать всего за 1 гривну</h2>
+            <h2><?=Yii::t('frontend','печать всего за 1 гривну')?></h2>
             <div>
                 <p>а воспоминания - бесценны, сохраните их нстоящими.</p>
                 <p>бумажными фотографиями, которые можно дать в руки, подарить, и положить под подушку</p>
@@ -33,14 +33,7 @@
     <div class="img-main-page"></div>
     <div class="footer-menu">
         <div class="footer-menu-wrap">
-            <menu>
-                <ul>
-                    <li><a href="#">вопросы</a></li>
-                    <li><a href="#">оферта</a></li>
-                    <li><a href="#">политика конфиденциальности</a></li>
-                    <li><a href="#">блог</a></li>
-                </ul>
-            </menu>
+            <?php $this->widget('application.backend.modules.menugen.widgets.FrontMenu',array('menuName'=>'меню в footer'))?>
             <div class="socials-bottom">
                 <a class="ins" href="#"></a>
                 <a class="fb" href="#"></a>

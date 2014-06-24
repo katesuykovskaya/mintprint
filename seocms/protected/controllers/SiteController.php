@@ -266,9 +266,10 @@ class SiteController extends Controller
             'index' => 't_lang',
             'sufix' => '.html',
         );
-
+        $conf = require(Yii::getPathOfAlias('application.modules.order.config.config').'.php');
         $this->render('pages', array(
-            'model'=>$model,
+            'model'=>$model->translation[Yii::app()->language],
+            'conf'=>$conf
         ));
     }
 }

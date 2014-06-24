@@ -24,37 +24,6 @@ class OrderHeadController extends Controller
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
-	public function accessRules()
-	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
-	}
-
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
-	}
 
 	/**
 	 * Creates a new model.
@@ -185,16 +154,37 @@ class OrderHeadController extends Controller
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('OrderHead');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
+    public function actionPrice(){
+//        CVarDumper::dump($_REQUEST, 5, true);
+//        die();
+        $this->layout = '//layouts/main';
+        $model = new ConfigForm();
+        $file = Yii::getPathOfAlias('application.modules.order.config').'/config.php';
+        $model->attributes = include $file;
+        if(Yii::app()->request->isPostRequest){
+            $model->attributes=$_POST['ConfigForm'];
+            if($model->validate()){
+
+                $content = "<?php\n return ";
+                $content .= var_export($model->attributes,true);
+                $content .=";";
+
+                if(!file_put_contents($file, $content)) die ('<h1>error!</h1>');
+            }
+
+            }else{
+
+                $priceArray = array();
+
+            }
+
+
+        $this->render('price',array(
+            'file'=>$file,
+            'model'=>$model
+        ));
+
+    }
 
 	/**
 	 * Manages all models.

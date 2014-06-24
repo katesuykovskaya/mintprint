@@ -33,7 +33,7 @@
         echo '<hr />';
         ?>
 
-        <?php echo CHtml::activeFileField($translate,'img',array()).'<hr />'?>
+<!--        --><?php //echo CHtml::activeFileField($translate,'img',array()).'<hr />'?>
 
 		<?php echo CHtml::submitButton('Создать',array('class'=>'btn')).'<hr />'; ?>
 
@@ -46,16 +46,16 @@
 $filesToken = sha1(uniqid(mt_rand(),true));
 $entity = 'StaticPages';
 $webroot = Yii::getPathOfAlias('webroot');
-$this->widget('application.backend.modules.attach.widgets.FileUploadWidget',array(
-    'entity'=>$entity,
-    'entity_id'=> !$translate->isNewRecord ? $translate->page_id : null,
-    'versions'=>array('small','thumbnail',''),
-    'tempUrl'=>$webroot.'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
-    'uploadUrl'=>$webroot.'/uploads/',
-    'webUrl'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
-    'webTmp'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
-    'filePath'=>'/uploads/'.$entity.DIRECTORY_SEPARATOR.$translate->page_id.DIRECTORY_SEPARATOR,
-));
+//$this->widget('application.backend.modules.attach.widgets.FileUploadWidget',array(
+//    'entity'=>$entity,
+//    'entity_id'=> !$translate->isNewRecord ? $translate->page_id : null,
+//    'versions'=>array('small','thumbnail',''),
+//    'tempUrl'=>$webroot.'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
+//    'uploadUrl'=>$webroot.'/uploads/',
+//    'webUrl'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
+//    'webTmp'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
+//    'filePath'=>'/uploads/'.$entity.DIRECTORY_SEPARATOR.$translate->page_id.DIRECTORY_SEPARATOR,
+//));
 
 $this->widget('application.backend.extensions.tinymce.TinyMceWidget',array(
     'language'=>Yii::app()->language,

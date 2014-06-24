@@ -120,6 +120,7 @@ body {
     height: auto !important;
     margin-bottom: -230px;
     overflow: hidden;
+
 }
 header {
     height: 70px;
@@ -129,6 +130,7 @@ header {
     position: relative;
     margin-bottom: 10px;
     display: block;
+    z-index: 4;
 }
 header .header-wrap {
     margin: 0 auto;
@@ -169,7 +171,7 @@ header menu a {
 }
 .profile {
     display: inline-block;
-
+    visibility: hidden;
     width: 48px;
     height: 48px;
     background-image: url('/img/cabinet.png');
@@ -305,6 +307,78 @@ h1 {
 .basket-cost .white-text {
     padding-top: 2px;
 }
+.head-page{
+    position: relative;z-index: 1;
+    color: white;
+    font-size: 63px;
+    text-align: center;
+    background: url("../img/page-header.jpg");
+    top: -9px;
+    height: 110px;
+    line-height: 110px;
+}
+.wrapper-page{
+    padding-bottom: 230px;
+    overflow: hidden;
+    width: 950px;
+    margin: 0 auto;
+}
+.wrapper-page .left-page{
+    float: left;
+    width: 564px;
+    /*margin-left: 90px;*/
+}
+.wrapper-page .right-page{
+    float: right;
+    width: 306px;
+}
+.wrapper-page .title-page{
+    color: #6cbbc1;
+    font-size: 50px;
+    font-weight: bold;
+}
+.right-block-info{
+    background-color: #ffffff;
+    width: 265px;
+    -webkit-border-radius: 10px 0 0 10px;
+    -moz-border-radius: 10px 0 0 10px;
+    border-radius: 10px 0 0 10px;
+    padding: 20px 0 34px 40px;
+    margin: 140px 0 0 0;
+
+}
+.right-block-info .head-block-info{
+    display: block;
+    color: #6cbbc1;
+    font-weight: bold;
+    font-size: 15px;
+    width: 200px;
+}
+.desc-photo{
+    font-size: 12px;
+    color: #929496;
+    font-weight: bold;
+    width: 200px;
+}
+.watch-button{
+    background-color: #19BDC3;
+    border-radius: 21px;
+    border: none;
+    border-bottom: 3px solid #3492B0;
+    display: inline-block;
+    padding: 8px 15px;
+    color: #262424;
+    font-size: 16px;
+    margin: 10px 0 0 0;
+}
+.right-block-info .price-photo{
+    margin: 17px 0 0 0;
+    font-size: 12px;
+    color: #929496;
+    width: 130px;
+    font-weight: bold;
+}
+
 .green-text {
     font-size: 14px;
     color: #19BDC3;
@@ -328,7 +402,7 @@ h1 {
     display: inline-block;
     padding-right: 30px;
     margin-top: 15px;
-    margin-bottom: 22px;
+    margin-bottom: 14px;
 }
 #priceWrap sup {
     font-size: 14px;

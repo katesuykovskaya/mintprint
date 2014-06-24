@@ -48,10 +48,8 @@ class FrontMenu extends CWidget
             'condition'=>'t_hide=0',
             'params'=>array(':lang'=>Yii::app()->language),
         )))->findAll($criteria);
-
         $this->render('frontMenu',array(
             'menu'=>$menu,
-            'name'=>$this->menuName,
         ));
     }
 }

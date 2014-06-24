@@ -1,14 +1,7 @@
 <div class="header-and-content-wrap home-page">
     <header>
         <div class="header-wrap">
-            <menu>
-                <ul>
-                    <li><a href="#">оплата и доставка</a></li>
-                    <li><a href="#">новости</a></li>
-                    <li><a href="#">главная</a></li>
-                    <li><a href="#">о нас</a></li>
-                </ul>
-            </menu>
+            <?php $this->widget('application.backend.modules.menugen.widgets.FrontMenu',array('menuName'=>'меню в head'))?>
             <div class="right-buttons">
                 <a id="profile" class="profile" href="<?=!empty(Yii::app()->user->id) ? Yii::app()->createUrl('site/profile') : Yii::app()->createUrl('site/login')?>"><?=!empty(Yii::app()->user->id) ? Yii::app()->user->login : ''?></a>
                 <a id="basket" class="basket" href="<?=Yii::app()->createUrl('order/orderTemp/basket')?>"></a>

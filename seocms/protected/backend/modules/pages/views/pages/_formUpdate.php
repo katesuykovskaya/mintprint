@@ -50,12 +50,12 @@ Yii::app()->clientScript->registerCssFile('/css/lightbox.css');
             )
         );
     } else {
-        echo CHtml::activeFileField($model,'img',array());
+//        echo CHtml::activeFileField($model,'img',array());
     }
 
 ?>
 </div><!-- form -->
-<hr />
+<!--<hr />-->
 <?php echo CHtml::submitButton(Yii::t('backend','Сохранить'),array('class'=>'btn')); ?>
 
 
@@ -63,28 +63,28 @@ Yii::app()->clientScript->registerCssFile('/css/lightbox.css');
 
 
 <?php if(!$model->isNewRecord):?>
-<div class="well">
-    <h4 class="page-header"><?=Yii::t('backend','Загруженные файлы:')?></h4>
+<!--<div class="well">-->
+<!--    <h4 class="page-header">--><?//=Yii::t('backend','Загруженные файлы:')?><!--</h4>-->
 <?php
-    $this->widget('application.backend.modules.attach.widgets.FileWidget');
-?>
-</div>
+//    $this->widget('application.backend.modules.attach.widgets.FileWidget');
+//?>
+<!--</div>-->
 <?php endif?>
 
 <?php
 $filesToken = sha1(uniqid(mt_rand(),true));
 $entity = get_class($model);
-$this->widget('application.backend.modules.attach.widgets.FileUploadWidget',array(
-        'entity'=>$entity,
-        'entity_id'=> !$model->isNewRecord ? $model->page_id : null,
-        'versions'=>array('small','thumbnail',''),
-        'tempUrl'=>Yii::getPathOfAlias('webroot').'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
-        'uploadUrl'=>Yii::getPathOfAlias('webroot').'/uploads/',
-        'webUrl'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
-        'webTmp'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
-        'filePath'=>Yii::getPathOfAlias('webroot').'/uploads/'.$entity.DIRECTORY_SEPARATOR.$model->page_id.DIRECTORY_SEPARATOR,
-        'filesToken'=>$filesToken,
-));
+//$this->widget('application.backend.modules.attach.widgets.FileUploadWidget',array(
+//        'entity'=>$entity,
+//        'entity_id'=> !$model->isNewRecord ? $model->page_id : null,
+//        'versions'=>array('small','thumbnail',''),
+//        'tempUrl'=>Yii::getPathOfAlias('webroot').'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
+//        'uploadUrl'=>Yii::getPathOfAlias('webroot').'/uploads/',
+//        'webUrl'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
+//        'webTmp'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
+//        'filePath'=>Yii::getPathOfAlias('webroot').'/uploads/'.$entity.DIRECTORY_SEPARATOR.$model->page_id.DIRECTORY_SEPARATOR,
+//        'filesToken'=>$filesToken,
+//));
 
 $this->widget('application.backend.extensions.tinymce.TinyMceWidget',array(
     'language'=>Yii::app()->language,

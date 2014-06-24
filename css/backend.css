@@ -46,7 +46,8 @@
 .wrapper-photos{
     position: absolute;
     top: 200px;
-    right: 0;
+    /*right: 0;*/
+    left: 276px;
 }
 .wrapper-photos img{
     margin: 5px;

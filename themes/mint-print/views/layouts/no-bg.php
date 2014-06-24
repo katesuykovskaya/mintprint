@@ -22,14 +22,7 @@
 <div class="header-and-content-wrap">
     <header>
         <div class="header-wrap">
-            <menu>
-                <ul>
-                    <li><a href="#">оплата и доставка</a></li>
-                    <li><a href="#">новости</a></li>
-                    <li><a href="/">главная</a></li>
-                    <li><a href="#">о нас</a></li>
-                </ul>
-            </menu>
+            <?php $this->widget('application.backend.modules.menugen.widgets.FrontMenu',array('menuName'=>'меню в head'))?>
             <div class="right-buttons">
                 <a id="profile" class="profile" href="<?=!empty(Yii::app()->user->id) ? Yii::app()->createUrl('site/profile') : Yii::app()->createUrl('site/login')?>"><?=!empty(Yii::app()->user->id) ? Yii::app()->user->login : ''?></a>
                 <a id="basket" class="basket" href="<?=Yii::app()->createUrl('order/orderTemp/basket')?>"></a>
@@ -43,7 +36,7 @@
     <div class="footer-text-wrap">
         <div class="footer-top-bg"></div>
         <div class="footer-text">
-            <h2>печать всего за 1 гривну</h2>
+            <h2><?=Yii::t('frontend','печать всего за 1 гривну')?></h2>
             <div>
                 <p>а воспоминания - бесценны, сохраните их нстоящими.</p>
                 <p>бумажными фотографиями, которые можно дать в руки, подарить, и положить под подушку</p>
@@ -54,14 +47,7 @@
     </div>
     <div class="footer-menu">
         <div class="footer-menu-wrap">
-            <menu>
-                <ul>
-                    <li><a href="#">вопросы</a></li>
-                    <li><a href="#">оферта</a></li>
-                    <li><a href="#">политика конфиденциальности</a></li>
-                    <li><a href="#">блог</a></li>
-                </ul>
-            </menu>
+            <?php $this->widget('application.backend.modules.menugen.widgets.FrontMenu',array('menuName'=>'меню в footer'))?>
             <div class="socials-bottom">
                 <a class="ins" href="#"></a>
                 <a class="fb" href="#"></a>
