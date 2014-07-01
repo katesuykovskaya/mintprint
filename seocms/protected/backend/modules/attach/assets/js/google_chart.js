@@ -31,7 +31,8 @@ $(document).on("click",'#chart-btn',function(e){
         type:"POST",
         url:$(this).attr("href"),
         data:{
-            'tmp':$(this).data("tmp")
+            'tmp':$(this).data("tmp"),
+            'timeCriteria': $(this).data('time-criteria')
         },
         success:function(){
             location.reload();

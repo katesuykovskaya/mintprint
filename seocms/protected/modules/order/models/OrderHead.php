@@ -15,6 +15,7 @@
  * @property string $newPostAddress
  * @property integer $sign
  * @property integer $price
+ * @property integer $date
  */
 class OrderHead extends CActiveRecord
 {
@@ -54,7 +55,7 @@ class OrderHead extends CActiveRecord
 			array('delivery', 'length', 'max'=>7),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, photoCount, status, name, email, phone, address, city, region, delivery, newPostAddress, sign, price', 'safe', 'on'=>'search'),
+			array('id, photoCount, status, name, email, phone, address, city, region, delivery, newPostAddress, sign, price, date', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -78,18 +79,19 @@ class OrderHead extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
+			'name' => 'Имя и Фамилия',
 			'email' => 'Email',
-			'phone' => 'Phone',
-			'address' => 'Address',
-			'city' => 'City',
-			'region' => 'Region',
-			'delivery' => 'Delivery',
+			'phone' => 'Телефон',
+			'address' => 'Адрес',
+			'city' => 'Город',
+			'region' => 'Область',
+			'delivery' => 'Способ доставки',
 			'newPostAddress' => 'New Post Address',
-			'sign' => 'Sign',
+			'sign' => 'Подписан на новости',
+            'date' => 'Дата',
+            'price'=>'Сумма'
 		);
 	}
-
 
     public function afterDelete()
     {
@@ -143,6 +145,7 @@ class OrderHead extends CActiveRecord
 		$criteria->compare('sign',$this->sign);
         $criteria->compare('price',$this->price);
         $criteria->compare('status',$this->status);
+        $criteria->compare('date', $this->date);
         if($this->photoCount)
         {
             $criteria->having = "`count` = {$this->photoCount}";

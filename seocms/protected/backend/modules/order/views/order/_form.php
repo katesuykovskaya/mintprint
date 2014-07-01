@@ -71,7 +71,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'sign'); ?>
-		<?php echo $form->textField($model,'sign'); ?>
+		<?php echo $form->checkBox($model,'sign'); ?>
 		<?php echo $form->error($model,'sign'); ?>
 	</div>
 

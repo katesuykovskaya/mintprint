@@ -90,44 +90,54 @@ class OrderController extends Controller
         $model->price = $model->price." грн";
 
         if(isset($_POST['download'])){
+            $date = '2014-07-01';
+            $models = OrderHead::model()->findAll('date=:date', array(":date"=>strtotime($date)));
+            $rar = new store_rar;
+            $rar->create("$date.rar");
+            foreach($models as $model)
+                foreach($model->body as $key=>$item)
+                {
+                    $rar->addFile($model->id);
+                }
+            $rar->close();
+            /*
+                $error = "";
 
-            $error = "";
-
-                    if(count($model->body))
-                    {
-            // проверяем выбранные файлы
-                        $zip = new ZipArchive(); // подгружаем библиотеку zip
-                        $zip_name = time().".zip"; // имя файла
-                        if($zip->open($zip_name, ZIPARCHIVE::CREATE)!==TRUE)
+                        if(count($model->body))
                         {
-                            $error .= "* Sorry ZIP creation failed at this time";
+                // проверяем выбранные файлы
+                            $zip = new ZipArchive(); // подгружаем библиотеку zip
+                            $zip_name = time().".zip"; // имя файла
+                            if($zip->open($zip_name, ZIPARCHIVE::CREATE)!==TRUE)
+                            {
+                                $error .= "* Sorry ZIP creation failed at this time";
+                            }
+                            foreach($model->body as $key=>$item)
+                            {
+    //                            $path = str_replace('http://'.$_SERVER['SERVER_NAME'].'/', "",$item['path']);
+                                $zip->addFile(substr($item['path'], 1)); // добавляем файлы в zip архив
+                            }
+                            $zip->close();
+
+                            if(file_exists($zip_name))
+                            {
+                // отдаём файл на скачивание
+                                header('Content-type: application/zip');
+                                header('Content-Disposition: attachment; filename="'.$zip_name.'"');
+                                readfile($zip_name);
+                // удаляем zip файл если он существует
+                                unlink($zip_name);
+                            }
+
                         }
-                        foreach($model->body as $key=>$item)
-                        {
-//                            $path = str_replace('http://'.$_SERVER['SERVER_NAME'].'/', "",$item['path']);
-                            $zip->addFile(substr($item['path'], 1)); // добавляем файлы в zip архив
-                        }
-                        $zip->close();
+                        else
+                            $error .= "folder empty";
 
-                        if(file_exists($zip_name))
-                        {
-            // отдаём файл на скачивание
-                            header('Content-type: application/zip');
-                            header('Content-Disposition: attachment; filename="'.$zip_name.'"');
-                            readfile($zip_name);
-            // удаляем zip файл если он существует
-                            unlink($zip_name);
-                        }
-
-                    }
-                    else
-                        $error .= "folder empty";
-
-            if($error)
-                die($error);
-            else
-                die();
-
+                if($error)
+                    die($error);
+                else
+                    die();
+                */
             }
 
 		$this->render('update',array(
@@ -154,6 +164,38 @@ class OrderController extends Controller
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
+
+    public function actionClearTmp()
+    {
+        if(Yii::app()->request->isAjaxRequest){
+            $url = isset($_POST['tmp']) ? $_POST['tmp'] : null;
+            $timeCriteria = isset($_POST['timeCriteria']) ? $_POST['timeCriteria'] : 60 * 60 * 24 * 7;
+            if($url){
+                $this->delete_files($url, $timeCriteria);
+            }
+        }
+    }
+
+    /**
+     * php delete function that deals with directories recursively
+     * @param $target - directory path to work with
+     * @return bool
+     */
+    public function delete_files($target, $timeCriteria) {
+        if(is_dir($target)){
+            $files = glob( $target . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
+            foreach( $files as $file )
+            {
+                $this->delete_files( $file, $timeCriteria );
+            }
+            if(count(glob( $target . '*', GLOB_MARK )) === 0 && $target != Yii::getPathOfAlias('webroot').'/uploads/tmp/')
+                rmdir( $target );
+        } else {
+            if(is_file($target) && filectime($target) + $timeCriteria < time()) {
+                unlink( $target );
+            }
+        }
+    }
 
     public function actionPrice(){
 //        CVarDumper::dump($_REQUEST, 5, true);
