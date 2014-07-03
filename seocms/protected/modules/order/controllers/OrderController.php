@@ -2,6 +2,12 @@
 
 class OrderController extends Controller
 {
+    public function filters()
+    {
+        return array(
+            'ajaxOnly + result', // we only allow deletion via POST request
+        );
+    }
     public function actionCreate() {
         $model = new OrderHead;
         $model->attributes = Yii::app()->session['OrderHead'];
@@ -94,7 +100,7 @@ class OrderController extends Controller
         ));
     }
 
-    public function SendClientEmail(&$body, $email) {
+    protected function SendClientEmail(&$body, $email) {
         Yii::import('application.backend.modules.feedback.components.mailOrPhone');
         Yii::import('application.extensions.yii-mail.YiiMailMessage');
         Yii::import('application.backend.components.*');
@@ -112,7 +118,7 @@ class OrderController extends Controller
         return Yii::app()->mail->send($message);
     }
 
-    public function SendAdminEmail(&$body, $id) {
+    protected function SendAdminEmail(&$body, $id) {
         Yii::import('application.backend.modules.feedback.components.mailOrPhone');
         Yii::import('application.extensions.yii-mail.YiiMailMessage');
         Yii::import('application.backend.components.*');

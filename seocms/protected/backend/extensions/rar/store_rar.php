@@ -13,7 +13,7 @@
 //  $rar->addDirectory("b/c");   # создаём в архиве директорию "b" с поддиректорией "c"
 //  $rar->addFile("d/e.txt");    # создаём директорию "d" и пишем в неё e.txt
 // $rar->close();                # закрываем архив
-class store_rar {
+class store_rar extends CComponent {
 	// Указатель на архив
 	private $id = null;
 	// Внутренняя структура каталогов, чтобы не создавать лишние.

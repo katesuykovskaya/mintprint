@@ -8,21 +8,25 @@
  */
 ?>
 <section class="content buyer-info-form">
+    <?php if($count == 0): echo 'Корзина - пуста'; else:?>
     <h1><?=Yii::t('frontend', 'Оплатите')?></h1>
     <p><?=Yii::t('frontend', 'Печать ваших замечательних фотографий')?></p>
     <div class="overflow-hidden forms-start">
         <div class="tree-forms left">
-            <div class="overflow-hidden">
-                <div class="left enter-wrap">
-                    <h2><?=Yii::t('frontend', 'уже зарегистрированы?')?></h2>
-                    <a href="<?=Yii::app()->createUrl('users/users/login')?>" class="continue-button"><?=Yii::t('frontend', 'Войти')?></a>
-                </div>
-                <div class="left create-profile-wrap">
-                    <?php $this->renderPartial('application.modules.users.views.users._createAccount', array(
-                        'createAccountModel'=>$createAccountModel
-                    ))?>
-                </div>
-            </div>
+            <?php /**
+                    * UNCOMMENT THIS WHEN AUTHORIZATION AND REGISTRATION WILL BE
+                    */ ?>
+<!--            <div class="overflow-hidden">-->
+<!--                <div class="left enter-wrap">-->
+<!--                    <h2>--><?//=Yii::t('frontend', 'уже зарегистрированы?')?><!--</h2>-->
+<!--                    <a href="--><?//=Yii::app()->createUrl('users/users/login')?><!--" class="continue-button">--><?//=Yii::t('frontend', 'Войти')?><!--</a>-->
+<!--                </div>-->
+<!--                <div class="left create-profile-wrap">-->
+<!--                    --><?php //$this->renderPartial('application.modules.users.views.users._createAccount', array(
+//                        'createAccountModel'=>$createAccountModel
+//                    ))?>
+<!--                </div>-->
+<!--            </div>-->
             <div class="order-head-wrap">
                 <h2><?=Yii::t('frontend', 'вы и ваш адрес')?></h2>
                 <?php $this->renderPartial('application.modules.order.views.order._order', array(
@@ -43,5 +47,5 @@
             <a class="back-button" href="javascript: history.back(); return false">назад</a>
         </div>
     </div>
-
+<?php endif;?>
 </section>
