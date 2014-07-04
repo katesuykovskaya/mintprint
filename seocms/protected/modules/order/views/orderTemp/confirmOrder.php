@@ -17,6 +17,7 @@
     </div>
     <div class="blue-stripe"></div>
     <div class="confirm-order relative">
+        <?php if(!count($photos)): echo 'Корзина - пустая'; else:?>
         <h2>Подтверждение заказа</h2>
         <p class="green-open-sans-text">Выбранные фото:</p>
         <div class="overflow-hidden">
@@ -48,6 +49,7 @@
                 $counter++;
                 endforeach?>
             </div>
+<!--            --><?//=CVarDumper::dump($order, 4, 1)?>
             <div class="right confirm-info">
                 <table class="confirm-table">
                     <tr>
@@ -108,6 +110,7 @@
             ))?>
             <span id="message"></span>
         </div>
+        <?php endif;?>
     </div>
     <div class="clear-float"></div>
 </section>

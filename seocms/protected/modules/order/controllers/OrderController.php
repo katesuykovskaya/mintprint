@@ -2,10 +2,17 @@
 
 class OrderController extends Controller
 {
+    public function filters()
+    {
+        return array(
+            'ajaxOnly + result', // we only allow deletion via POST request
+        );
+    }
     public function actionCreate() {
         $model = new OrderHead;
         $model->attributes = Yii::app()->session['OrderHead'];
         $model->price = OrderTemp::CollectPrice($this->module->config['price']);
+        $model->date = date("Y-m-d");
         if($model->save(false)) {
             Yii::app()->session['id_order'] = $model->id;
             die(json_encode(array('res'=>true, 'id_order'=>$model->id)));
@@ -42,16 +49,17 @@ class OrderController extends Controller
 //            ));
             $path_parts = pathinfo($tempPath);
 
-            if(!file_exists(Yii::getPathOfAlias("webroot")."/uploads/Order/".$idOrder."/"))
-            {
-                mkdir(Yii::getPathOfAlias("webroot")."/uploads/Order/".$idOrder."/");
-            }
-
-
+        $dateFolder = Yii::getPathOfAlias("webroot")."/uploads/Order/".date("d-m-Y")."/";
+        if(!file_exists($dateFolder))
+            mkdir($dateFolder, 0777, true);
+        $orderFolder = $dateFolder.$idOrder."/";
+        $file = $orderFolder.$path_parts['filename'].'.'.$path_parts['extension'];
+        if(!file_exists($orderFolder))
+            mkdir($orderFolder, 0777);
             $crop = new EasyImage($tempPath);
             $crop->crop($image['img_width'], $image['img_height'], $image['img_x'], $image['img_y']);
-            $crop->save(Yii::getPathOfAlias("webroot")."/uploads/Order/".$idOrder."/".$path_parts['filename'].'.'.$path_parts['extension'], 80);
-            $saved = Yii::getPathOfAlias("webroot")."/uploads/Order/".$idOrder."/".$path_parts['filename'].'.'.$path_parts['extension'];
+            $crop->save($file, 80);
+//            $saved = Yii::getPathOfAlias("webroot")."/uploads/Order/".$idOrder."/".$path_parts['filename'].'.'.$path_parts['extension'];
 
             if($image['type'] == 'social')
                 unlink($tempPath);
@@ -59,7 +67,7 @@ class OrderController extends Controller
 //            die(json_encode(array('res'=>false)));
 //        }
         $model = new OrderBody;
-        $model->path = str_replace(Yii::getPathOfAlias('webroot'), "", $saved);
+        $model->path = str_replace(Yii::getPathOfAlias('webroot'), "", $file);
         $model->count = $image['img_count'];
         $model->id_order = $idOrder;
         $res = $model->save();
@@ -69,11 +77,12 @@ class OrderController extends Controller
     }
 
     public function actionResult() {
+        Yii::import('application.backend.components.ZHtml');
         $id = Yii::app()->session['id_order'];
 //        unset(Yii::app()->session['id_order']);
         $tmpDir = Yii::getPathOfAlias('webroot').'/uploads/tmp/'.Yii::app()->session->sessionID.'/';
         if(file_exists($tmpDir))
-            rmdir($tmpDir);
+            ZHtml::deleteDir($tmpDir);
         $model = OrderHead::model()->findByPk($id);
         $orderFormModel = new OrderForm;
         $config = $this->getModule()->config;
@@ -91,7 +100,7 @@ class OrderController extends Controller
         ));
     }
 
-    public function SendClientEmail(&$body, $email) {
+    protected function SendClientEmail(&$body, $email) {
         Yii::import('application.backend.modules.feedback.components.mailOrPhone');
         Yii::import('application.extensions.yii-mail.YiiMailMessage');
         Yii::import('application.backend.components.*');
@@ -109,7 +118,7 @@ class OrderController extends Controller
         return Yii::app()->mail->send($message);
     }
 
-    public function SendAdminEmail(&$body, $id) {
+    protected function SendAdminEmail(&$body, $id) {
         Yii::import('application.backend.modules.feedback.components.mailOrPhone');
         Yii::import('application.extensions.yii-mail.YiiMailMessage');
         Yii::import('application.backend.components.*');

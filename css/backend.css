@@ -52,3 +52,11 @@
 .wrapper-photos img{
     margin: 5px;
 }
+input[type="submit"].link {
+    color: #0088cc;
+    outline: 0;
+    border: none;
+    text-decoration: underline;
+    background-color: transparent;
+    box-shadow: none;
+}

@@ -15,6 +15,8 @@
  * @property string $newPostAddress
  * @property integer $sign
  * @property integer $price
+ * @property integer $date
+ * @property strinf $index
  */
 class OrderHead extends CActiveRecord
 {
@@ -45,16 +47,16 @@ class OrderHead extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, status, email, phone, address, city, region, newPostAddress', 'required'),
-			array('sign', 'numerical', 'integerOnly'=>true),
-			array('name, email, address, region, newPostAddress', 'length', 'max'=>255),
+			array('name, status, email, phone, address, city, region, index', 'required'),
+			array('sign, index', 'numerical', 'integerOnly'=>true),
+			array('name, email, address, region', 'length', 'max'=>255),
 			array('phone', 'length', 'max'=>60),
             array('status', 'in', 'range'=>array('new','ready', 'shipped', 'delete')),
 			array('city', 'length', 'max'=>128),
 			array('delivery', 'length', 'max'=>7),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, photoCount, status, name, email, phone, address, city, region, delivery, newPostAddress, sign, price', 'safe', 'on'=>'search'),
+			array('id, photoCount, status, name, email, phone, address, city, region, delivery, sign, price, date, index', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -78,18 +80,19 @@ class OrderHead extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
+			'name' => 'Имя и Фамилия',
 			'email' => 'Email',
-			'phone' => 'Phone',
-			'address' => 'Address',
-			'city' => 'City',
-			'region' => 'Region',
-			'delivery' => 'Delivery',
+			'phone' => 'Телефон',
+			'address' => 'Адрес',
+			'city' => 'Город',
+			'region' => 'Область',
+			'delivery' => 'Способ доставки',
 			'newPostAddress' => 'New Post Address',
-			'sign' => 'Sign',
+			'sign' => 'Подписан на новости',
+            'date' => 'Дата',
+            'price'=>'Сумма'
 		);
 	}
-
 
     public function afterDelete()
     {
@@ -143,6 +146,8 @@ class OrderHead extends CActiveRecord
 		$criteria->compare('sign',$this->sign);
         $criteria->compare('price',$this->price);
         $criteria->compare('status',$this->status);
+        $criteria->compare('date', $this->date);
+        $criteria->compare('index', $this->index);
         if($this->photoCount)
         {
             $criteria->having = "`count` = {$this->photoCount}";
