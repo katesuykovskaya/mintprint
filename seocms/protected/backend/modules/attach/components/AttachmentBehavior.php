@@ -8,10 +8,9 @@
  */
 
 class AttachmentBehavior extends CActiveRecordBehavior {
-
-
     public $entity_id;
     public $upload_path;
+    public $relationName;
 
     /**
      * php delete function that deals with directories recursively
@@ -52,7 +51,9 @@ class AttachmentBehavior extends CActiveRecordBehavior {
                         rename($tmpPath.$file,$newPath);
                     }
                     Yii::import('application.backend.modules.attach.models.Attachment');
-                    $modelExist = Attachment::model()->findByAttributes(array('path'=>$file,'entity_id'=>(int)$this->entity_id));
+                    $rel = $this->relationName;
+                    $id = $this->owner->$rel;
+                    $modelExist = Attachment::model()->findByAttributes(array('path'=>$file,'entity_id'=>(int)$id));
 
                     if(!$modelExist){
                         $fileExt = pathinfo($newPath,PATHINFO_EXTENSION);
@@ -105,9 +106,10 @@ class AttachmentBehavior extends CActiveRecordBehavior {
         if(isset(Yii::app()->session['files'])){
             $files = Yii::app()->session['files'];
             $tmpPath = $files['files']['tempUrl'];
-            $uploadDir = $files['files']['uploadUrl'].$files['files']['entity'].DIRECTORY_SEPARATOR.$this->entity_id.DIRECTORY_SEPARATOR;
-
-            $this->moveFiles($tmpPath,$uploadDir,$this->entity_id);
+            $rel = $this->relationName;
+            $entity_id = $this->owner->$rel;
+            $uploadDir = $files['files']['uploadUrl'].$files['files']['entity'].DIRECTORY_SEPARATOR.$entity_id.DIRECTORY_SEPARATOR;
+            $this->moveFiles($tmpPath,$uploadDir,$entity_id);
 
             unset(Yii::app()->session['files']);
 
@@ -118,7 +120,8 @@ class AttachmentBehavior extends CActiveRecordBehavior {
     public function afterDelete($event)
     {
         $entity = get_class($this->owner);
-        $entity_id = $this->owner->page_id;
+        $rel = $this->relationName;
+        $entity_id = $this->owner->$rel;
         Yii::import('application.backend.modules.attach.models.Attachment');
         Attachment::model()->deleteAllByAttributes(array('attachment_entity'=>$entity,'entity_id'=>$entity_id));
         $this->delete_files($this->upload_path.$entity.DIRECTORY_SEPARATOR.$entity_id.DIRECTORY_SEPARATOR);

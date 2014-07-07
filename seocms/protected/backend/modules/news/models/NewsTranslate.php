@@ -65,7 +65,7 @@ class NewsTranslate extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-            'news'=>[self::BELONGS_TO,'News',['t_id'=>'id']],
+            'news'=>[self::BELONGS_TO,'News',['t_id'=>'id'], 'joinType'=>"LEFT JOIN"],
 		);
 	}
 
@@ -211,14 +211,14 @@ class NewsTranslate extends CActiveRecord
                             'class'=>'input-xxlarge'
                         ),
                     ),
-                    't_imgmeta'=>array(
-                        'label'=>'t_imgmeta',
-                        'fieldType'=>'dropDownList',
-                        'value'=>['imgalt'=>'imgalt','imgtitle'=>'imgtitle'],
-                        'htmlOptions'=>array(
-                            'class'=>'input-xxlarge imgmeta'
-                        ),
-                    ),
+//                    't_imgmeta'=>array(
+//                        'label'=>'t_imgmeta',
+//                        'fieldType'=>'dropDownList',
+//                        'value'=>['imgalt'=>'imgalt','imgtitle'=>'imgtitle'],
+//                        'htmlOptions'=>array(
+//                            'class'=>'input-xxlarge imgmeta'
+//                        ),
+//                    ),
                 ),
             ),
         );

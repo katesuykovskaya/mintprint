@@ -135,73 +135,93 @@ class SiteController extends Controller
     public function actionAllNews()
     {
         Yii::import('application.backend.modules.news.models.*');
+        Yii::import('application.backend.modules.attach.models.*');
+        Yii::import('application.backend.components.ZHtml');
+/*
+
+
+        $criteria = new CDbCriteria(array(
+            'limit'=>1,
+            'with'=>array(
+                'translation'=>array(
+                )
+            )
+        ));
+
+        $pager = new CPagination($dataNews->totalItemCount);
+//        $pager->pageSize = 1;
+        $pager->pageVar = 'page';
+        $pager->applyLimit($criteria);
+        $pager->params = isset($_GET['page']) ? ['page'=>urlencode($_GET['page']),] : [];
+        $pager->route = Yii::app()->createUrl('site/allNews');
 
         $dataNews = new CActiveDataProvider('NewsTranslate',[
             'criteria'=>[
-                'with'=> [
-                    'news'=>[
-                        'condition'=>'category = 1'
-                    ]
-                ],
+                'with'=>array('news'=>array(
+                'with'=>array('attaches')
+            )),
                 'condition'=>'t_status = 1 AND t_language=:language',
                 'params'=>[':language'=>Yii::app()->language],
                 'order'=>'t_createdate DESC',
             ],
-            'pagination'=>[
-                'pageVar'=>'all',
-                'params'=>isset($_GET['url']) ? ['url'=>urlencode($_GET['url']),'language'=>Yii::app()->language] : ['language'=>Yii::app()->language],
-                'pagesize'=>4,
-            ],
+            'pagination'=>$pager,
         ]);
-
-        $clubNews = new CActiveDataProvider('NewsTranslate',[
-            'criteria'=>[
-                'with'=> [
-                    'news'=>[
-                        'condition'=>'category = 2'
-                    ]
-                ],
+        $dataProvider = new CActiveDataProvider('News', array(
+            'pagination'=>array(
+                'pageVar'=>'page'
+            ),
+            'criteria'=>$criteria
+        ));
+        CVarDumper::dump($dataProvider->data[0]->translation['ru']->attributes, 5, 1);*/
+        $criteria = new CDbCriteria();
+        $criteria->together = true;
+        $criteria->with = array(
+            'translation'=>array(
                 'condition'=>'t_status = 1 AND t_language=:language',
                 'params'=>[':language'=>Yii::app()->language],
-                'order'=>'t_createdate DESC',
-            ],
+            ),
+        );
+        $criteria->order = 'translation.t_createdate DESC';
+        $count=News::model()->count($criteria);
 
-            'pagination'=>[
-                'pageVar'=>'club',
-                'params'=>isset($_GET['url']) ? ['url'=>urlencode($_GET['url']),'language'=>Yii::app()->language] : ['language'=>Yii::app()->language],
-                'pagesize'=>4,
-            ],
-        ]);
+        $pages=new CPagination($count);
+        $pages->pageSize=7;
+        $pages->applyLimit($criteria);
 
-        $this->render('newsAll',['dataNews'=>$dataNews,'clubNews'=>$clubNews]);
+        $models = News::model()->findAll($criteria);
+
+        $sql = "select `t1`.`entity_id`,
+            (select `path` from `Attachments` `t2`
+                where `t2`.`attachment_id`=`t1`.`attachment_id`
+                order by position ASC
+                limit 1) as `img`
+            from `Attachments` `t1`
+             where `attachment_entity` = \"News\"
+            group by t1.entity_id";
+        $rows = Yii::app()->db->createCommand($sql)->queryAll();
+        $images = array();
+        foreach($rows as $val)
+            $images[$val['entity_id']] = $val['img'];
+
+        $config = require Yii::getPathOfAlias('application.modules.order.config.config').'.php';
+
+        $this->render('newsAll',[
+            'news'=>$models,
+            'conf'=>$config,
+            'images'=>$images,
+            'pager'=>$pages]);
     }
 
-    public function actionNews()
+    public function actionNews($translit)
     {
         Yii::import('application.backend.modules.news.models.*');
 
-        $url = explode('.html',Yii::app()->request->url)[0];
-        $exUrl = explode('/',$url);
-        $dbUrl = $exUrl[sizeof($exUrl)-1];
         $model = Yii::app()->db->createCommand()
             ->select()
             ->from('News')
             ->join('NewsTranslate','News.id=t_id')
-            ->where('NewsTranslate.t_url=:url AND NewsTranslate.t_status=1',[':url'=>$dbUrl])
+            ->where('NewsTranslate.t_url=:url AND NewsTranslate.t_status = 1',[':url'=>$translit])
             ->queryAll();
-
-        $this->switchlangParams = array(
-            'from'=>'model',
-            'model' => 'NewsTranslate',
-            'search_attr'=>array(
-                't_id'=>$model[0]['t_id'],
-                't_status'=>'published',
-            ),
-            'translit' => 't_url',
-            'index' => 't_language',
-            'sufix' => '.html',
-            'prefix' => 'news'
-        );
 
         $language = Yii::app()->language;
         $this->render('news',['model'=>$model,'language'=>$language]);

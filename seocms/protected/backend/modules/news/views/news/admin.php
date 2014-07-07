@@ -27,17 +27,17 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
     'filter'=>$model,
     'enableHistory'=>true,
     'columns'=>array(
-        array(
-            'name'=>Yii::t('backend','Изображение'),
-            'type'=>'html',
-            'value'=>'!empty($data->img) ? Yii::app()->easyImage->thumbOf(Yii::getPathOfAlias("webroot")."/uploads/News/".$data->id."/".$data->img,
-                array(
-                    "resize" => array("width"=>100,"master"=>EasyImage::RESIZE_WIDTH),
-                    "savePath"=>"/uploads/News/".$data->id."/",
-                    "quality" => 80,
-                )) : ""',
-            'filter'=>''
-        ),
+//        array(
+//            'name'=>Yii::t('backend','Изображение'),
+//            'type'=>'html',
+//            'value'=>'!empty($data->img) ? Yii::app()->easyImage->thumbOf(Yii::getPathOfAlias("webroot")."/uploads/News/".$data->id."/".$data->img,
+//                array(
+//                    "resize" => array("width"=>100,"master"=>EasyImage::RESIZE_WIDTH),
+//                    "savePath"=>"/uploads/News/".$data->id."/",
+//                    "quality" => 80,
+//                )) : ""',
+//            'filter'=>''
+//        ),
         [
             'header'=>Yii::t('backend','Язык'),
             'name'=>'translation.t_language',
@@ -53,12 +53,12 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
             'name'=>'news.t_shorttext',
             'value'=>'$data->translation[Yii::app()->language]["t_shorttext"]',
         ],
-        [
-            'header'=>Yii::t('backend','Категория'),
-            'name'=>'category',
-            'value'=>'Yii::t("backend",$data->category)',
-            'filter'=>['allNews'=>'Новости футбола','clubNews'=>'Новости клуба'],
-        ],
+//        [
+//            'header'=>Yii::t('backend','Категория'),
+//            'name'=>'category',
+//            'value'=>'Yii::t("backend",$data->category)',
+//            'filter'=>['allNews'=>'Новости футбола','clubNews'=>'Новости клуба'],
+//        ],
         [
             'header'=>Yii::t('backend','Статус'),
             'name'=>'t_status',
@@ -67,13 +67,7 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
         ],
         [
             'class'=>'CButtonColumn',
-            'template'=>'{view}{update}{delete}',
-            'buttons'=>[
-                'view'=>[
-                    'url'=>'Yii::app()->request->hostInfo."/".Yii::app()->language."/newspreview/".$data->translation[Yii::app()->language]["t_url"].".html"',
-                    'options'=>['target'=>'_blank']
-                ],
-            ],
+            'template'=>'{update}{delete}',
             'updateButtonUrl'=>'Yii::app()->urlManager->createUrl("/backend/news/news/update",array("id"=>$data->id,"language"=>Yii::app()->language))',
             'deleteButtonUrl'=>'Yii::app()->urlManager->createUrl("/backend/news/news/delete",array("id"=>$data->id,"language"=>Yii::app()->language))',
         ],

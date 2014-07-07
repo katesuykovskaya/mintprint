@@ -13,8 +13,8 @@ class NewsController extends Controller
 		return array(
 //			'accessControl', // perform access control for CRUD operations
 //			'postOnly + delete', // we only allow deletion via POST request
-//            'rights'
-            array('auth.filters.AuthFilter'),
+            'rights'
+//            array('auth.filters.AuthFilter'),
 		);
 	}
 
@@ -63,23 +63,24 @@ class NewsController extends Controller
 	{
 		$model=new News;
         $newsTranslate = new NewsTranslate;
-
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['News']))
+		if(isset($_POST['News']) || isset($_POST['NewsTranslate']))
 		{
 			$model->attributes=$_POST['News'];
-            $model->img = CUploadedFile::getInstance($model,'img');
+//            $model->img = CUploadedFile::getInstance($model,'img');
             if($model->save()){
-                $imgDir = Yii::getPathOfAlias('webroot').'/uploads/'.get_class($model).DIRECTORY_SEPARATOR.$model->id.DIRECTORY_SEPARATOR;
-                if(is_dir($imgDir)){
-                    $model->img->saveAs($imgDir.$model->img->name);
-                } else {
-                    mkdir($imgDir,0777,true);
-                    $model->img->saveAs($imgDir.$model->img->name);
-                }
+//                $imgDir = Yii::getPathOfAlias('webroot').'/uploads/'.get_class($model).DIRECTORY_SEPARATOR.$model->id.DIRECTORY_SEPARATOR;
+//                if(is_dir($imgDir)){
+//                    $model->img->saveAs($imgDir.$model->img->name);
+//                } else {
+//                    mkdir($imgDir,0777,true);
+//                    $model->img->saveAs($imgDir.$model->img->name);
+//                }
                 $this->redirect($this->createUrl('/backend/news/news/admin',['language'=>Yii::app()->language]));
+            } else {
+                die(CVarDumper::dump($model->errors, 2, 1));
             }
 		}
 
@@ -230,17 +231,17 @@ class NewsController extends Controller
             if(isset($_POST['News'])){
                 $model->attributes=$_POST['News'];
             }
-            $model->img = isset($_POST['News']['img']) ? CUploadedFile::getInstance($model,'img') : $model->img;
+//            $model->img = isset($_POST['News']['img']) ? CUploadedFile::getInstance($model,'img') : $model->img;
             if($model->save()){
-                if(isset($_POST['News']['img'])){
-                    $imgDir = Yii::getPathOfAlias('webroot').'/uploads/'.get_class($model).DIRECTORY_SEPARATOR.$model->id.DIRECTORY_SEPARATOR;
-                    if(is_dir($imgDir)){
-                        $model->img->saveAs($imgDir.$model->img->name);
-                    } else {
-                        mkdir($imgDir,0777,true);
-                        $model->img->saveAs($imgDir.$model->img->name);
-                    }
-                }
+//                if(isset($_POST['News']['img'])){
+//                    $imgDir = Yii::getPathOfAlias('webroot').'/uploads/'.get_class($model).DIRECTORY_SEPARATOR.$model->id.DIRECTORY_SEPARATOR;
+//                    if(is_dir($imgDir)){
+//                        $model->img->saveAs($imgDir.$model->img->name);
+//                    } else {
+//                        mkdir($imgDir,0777,true);
+//                        $model->img->saveAs($imgDir.$model->img->name);
+//                    }
+//                }
 
                 $this->redirect($this->createUrl('/backend/news/news/admin',['language'=>Yii::app()->language]));
             }

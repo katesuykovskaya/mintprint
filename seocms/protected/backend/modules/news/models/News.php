@@ -37,13 +37,13 @@ class News extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('category', 'required'),
-			array('img', 'length', 'max'=>255),
-            array('img','file','allowEmpty'=>true),
-			array('category', 'length', 'max'=>8),
+//			array('category', 'required'),
+//			array('img', 'length', 'max'=>255),
+//            array('img','file','allowEmpty'=>true),
+//			array('category', 'length', 'max'=>8),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, img, category, t_status', 'safe', 'on'=>'search'),
+			array('id, t_status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,6 +56,10 @@ class News extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
             'translation' => array(self::HAS_MANY, 'NewsTranslate', 't_id','index'=>'t_language'),
+//            'attaches'=>array(self::HAS_MANY, 'Attachment', '',
+//                ),
+            'img'=>array(self::HAS_ONE, 'Attachment', 'entity_id'
+            )
 		);
 	}
 
@@ -101,6 +105,14 @@ class News extends CActiveRecord
             ],
 		));
 	}
+
+    public function afterDelete()
+    {
+        $sql = "delete from `NewsTranslate` where id not in (select `id` from `News`)";
+        $result = Yii::app()->db->createCommand($sql)->execute();
+        if($result) return parent::afterDelete();
+        return false;
+    }
 
     public function afterSave() {
         if($this->isNewRecord) {
@@ -175,6 +187,12 @@ class News extends CActiveRecord
     public function behaviors()
     {
         return array(
+            'AttachmentBehavior'=>array(
+                'class'=>'application.backend.modules.attach.components.AttachmentBehavior',
+//                'entity_id'=>$this->id,
+                'relationName'=>'id',
+                'upload_path'=>Yii::getPathOfAlias('webroot').'/uploads/',
+            ),
             'Multilanguage'=>array(
                 'class'=>'application.backend.modules.news.components.Multilanguage',
                 'languages'=>Yii::app()->params['languages'],
@@ -262,38 +280,17 @@ class News extends CActiveRecord
                             'class'=>'input-xxlarge'
                         ),
                     ),
-                    't_imgmeta'=>array(
-                        'label'=>'t_imgmeta',
-                        'fieldType'=>'dropDownList',
-                        'value'=>['imgalt'=>'imgalt','imgtitle'=>'imgtitle'],
-                        'htmlOptions'=>array(
-                            'class'=>'input-xxlarge imgmeta'
-                        ),
-                    ),
+//                    't_imgmeta'=>array(
+//                        'label'=>'t_imgmeta',
+//                        'fieldType'=>'dropDownList',
+//                        'value'=>['imgalt'=>'imgalt','imgtitle'=>'imgtitle'],
+//                        'htmlOptions'=>array(
+//                            'class'=>'input-xxlarge imgmeta'
+//                        ),
+//                    ),
                 ),
             ),
         );
-    }
-
-    public function getNewsForMain() {
-        $modelAll = Yii::app()->db->createCommand()
-            ->select()
-            ->from('News')
-            ->join('NewsTranslate', 'News.id=NewsTranslate.t_id')
-            ->where('category=1 AND NewsTranslate.t_status=1 AND NewsTranslate.t_language="'.Yii::app()->language.'"')
-            ->limit('6')
-            ->order('NewsTranslate.t_createdate DESC')
-            ->queryAll();
-
-        $modelClub = Yii::app()->db->createCommand()
-            ->select()
-            ->from('News')
-            ->join('NewsTranslate', 'News.id=NewsTranslate.t_id')
-            ->where('category=2 AND NewsTranslate.t_status=1 AND NewsTranslate.t_language="'.Yii::app()->language.'"')
-            ->limit('6')
-            ->order('NewsTranslate.t_createdate DESC')
-            ->queryAll();
-        return array('1'=>$modelAll, '2'=>$modelClub);
     }
 
 }

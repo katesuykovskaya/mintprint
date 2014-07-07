@@ -44,36 +44,32 @@ $this->widget('bootstrap.widgets.TbTabs', array(
 ?>
 
     <div class="span12">
-        <?=ZHtml::enumDropDownList($model,'category')?>
-    </div>
-
-    <div class="span12">
-        <?php if($model->isNewRecord || empty($model->img)):?>
-            <?php echo $form->labelEx($model,Yii::t('backend','Основное изображение')); ?>
-            <?php echo CHtml::activeFileField($model,'img',['class'=>'form control input-sm'])?>
-            <?php echo $form->error($model,'img'); ?>
-        <?php else : ?>
-            <?php
-            $imageParams = array(
-                'resize' => array('width' => 100, 'height' => 100,'master'=>EasyImage::RESIZE_NONE),
-                'savePath'=>'/uploads/News/'.$model->id.'/',
-                'quality' => 80,
-            );
-            $imageName = '/uploads/News/'.$model->id.DIRECTORY_SEPARATOR.$model->img;
-
-            echo '<a href="/uploads/News/'.$model->id.DIRECTORY_SEPARATOR.$model->img.'" data-lightbox="'.$model->img.'">
-                '.Yii::app()->easyImage->thumbOf($imageName,$imageParams).'</a>';
-
-                       echo '<span class="clearfix"></span>';
-                       echo CHtml::link(Yii::t('backend','Удалить').' <i class="icon-remove"></i>',
-            '#',array(
-            'id'=>'delImg','data-id'=>$model->id,
-            'data-url'=>$this->createUrl('/backend/news/news/delImage',array('language'=>Yii::app()->language)),
-            'data-name'=>Yii::app()->easyImage->getHashedName($imageName,$imageParams,true)
-            )
-            );
-            ?>
-        <?php endif;?>
+<!--        --><?php //if($model->isNewRecord || empty($model->img)):?>
+<!--            --><?php //echo $form->labelEx($model,Yii::t('backend','Основное изображение')); ?>
+<!--            --><?php //echo CHtml::activeFileField($model,'img',['class'=>'form control input-sm'])?>
+<!--            --><?php //echo $form->error($model,'img'); ?>
+<!--        --><?php //else : ?>
+<!--            --><?php
+//            $imageParams = array(
+//                'resize' => array('width' => 100, 'height' => 100,'master'=>EasyImage::RESIZE_NONE),
+//                'savePath'=>'/uploads/News/'.$model->id.'/',
+//                'quality' => 80,
+//            );
+//            $imageName = '/uploads/News/'.$model->id.DIRECTORY_SEPARATOR.$model->img;
+//
+//            echo '<a href="/uploads/News/'.$model->id.DIRECTORY_SEPARATOR.$model->img.'" data-lightbox="'.$model->img.'">
+//                '.Yii::app()->easyImage->thumbOf($imageName,$imageParams).'</a>';
+//
+//                       echo '<span class="clearfix"></span>';
+//                       echo CHtml::link(Yii::t('backend','Удалить').' <i class="icon-remove"></i>',
+//            '#',array(
+//            'id'=>'delImg','data-id'=>$model->id,
+//            'data-url'=>$this->createUrl('/backend/news/news/delImage',array('language'=>Yii::app()->language)),
+//            'data-name'=>Yii::app()->easyImage->getHashedName($imageName,$imageParams,true)
+//            )
+//            );
+//            ?>
+<!--        --><?php //endif;?>
     </div>
 
 
@@ -86,7 +82,7 @@ $this->widget('bootstrap.widgets.TbTabs', array(
 
 <?php
 $filesToken = sha1(uniqid(mt_rand(),true));
-$entity = 'StaticPages';
+$entity = 'News';
 $webroot = Yii::getPathOfAlias('webroot');
 $this->widget('application.backend.modules.attach.widgets.FileUploadWidget',array(
     'entity'=>$entity,
@@ -94,7 +90,7 @@ $this->widget('application.backend.modules.attach.widgets.FileUploadWidget',arra
     'versions'=>array('small','thumbnail',''),
     'tempUrl'=>$webroot.'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
     'uploadUrl'=>$webroot.'/uploads/',
-    'webUrl'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
+    'webUrl'=>'/uploads/',
     'webTmp'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
     'filePath'=>'/uploads/'.$entity.DIRECTORY_SEPARATOR.$model->id.DIRECTORY_SEPARATOR,
 ));

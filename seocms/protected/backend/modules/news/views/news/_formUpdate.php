@@ -56,7 +56,27 @@ Yii::app()->clientScript->registerScriptFile('/js/jquery.ui.i18n-ru.js');
 
 
 <?php $this->endWidget(); ?>
-
+<div class="well">
+    <h4 class="page-header"><?=Yii::t('backend','Загруженные файлы:')?></h4>
+    <?php
+        $this->widget('application.backend.modules.attach.widgets.FileWidget');
+    ?>
+</div>
+<?php
+$filesToken = sha1(uniqid(mt_rand(),true));
+$entity = get_class($model);
+$this->widget('application.backend.modules.attach.widgets.FileUploadWidget',array(
+        'entity'=>$entity,
+        'entity_id'=> !$model->isNewRecord ? $model->id : null,
+        'versions'=>array('small','thumbnail',''),
+        'tempUrl'=>Yii::getPathOfAlias('webroot').'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
+        'uploadUrl'=>Yii::getPathOfAlias('webroot').'/uploads/',
+        'webUrl'=>'/uploads/',
+        'webTmp'=>'/uploads/tmp/'.$filesToken.DIRECTORY_SEPARATOR,
+        'filePath'=>Yii::getPathOfAlias('webroot').'/uploads/'.$entity.DIRECTORY_SEPARATOR.$model->id.DIRECTORY_SEPARATOR,
+        'filesToken'=>$filesToken,
+));
+?>
 
 <?php
 //echo 't_imgmeta = '.$model->translation['ru']['t_imgmeta'].'<br />';
