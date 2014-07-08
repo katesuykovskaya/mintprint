@@ -38,9 +38,13 @@
         <td><?=CHtml::activeLabel($orderFormModel, 'region')?></td>
         <td><?=$model['region']?></td>
     </tr>
+<!--    <tr>-->
+<!--        <td>--><?//=CHtml::activeLabel($orderFormModel, $model['delivery'] == 'newPost' ? 'newPostAddress' : 'index')?><!--</td>-->
+<!--        <td>--><?//=$model['delivery'] == 'newPost' ? $model['newPostAddress'] : $model['index']?><!--</td>-->
+<!--    </tr>-->
     <tr>
-        <td><?=CHtml::activeLabel($orderFormModel, $model['delivery'] == 'newPost' ? 'newPostAddress' : 'index')?></td>
-        <td><?=$model['delivery'] == 'newPost' ? $model['newPostAddress'] : $model['index']?></td>
+        <td><?=CHtml::activeLabel($orderFormModel, 'photoCount')?></td>
+        <td><?=$model['photoCount']?></td>
     </tr>
 </table>
 <p>Сумма: <strong><?=$model->price?>&nbsp;<?=$config['currency']?></strong></p>

@@ -171,33 +171,29 @@ class OrderController extends Controller
 
 		if(isset($_POST['OrderHead']))
 		{
+            if($model->status != $_POST['OrderHead']['status'])
+                $sendLetter = true;
+            else
+                $sendLetter = false;
 			$model->attributes=$_POST['OrderHead'];
-			if($model->save())
+			if($model->save()) {
+                if($sendLetter) {
+                    $host = $_SERVER['HTTP_HOST'];
+                    $body = "Уважаемый(я) ".$model->name.'<br>Статус вашего заказа на сайте <a href="http://'.$host.'">'.$host.'</a> изменился на - '.Yii::t('backend', $model->status);
+                    $res = $this->SendClientEmail($body, $model->email);
+                    if($res)
+                        Yii::app()->user->setFlash('success', 'Статус успешно изменен');
+                    else
+                        Yii::app()->user->setFlash('error', 'Статус не изменен!');
+                }
                 $this->redirect($this->createUrl('/backend/order/order/admin',['language'=>Yii::app()->language]));
+            }
+
 		}
 
         $model->price = $model->price." грн";
 
         if(isset($_POST['download'])){
-//            $date = '2014-07-01';
-//            $models = OrderHead::model()->findAll('date=:date', array(":date"=>strtotime($date)));
-//            Yii::import('application.backend.extensions.rar.store_rar');
-//            $rar = new store_rar;
-//            $rar->create("1.rar");
-//            foreach($models as $model)
-//                foreach($model->body as $key=>$item)
-//                {
-//                    $rar->addFile(Yii::getPathOfAlias('webroot').$item->path);
-//                }
-//            $rar->close();
-//            header("Pragma: no-cache"); // required
-//            header('Content-type: application/octet-stream');
-//            header('Content-Disposition: attachment; filename="1.rar"');
-//            readfile("1.rar");
-//            readfile($rar);
-            // удаляем zip файл если он существует
-//            unlink($rar);
-
                 $error = "";
 
                         if(count($model->body))
@@ -241,6 +237,24 @@ class OrderController extends Controller
 			'model'=>$model,
 		));
 	}
+
+    protected function SendClientEmail(&$body, $email) {
+//        Yii::import('application.backend.modules.feedback.components.mailOrPhone');
+//        Yii::import('application.extensions.yii-mail.YiiMailMessage');
+//        Yii::import('application.backend.components.*');
+        $message = new YiiMailMessage;
+        $host = $_SERVER['HTTP_HOST'];
+        $mailSettings = require(Yii::getPathOfAlias('webroot').'/seocms/protected/common/config/mail.php');
+        $message->setCharset(Yii::app()->mail->charset);
+        $message->setSubject('Заказ на '.$host);
+
+        $message->setBody($body,'text/html');
+        $message->setTo(array($email));
+        $message->setFrom(array($mailSettings['adminEmail']=>'Администратор '.$host));
+        $message->setReplyTo($mailSettings['adminEmail'], 'Администратор '.$host);
+
+        return Yii::app()->mail->send($message);
+    }
 
 	/**
 	 * Deletes a particular model.

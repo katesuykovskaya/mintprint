@@ -66,6 +66,8 @@ class OrderController extends Controller
 //        } catch(Exception $e) {
 //            die(json_encode(array('res'=>false)));
 //        }
+        $this->CreatePolaroid($file, strtolower($path_parts['extension']));
+
         $model = new OrderBody;
         $model->path = str_replace(Yii::getPathOfAlias('webroot'), "", $file);
         $model->count = $image['img_count'];
@@ -74,6 +76,38 @@ class OrderController extends Controller
         if($res)
             $image->delete();
         die(json_encode(array('res'=>$res)));
+    }
+
+    protected function CreatePolaroid($path, $ext)
+    {
+        $imgHeight = getimagesize($path)[0];
+        $resWidth = ($imgHeight / 3.5) * 4;
+        $resHeight = ($resWidth / 9) * 11;
+        $im = imagecreatetruecolor($resWidth, $resHeight);
+        $white = imagecolorallocate($im, 255, 255, 255);
+        imagefill($im, 0,0,$white);
+        switch($ext)
+        {
+            case 'png':
+                $im2 = imagecreatefrompng($path);
+                break;
+            case 'gif':
+                $im2 = imagecreatefromgif($path);
+            case 'bmp':
+                $im2 = imagecreatefromwbmp($path);
+            case 'jpg':case 'jpeg':
+                $im2 = imagecreatefromjpeg($path);
+                break;
+            default:
+                $im2 = imagecreatefromjpeg($path);
+                break;
+        }
+
+        $offset = ($resWidth - $imgHeight) / 2;
+        imagecopy($im, $im2, $offset, $offset, 0, 0, $imgHeight, $imgHeight);
+//        header('Content-Type: image/jpeg');
+        imagejpeg($im, $path);
+        imagedestroy($im);
     }
 
     public function actionResult() {

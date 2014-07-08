@@ -90,6 +90,7 @@ class OrderHead extends CActiveRecord
 			'newPostAddress' => 'New Post Address',
 			'sign' => 'Подписан на новости',
             'date' => 'Дата',
+            'photoCount' => 'Кол-во фото',
             'price'=>'Сумма'
 		);
 	}
@@ -167,6 +168,12 @@ class OrderHead extends CActiveRecord
                     '*',
                 ),
             ),
+            'pagination'=>array(
+                'pageSize'=>20,
+                'route'=>Yii::app()->createUrl('backend/order/order/admin'),
+                'pageVar'=>'page',
+                'params'=>isset($_GET['page']) ? array('page'=>$_GET['page']): array()
+            )
 		));
 	}
 }
