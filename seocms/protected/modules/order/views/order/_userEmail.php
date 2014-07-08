@@ -43,8 +43,8 @@
 <!--        <td>--><?//=$model['delivery'] == 'newPost' ? $model['newPostAddress'] : $model['index']?><!--</td>-->
 <!--    </tr>-->
     <tr>
-        <td><?=CHtml::activeLabel($orderFormModel, 'photoCount')?></td>
-        <td><?=$model['photoCount']?></td>
+        <td><?=CHtml::activeLabel($model, 'photoCount')?></td>
+        <td><?=$model->count?></td>
     </tr>
 </table>
 <p>Сумма: <strong><?=$model->price?>&nbsp;<?=$config['currency']?></strong></p>

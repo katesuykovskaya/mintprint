@@ -46,18 +46,30 @@ class ZHtml extends CHtml
         return $randomString;
     }
 
-    public static function deleteDir($dir) {
-        $files = glob($dir."/*");
-        $c = count($files);
-        if (count($files) > 0) {
-            foreach ($files as $file) {
-                if (file_exists($file)) {
-                    unlink($file);
-                }
-            }
-        }
+//    public static function deleteDir($dir) {
+//        $files = glob($dir."/*");
+//        $c = count($files);
+//        if (count($files) > 0) {
+//            foreach ($files as $file) {
+//                if (file_exists($file)) {
+//                    unlink($file);
+//                }
+//            }
+//        }
+//
+//        rmdir($dir);
+//    }
 
-        rmdir($dir);
+    static function deleteDir($dir) {
+        if (!is_dir($dir) || is_link($dir)) return unlink($dir);
+        foreach (scandir($dir) as $file) {
+            if ($file == '.' || $file == '..') continue;
+            if (!self::deleteDir($dir . DIRECTORY_SEPARATOR . $file)) {
+                chmod($dir . DIRECTORY_SEPARATOR . $file, 0777);
+                if (!self::deleteDir($dir . DIRECTORY_SEPARATOR . $file)) return false;
+            };
+        }
+        return rmdir($dir);
     }
 }
 

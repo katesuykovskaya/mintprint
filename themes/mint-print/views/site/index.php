@@ -44,7 +44,7 @@ Yii::app()->clientScript->registerScriptFile('/js/draggablePhotos.js');
                 ?>
                 <div class="photo-wrap full">
                     <a href="#" class="remove" data-id="<?=$photo['id']?>"></a>
-                    <a href="<?=Yii::app()->createUrl('order/orderTemp/update', array('id'=>$photo['id']))?>" class="photo">
+                    <a href="<?=Yii::app()->createUrl('order/orderTemp/update', array('id'=>$photo['id']))?>" class="photo" title="Редактировать">
                             <?=CHtml::image($info['src'], null, array('data-original'=>$photo['img_url'], 'data-thumb'=>$photo['thumb_url'],'data-type'=>$photo['type'], 'style'=>$info['style']))?>
                     </a>
                 </div>
