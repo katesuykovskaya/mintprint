@@ -3,8 +3,7 @@
 class SiteController extends Controller
 {
     public $layout = '//layouts/main';
-    public $switchlangParams = array('from'=>'url');
-    public $mainUrl;
+    public $conf;
 	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
@@ -14,14 +13,10 @@ class SiteController extends Controller
         if(parent::beforeAction($action)) {
             Yii::app()->clientScript->registerCoreScript('jquery');
             Yii::app()->clientScript->registerCoreScript('jquery.ui');
+            $this->conf = require Yii::getPathOfAlias('application.modules.order.config.config').'.php';
             return true;
         }
         return false;
-    }
-
-    public function init() {
-        parent::init();
-        $this->mainUrl = Yii::app()->createUrl('main.html', ['language'=>Yii::app()->language]);
     }
 
 	public function actionIndex() {
@@ -94,21 +89,8 @@ class SiteController extends Controller
                 $result = array('error'=> 'Could not save uploaded file.' .
                     'The upload was cancelled, or server error encountered');
             }
-
-
-
         }
-
-
-
-
-
         $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
-
-//        $fileSize=filesize($folder.$result['filename']);//GETTING FILE SIZE
-//        $fileName=$result['filename'];//GETTING FILE NAME
-        //$img = CUploadedFile::getInstance($model,'image');
-
         echo $return;// it's array
     }
 
@@ -117,9 +99,6 @@ class SiteController extends Controller
 	 */
 	public function actionError()
 	{
-        $this->switchlangParams = array(
-            'from'=>'prev',
-        );
 		if($error=Yii::app()->errorHandler->error)
 		{
 			if(Yii::app()->request->isAjaxRequest)
@@ -137,42 +116,7 @@ class SiteController extends Controller
         Yii::import('application.backend.modules.news.models.*');
         Yii::import('application.backend.modules.attach.models.*');
         Yii::import('application.backend.components.ZHtml');
-/*
-
-
-        $criteria = new CDbCriteria(array(
-            'limit'=>1,
-            'with'=>array(
-                'translation'=>array(
-                )
-            )
-        ));
-
-        $pager = new CPagination($dataNews->totalItemCount);
-//        $pager->pageSize = 1;
-        $pager->pageVar = 'page';
-        $pager->applyLimit($criteria);
-        $pager->params = isset($_GET['page']) ? ['page'=>urlencode($_GET['page']),] : [];
-        $pager->route = Yii::app()->createUrl('site/allNews');
-
-        $dataNews = new CActiveDataProvider('NewsTranslate',[
-            'criteria'=>[
-                'with'=>array('news'=>array(
-                'with'=>array('attaches')
-            )),
-                'condition'=>'t_status = 1 AND t_language=:language',
-                'params'=>[':language'=>Yii::app()->language],
-                'order'=>'t_createdate DESC',
-            ],
-            'pagination'=>$pager,
-        ]);
-        $dataProvider = new CActiveDataProvider('News', array(
-            'pagination'=>array(
-                'pageVar'=>'page'
-            ),
-            'criteria'=>$criteria
-        ));
-        CVarDumper::dump($dataProvider->data[0]->translation['ru']->attributes, 5, 1);*/
+        $this->layout = '//layouts/page';
         $criteria = new CDbCriteria();
         $criteria->together = true;
         $criteria->with = array(
@@ -215,16 +159,19 @@ class SiteController extends Controller
     public function actionNews($translit)
     {
         Yii::import('application.backend.modules.news.models.*');
-
+        $this->layout = '//layouts/page';
         $model = Yii::app()->db->createCommand()
             ->select()
             ->from('News')
             ->join('NewsTranslate','News.id=t_id')
             ->where('NewsTranslate.t_url=:url AND NewsTranslate.t_status = 1',[':url'=>$translit])
-            ->queryAll();
+            ->queryRow();
+        if(!$model)
+            throw new CHttpException(404, "Такой новости нет.");
+        $sql = "select `path` from `Attachments` where `attachment_entity` = 'News' and `hidden` = 0 and `entity_id` = ".$model['t_id']." order by `position`";
+        $attaches = Yii::app()->db->createCommand($sql)->queryAll();
 
-        $language = Yii::app()->language;
-        $this->render('news',['model'=>$model,'language'=>$language]);
+        $this->render('news',['model'=>$model, 'attaches'=>$attaches]);
     }
 
     public function actionNewsPreview()
@@ -262,7 +209,7 @@ class SiteController extends Controller
     public function actionPages() {
         Yii::import('application.backend.modules.pages.models.*');
         $pageUrl = $_GET['page'];
-        $models = StaticPages::model()->with(array(
+        $model = StaticPages::model()->with(array(
                 'translation'=>array(
                     'joinType'=>'INNER JOIN',
 //                    'conditition'=>'translation.t_translit="'.$pageUrl.'"',
@@ -270,22 +217,10 @@ class SiteController extends Controller
                     'params'=>array(':translit'=>$pageUrl)
                 )
             )
-        )->findAll();
-        if(empty($models)) {
+        )->find();
+        if(empty($model)) {
             throw new CHttpException(404, 'Нет такой страницы');
         }
-        $model = $models[0];
-
-        $this->switchlangParams = array(
-            'from'=>'model',
-            'model' => 'PagesTranslate',
-            'search_attr'=>array(
-                'page_id'=>$model['page_id'],
-            ),
-            'translit' => 't_translit',
-            'index' => 't_lang',
-            'sufix' => '.html',
-        );
         $conf = require(Yii::getPathOfAlias('application.modules.order.config.config').'.php');
         $this->render('pages', array(
             'model'=>$model->translation[Yii::app()->language],

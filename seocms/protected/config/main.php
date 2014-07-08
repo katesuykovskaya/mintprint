@@ -49,6 +49,7 @@ return CMap::mergeArray(
             'matchValue'=>false,
 			'rules'=>array(
                 ''=>'site/home',
+                'news'=>'site/allNews',
                 '/news/<translit>'=>array('site/news', 'urlSuffix'=>'.html'),
                 '<controller:\w+>/<id:\d+>'=>'<controller>/view',
                 '<page:[\w\d-]+>'=>'site/pages',
