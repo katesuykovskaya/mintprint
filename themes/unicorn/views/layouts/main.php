@@ -18,16 +18,16 @@
             <?php if(Yii::app()->user->role == 'admin') :?>
             <li class="btn btn-inverse" ><a title="" href="/backend/rights"><i class="icon icon-user"></i> <span class="text"><?=Yii::t('backend','Права доступа')?></span></a></li>
             <?php endif;?>
-            <?php Yii::import('application.backend.modules.feedback.models.*');
-            $count = Feedback::getMaillistCount();
+<!--            --><?php //Yii::import('application.backend.modules.feedback.models.*');
+//            $count = Feedback::getMaillistCount();
             ?>
-            <li class="btn btn-inverse">
-                <a href="<?=Yii::app()->createUrl('/backend/feedback/feedback/maillist', ['language'=>Yii::app()->language])?>">
-                    <i class="icon icon-envelope"></i>
-                    <span class="text"><?=Yii::t('backend','Сообщения')?></span>
-                    <span class="label label-important"><?=$count?></span>
-                </a>
-            </li>
+<!--            <li class="btn btn-inverse">-->
+<!--                <a href="--><?//=Yii::app()->createUrl('/backend/feedback/feedback/maillist', ['language'=>Yii::app()->language])?><!--">-->
+<!--                    <i class="icon icon-envelope"></i>-->
+<!--                    <span class="text">--><?//=Yii::t('backend','Сообщения')?><!--</span>-->
+<!--                    <span class="label label-important">--><?//=$count?><!--</span>-->
+<!--                </a>-->
+<!--            </li>-->
 
             <li class="btn btn-inverse dropdown" id="menu-languages"><a href="#" data-toggle="dropdown" data-target="#menu-languages" class="dropdown-toggle"><span class="text"><?=Yii::t('backend','Язык')?></span><b class="caret"></b></a>
                 <ul class="dropdown-menu">

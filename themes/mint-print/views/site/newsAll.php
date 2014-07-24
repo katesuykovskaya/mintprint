@@ -19,18 +19,19 @@ $l = Yii::app()->language;
 foreach($news as $item): ?>
     <div class="news-wrap">
         <a href="<?=Yii::app()->createUrl('site/news', array('translit'=>$item->translation[$l]->t_url))?>">
-            <?php
-            $path = Yii::getPathOfAlias('webroot').'/uploads/News/'.$item->id.'/'.$images[$item->id];
-            $img = Yii::app()->easyImage->thumbOf($path, array(
-                'resize'=>array(
-                    'width'=>135,
-                    'height'=>90,
-                    'master'=>EasyImage::RESIZE_WIDTH
-                ),
-                'savePath'=>'/uploads/News/'.$item->id.'/'
-            ));
+            <?php if(isset($images[$item->id])):
+                $path = Yii::getPathOfAlias('webroot').'/uploads/News/'.$item->id.'/'.$images[$item->id];
+                $img = Yii::app()->easyImage->thumbOf($path, array(
+                    'resize'=>array(
+                        'width'=>135,
+                        'height'=>90,
+                        'master'=>EasyImage::RESIZE_WIDTH
+                    ),
+                    'savePath'=>'/uploads/News/'.$item->id.'/'
+                ));
             ?>
             <?=$img?>
+        <?php endif; ?>
         </a>
         <div class="news-body">
             <time><?= Yii::app()->dateFormatter->format('dd.MM.yyyy', $item->translation[$l]->t_createdate)?></time>

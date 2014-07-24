@@ -19,43 +19,6 @@ class NewsController extends Controller
 	}
 
 	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
-//	public function accessRules()
-//	{
-//		return array(
-//			array('allow',  // allow all users to perform 'index' and 'view' actions
-//				'actions'=>array('index','view'),
-//				'users'=>array('*'),
-//			),
-//			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-//				'actions'=>array('create','update'),
-//				'users'=>array('@'),
-//			),
-//			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-//				'actions'=>array('admin','delete'),
-//				'users'=>array('admin'),
-//			),
-//			array('deny',  // deny all users
-//				'users'=>array('*'),
-//			),
-//		);
-//	}
-
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-//	public function actionView($id)
-//	{
-//		$this->render('view',array(
-//			'model'=>$this->loadModel($id),
-//		));
-//	}
-
-	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
@@ -69,18 +32,10 @@ class NewsController extends Controller
 		if(isset($_POST['News']) || isset($_POST['NewsTranslate']))
 		{
 			$model->attributes=$_POST['News'];
-//            $model->img = CUploadedFile::getInstance($model,'img');
             if($model->save()){
-//                $imgDir = Yii::getPathOfAlias('webroot').'/uploads/'.get_class($model).DIRECTORY_SEPARATOR.$model->id.DIRECTORY_SEPARATOR;
-//                if(is_dir($imgDir)){
-//                    $model->img->saveAs($imgDir.$model->img->name);
-//                } else {
-//                    mkdir($imgDir,0777,true);
-//                    $model->img->saveAs($imgDir.$model->img->name);
-//                }
                 $this->redirect($this->createUrl('/backend/news/news/admin',['language'=>Yii::app()->language]));
             } else {
-                die(CVarDumper::dump($model->errors, 2, 1));
+                echo (CVarDumper::dump($model->errors, 2, 1));
             }
 		}
 
@@ -151,7 +106,6 @@ class NewsController extends Controller
     {
         $fieldsArray = $model->translateAttributes;
         $content = '';
-
         if($param) {
             foreach($fieldsArray as $key=>$field) {
 
@@ -161,8 +115,24 @@ class NewsController extends Controller
                     $label = '<h5 class="page-header">'.Yii::t('backend',$field['label']).':</h5>';
 
                 if($field['fieldType'] !== 'dropDownList'){
-                    $formField = 'active'.ucfirst($field['fieldType']);
-                    $textField = CHtml::$formField($model, $field['label'].'['.$lang.']',$field['htmlOptions']);
+                    if($field['fieldType'] == 'datePicker') {
+                        ob_start();
+                        $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                            'name'=>'NewsTranslate['.$field['label'].']['.$lang.']',
+                            'flat'=>true,//remove to hide the datepicker,
+                            'value'=>isset($field['value']) ? $field['value'] : date('d.m.Y'),
+                            'options'=>array(
+                                'showAnim'=>'slide',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                            ),
+                            'htmlOptions'=>array(
+                                'style'=>''
+                            ),
+                        ));
+                        $textField = ob_get_clean();
+                    } else {
+                        $formField = 'active'.ucfirst($field['fieldType']);
+                        $textField = CHtml::$formField($model, $field['label'].'['.$lang.']',$field['htmlOptions']);
+                    }
                 } else {
                     if($field['label'] !== 't_imgmeta'){
                         $formField = 'active'.ucfirst($field['fieldType']);
@@ -195,7 +165,20 @@ class NewsController extends Controller
                 $htmlOptions['name'] = 'NewsTranslate['.$field['label'].']['.$lang.']';
 
                 if($field['fieldType'] !== 'dropDownList') {
-                    $textField = CHtml::$formField($model->translation[$lang], $field['label'],$htmlOptions).'<hr />';
+                    if($field['fieldType'] == 'datePicker') {
+                        ob_start();
+                        $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                            'name'=>'NewsTranslate['.$field['label'].']['.$lang.']',
+                            'flat'=>true,//remove to hide the datepicker
+                            'value'=>date("d.m.Y", strtotime($model->translation[$lang]->{$field['label']})),
+                            'options'=>array(
+                                'showAnim'=>'slide',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                            ),
+                        ));
+                        $textField = ob_get_clean();
+                    } else {
+                        $textField = CHtml::$formField($model->translation[$lang], $field['label'],$htmlOptions).'<hr />';
+                    }
                 } else {
                     if($field['label'] !== 't_imgmeta'){
                         $textField = CHtml::dropDownList('NewsTranslate['.$field["label"].']['.$lang.']',$model->translation[$lang][$field['label']],$field['value'],$htmlOptions).'<hr />';

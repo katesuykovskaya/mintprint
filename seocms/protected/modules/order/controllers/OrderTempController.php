@@ -36,7 +36,7 @@ class OrderTempController extends Controller
                     $singlePrice = $this->module->config['price'];
                     die(json_encode(array('res'=>true, 'id'=>$model->id, 'sum'=>OrderTemp::CollectPrice($singlePrice))));
                 }
-                die(json_encode(array('res'=>false, 'reason'=>'not valid (kate message)')));
+                die(json_encode(array('res'=>false, 'reason'=>'Возникла ошибка')));
             }
 		}
         die(json_encode(array('res'=>false,'reason'=>'not ajax request')));
@@ -171,20 +171,23 @@ class OrderTempController extends Controller
         ));
     }
 
-	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
-	{
-		$model=new OrderTemp('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['OrderTemp']))
-			$model->attributes=$_GET['OrderTemp'];
+    public function actionCount()
+    {
+        if(Yii::app()->request->isPostRequest)
+        {
+            $sum = OrderTemp::CollectPrice($this->module->config['price']);
+            $sum >= 20 ? die("1") : die("0");
+        }
+        else
+            throw new CHttpException(403,'The requested page does not exist.');
+    }
 
-		$this->render('admin',array(
-			'model'=>$model,
-		));
-	}
+    public function actionClear()
+    {
+        $sql = "delete from OrderTemp where session_id = '".Yii::app()->session->sessionID."'";
+        Yii::app()->db->createCommand($sql)->execute();
+        $this->redirect(Yii::app()->createUrl('site/index'));
+    }
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

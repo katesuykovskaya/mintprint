@@ -134,14 +134,15 @@ class News extends CActiveRecord
                         $lang->t_url = $translit;
                     } elseif ($field['label'] === 't_imgmeta')
                         $lang->t_imgmeta = serialize($_POST['NewsTranslate']['imgmeta']);
+                    elseif($field['label'] == 't_createdate' || $field['label'] == 't_duedate') {
+                        $lang->{$field['label']} = date('Y-m-d', strtotime($_POST['NewsTranslate'][$field['label']][$language['langcode']]));
+                    }
                     else {
                         $lang->$field['label'] = isset($_POST['NewsTranslate'][$field['label']][$language['langcode']])
                             ? $_POST['NewsTranslate'][$field['label']][$language['langcode']]
                             : null;
                     }
                 }
-                $lang->t_createdate = ($_POST['NewsTranslate']['t_createdate'][$language['langcode']] === '') ? null : $_POST['NewsTranslate']['t_createdate'][$language['langcode']];
-                strtotime($lang->t_duedate);
                 $lang->save(false);
             }
         } else {
@@ -235,23 +236,23 @@ class News extends CActiveRecord
                     't_status'=>array(
                         'label'=>'t_status',
                         'fieldType'=>'dropDownList',
-                        'value'=>['draft'=>'draft','published'=>'published','archive'=>'archive'],
+                        'value'=>['published'=>'Публикация','draft'=>'Черновик','archive'=>'Архив'],
                         'htmlOptions'=>array(
                             'class'=>'input-xxlarge'
                         ),
                     ),
                     't_createdate'=>array(
                         'label'=>'t_createdate',
-                        'fieldType'=>'textField',
-                        'value'=>'',
+                        'fieldType'=>'datePicker',
+//                        'value'=>'',
                         'htmlOptions'=>array(
                             'class'=>'input-xxlarge date'
                         ),
                     ),
                     't_duedate'=>array(
                         'label'=>'t_duedate',
-                        'fieldType'=>'textField',
-                        'value'=>'',
+                        'fieldType'=>'datePicker',
+//                        'value'=>date('d.m.Y', strtotime('+1 month')),
                         'htmlOptions'=>array(
                             'class'=>'input-xxlarge date'
                         ),

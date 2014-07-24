@@ -5,10 +5,19 @@ Yii::app()->clientScript->registerScriptFile('/js_plugins/cropper/cropper.js');
 Yii::app()->clientScript->registerCssFile('/js_plugins/cropper/cropper.css');
 ?>
 <section class="content">
-    <div class="edit-image">
-        <?=CHtml::image($model->img_url, '', array(
-            'class'=>'cropper'
-        ))?>
+    <div class="overflow-hidden">
+        <div class="edit-image left">
+            <?=CHtml::image($model->img_url, '', array(
+                'class'=>'cropper'
+            ))?>
+        </div>
+        <div class="left edit-image-text">
+            <p>Как редактировать:</p>
+            <ul>
+                <li>уменьш или увеличь выделенную область</li>
+                <li>наведи выделенную область на нужный фрагмент</li>
+            </ul>
+        </div>
     </div>
     <div class="row">
         <button class="print-button" id="saveAndCrop">Продолжить</button><span class="loader"></span>

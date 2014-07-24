@@ -21,6 +21,12 @@ $(document).ready(function(){
     });
     //end draggable photo
 
+    $('.removeAllPhoto').click(function(e){
+        if(confirm(' Вы уверены?')) {
+            location.href = '/order/orderTemp/clear';
+        }
+    });
+
     //add all photo
     $('.addAllPhoto').click(function(){
         $(".all-photos-thumbs > div:not(div.full):gt(2)").remove();
@@ -157,6 +163,7 @@ function SendAjax(img) {
             'OrderTemp[thumb_height]': img[0].naturalHeight
         },
         success: function(response) {
+            $('.scroll-box').jScrollPane();
             try {
                 var result = $.parseJSON(response);
                 if(!result.res) {

@@ -117,10 +117,10 @@ $attr = $orderFormModel->delivery == 'post' ? array('class'=>'input-text') : arr
     <?=CHtml::label(CHtml::checkBox('OrderForm[sign]', true, array(
             'value'=>1,
             'uncheckValue'=>null
-        )).'Присылайте мне акции то Mint Print на эл. почту', null)?>
+        )).'Присылайте мне акции по Mint Print на эл. почту', null)?>
 </div>
 <div class="buttons-block overflow-hidden">
-    <a class="back-button left" href="javascript: history.back(); return false">назад</a>
+    <a class="back-button left" href="javascript:window.history.back();">назад</a>
     <?php echo CHtml::submitButton('Далее', array('class'=>'continue-button right')); ?>
 </div>
 <?php $this->endWidget(); ?>

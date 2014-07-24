@@ -121,7 +121,7 @@ class SiteController extends Controller
         $criteria->together = true;
         $criteria->with = array(
             'translation'=>array(
-                'condition'=>'t_status = 1 AND t_language=:language',
+                'condition'=>'t_status = 1 AND t_createdate < NOW() AND t_duedate > NOW() AND t_language=:language',
                 'params'=>[':language'=>Yii::app()->language],
             ),
         );

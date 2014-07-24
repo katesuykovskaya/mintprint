@@ -166,14 +166,14 @@ class NewsTranslate extends CActiveRecord
                         'label'=>'t_status',
                         'fieldType'=>'dropDownList',
 //                        'value'=>$this->isNewRecord ? ['2'=>'draft','1'=>'published','3'=>'archive'] : $this->t_status,
-                        'value'=>['draft'=>'draft','published'=>'published','archive'=>'archive'],
+                        'value'=>['published'=>'Публикация','draft'=>'Черновик','archive'=>'Архив'],
                         'htmlOptions'=>array(
                             'class'=>'input-xxlarge'
                         ),
                     ),
                     't_createdate'=>array(
                         'label'=>'t_createdate',
-                        'fieldType'=>'textField',
+                        'fieldType'=>'datePicker',
                         'value'=>'',
                         'htmlOptions'=>array(
                             'class'=>'input-xxlarge date'
@@ -181,8 +181,8 @@ class NewsTranslate extends CActiveRecord
                     ),
                     't_duedate'=>array(
                         'label'=>'t_duedate',
-                        'fieldType'=>'textField',
-                        'value'=>'',
+                        'fieldType'=>'datePicker',
+                        'value'=>date('d.m.Y', strtotime('+1 month')),
                         'htmlOptions'=>array(
                             'class'=>'input-xxlarge date'
                         ),

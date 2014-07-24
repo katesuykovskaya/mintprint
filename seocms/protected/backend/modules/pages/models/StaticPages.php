@@ -135,12 +135,6 @@ class StaticPages extends CActiveRecord
                 'rightAttribute'=>'rgt',
                 'levelAttribute'=>'level',
             ),
-            'AttachmentBehavior'=>array(
-                'class'=>'application.backend.modules.attach.components.AttachmentBehavior',
-//                'entity_id'=>$this->page_id,
-                'relationName'=>'page_id',
-                'upload_path'=>Yii::getPathOfAlias('webroot').'/uploads/',
-            ),
             'Multilanguage'=>array(
                 'class'=>'application.backend.components.Multilanguage',
                 'languages'=>Yii::app()->params['languages'],

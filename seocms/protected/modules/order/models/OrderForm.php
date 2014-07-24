@@ -17,6 +17,7 @@ class OrderForm extends CFormModel {
     public $email;
     public $sign;
     public $delivery;
+    public $price;
 
     /**
      * Declares the validation rules.
@@ -27,11 +28,11 @@ class OrderForm extends CFormModel {
     {
         return array(
             // username and password are required
-            array('name, phone, address, city, region, email', 'required'),
-            array('agree', 'required', 'message'=>'Вы должны сонласиться с правилами сервиса!'),
+            array('name, phone, address, city, region, email, index', 'required'),
+            array('agree', 'required', 'message'=>'Вы должны согласиться с правилами сервиса!'),
             array('email', 'email'),
-            array('index', 'indexOnPost', 'message'=>'Необходимо заполнить индекс'),
             array('index', 'numerical'),
+            array('price', 'moreThen20'),
             array('newPostAddress', 'length', 'max'=>255, 'allowEmpty'=>true),
             array('delivery', 'in', 'range'=>array('newPost', 'post')),
             array('name, city, region', 'match', 'pattern'=>'/^[a-zA-Z\p{Cyrillic}\d\s\-\.]+$/u', 'message'=>'Только буквы, цифры и пробельные символы!'),
@@ -58,8 +59,15 @@ class OrderForm extends CFormModel {
         );
     }
 
-    public function indexOnPost($attribute, $params) {
-        if($this->delivery == 'post' && empty($this->index)) $this->addError($attribute, $params['message']);
-        return true;
+//    public function indexOnPost($attribute, $params) {
+//        if($this->delivery == 'post' && empty($this->index)) $this->addError($attribute, $params['message']);
+//        return true;
+//    }
+
+    public function moreThen20($attribute, $params) {
+        $config = require Yii::getPathOfAlias('application.modules.order.config.config').'.php';
+        $sum = OrderTemp::CollectPrice($config['price']);
+        if($sum < 20)
+            $this->addError('price', 'Минимальная сумма - 20 грн.');
     }
 }

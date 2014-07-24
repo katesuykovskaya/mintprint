@@ -5,6 +5,7 @@
  * Date: 26.05.14
  * Time: 17:30
  */
+if($photos !== null):
 ?>
 
     <?php $data = $photos['data'];
@@ -17,7 +18,7 @@
     if(!empty($photos['pagination'])):?>
         <a class="instagram-more" href="<?=$photos['pagination']['next_url']?>">View more...</a>
     <?php endif; ?>
-
+<?php endif;?>
 <script>
    $('.image-wrap').draggable({
        cursor: "move",

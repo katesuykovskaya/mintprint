@@ -65,16 +65,38 @@
             <p class="total-price"><span id="totalPrice"><?=OrderTemp::CollectPrice($config['price'])?></span>&nbsp;<?=$config['currency']?></p>
         </div>
         <div class="overflow-hidden">
-            <a class="back-button" href="javascript: history.back(); return false;"><?=Yii::t('frontend', 'Назад')?></a>
+            <a class="back-button" href="javascript: window.history.go(-1);"><?=Yii::t('frontend', 'Назад')?></a>
             <a href="<?=Yii::app()->createUrl('order/orderTemp/buyerInfo')?>" class="continue-button"><?=Yii::t('frontend', 'Следующий шаг')?></a>
         </div>
     </div>
     <?php endif; ?>
 </section>
+<link rel="stylesheet" href="/js/vendor/fancybox/jquery.fancybox-1.3.4.css"/>
+<script type="text/javascript" src="/js/vendor/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
 <script>
     $(document).ready(function(){
+        $(document).on('click', '.continue-button:not(.disabled)', function(e){
+            e.preventDefault();
+            var _this = $(this);
+            _this.addClass('disabled');
+            $.ajax({
+                type: "post",
+                url: "/order/orderTemp/count",
+                success: function(response) {
+                    _this.removeClass('disabled');
+                    if(parseInt(response) == 1)
+                        location.href = _this.attr('href');
+                    else {
+                        $.fancybox({
+                            content: '<p class="basket-warning">Минимальная сумма покунки  - 20грн.!</p>'
+                        });
+                    }
+                }
+            });
+        });
         $(document).on('change', '.img-count', function(e){
             e.preventDefault();
+            $('.continue-button').addClass('disabled');
             var form = $(this).closest('form');
             var url = $(this).data('url');
             var id = $(this).data('id');
@@ -85,6 +107,7 @@
                 url: url,
                 data: form.serialize(),
                 success: function(response) {
+                    $('.continue-button').removeClass('disabled');
                     try {
                         var result = $.parseJSON(response);
                         if(result.res) {
