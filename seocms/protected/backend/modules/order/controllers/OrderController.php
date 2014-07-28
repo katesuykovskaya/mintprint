@@ -57,19 +57,30 @@ class OrderController extends Controller
             Yii::import('application.backend.components.ZHtml');
             $date = $_POST['date'];
             $error = "";
-            $models = OrderHead::model()->with('body')->findAllByAttributes(array('date'=>$date));
+            $condition = array('date'=>$date);
+            if(isset($_GET['status']))
+                $condition['status'] = $_GET['status'];
+            $models = OrderHead::model()->with('body')->findAllByAttributes($condition);
             $zip = new ZipArchive();
             $zip_name = $date.".zip";
             if($zip->open($zip_name, ZIPARCHIVE::CREATE)!==TRUE)
             {
                 $error .= "* Sorry ZIP creation failed at this time";
             }
-            foreach($models as $model)
+            $excelFiles = array();
+            foreach($models as $key=>$model)
             {
-                foreach($model->body as $key=>$item)
+                $excelFiles[$key] = ZHtml::randomString().'.csv';
+                $excelFileHandler = fopen($excelFiles[$key], 'w');
+                fwrite($excelFileHandler, b"\xEF\xBB\xBF" ) ; // to force utf-8 encoding
+                fputcsv($excelFileHandler, array('Порядковый номер фото', 'Количество шт'), ';');
+                foreach($model->body as $key1=>$item)
                 {
+                    fputcsv($excelFileHandler, array($item->position, $item->count), ';');
                     $zip->addFile(substr($item['path'], 1), str_replace('/uploads/Order/'.date('d-m-Y', strtotime($date)).'/', '', $item->path));
                 }
+                fclose($excelFileHandler);
+                $zip->addFile($excelFiles[$key], $model->id.'/'.$model->id.'.csv');
             }
             $zip->close();
             if(file_exists($zip_name))
@@ -80,6 +91,8 @@ class OrderController extends Controller
                 readfile($zip_name);
                 // удаляем zip файл если он существует
                 unlink($zip_name);
+                foreach($excelFiles as $val) // delete temporary csv files
+                    unlink($val);
             }
             if($error)
                 die($error);
@@ -90,6 +103,8 @@ class OrderController extends Controller
             'select'=>'date, count(*) as photoCount',
             'group'=>'date'
         ));
+        if(isset($_GET['status']))
+            $criteria->compare('t.status', $_GET['status'], false);
         $dataProvider = new CActiveDataProvider('OrderHead', array(
             'criteria'=>$criteria,
             'pagination'=>array(
@@ -100,8 +115,10 @@ class OrderController extends Controller
             )
         ));
 
+        $model = new OrderHead;
         $this->render('calendar', array(
-            'dataProvider'=>$dataProvider
+            'dataProvider'=>$dataProvider,
+            'model'=>$model,
         ));
     }
 
@@ -158,14 +175,6 @@ class OrderController extends Controller
                     $crop = new EasyImage($path);
                     $crop->resize(97, 97);
                     $crop->save('uploads/Order/thumb/'.$id.'/'.$item['id'].'.'.$path_parts['extension'], 80);
-
-//                    getimagesize(Yii::app()->easyImage->thumbOf($path, array(
-//                        "resize" => array("width"=>97, 'height' => 97),
-//                        "savePath"=>'uploads/Order/thumb/'.$id.'/',
-//                        'save'=>$item['id'],
-//                        "quality" => 80,
-//                    )));
-
                 }
         }
 
@@ -200,16 +209,22 @@ class OrderController extends Controller
                         {
                 // проверяем выбранные файлы
                             $zip = new ZipArchive(); // подгружаем библиотеку zip
-                            $zip_name = time().".zip"; // имя файла
+                            $zip_name = $model->id.".zip"; // имя файла
                             if($zip->open($zip_name, ZIPARCHIVE::CREATE)!==TRUE)
                             {
                                 $error .= "* Sorry ZIP creation failed at this time";
                             }
+                            $excelFile = ZHtml::randomString().'.csv';
+                            $excelFileHandler = fopen($excelFile, 'w');
+                            fwrite($excelFileHandler, b"\xEF\xBB\xBF" ) ; // to force utf-8 encoding
+                            fputcsv($excelFileHandler, array('Порядковый номер фото', 'Количество шт'), ';');
                             foreach($model->body as $key=>$item)
                             {
-    //                            $path = str_replace('http://'.$_SERVER['SERVER_NAME'].'/', "",$item['path']);
-                                $zip->addFile(substr($item['path'], 1)); // добавляем файлы в zip архив
+                                $zip->addFile(substr($item['path'], 1), pathinfo($item['path'])['basename']); // добавляем файлы в zip архив
+                                fputcsv($excelFileHandler, array($item->position, $item->count), ';');
                             }
+                            fclose($excelFileHandler);
+                            $zip->addFile($excelFile, $model->id.'.csv');
                             $zip->close();
 
                             if(file_exists($zip_name))
@@ -220,6 +235,7 @@ class OrderController extends Controller
                                 readfile($zip_name);
                 // удаляем zip файл если он существует
                                 unlink($zip_name);
+                                unlink($excelFile);
                             }
 
                         }
@@ -345,16 +361,58 @@ class OrderController extends Controller
 	 */
 	public function actionAdmin()
 	{
+        Yii::app()->clientScript->registerCssFile('/css/backend.css');
         $this->layout = '//layouts/main';
 		$model=new OrderHead('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['OrderHead']))
 			$model->attributes=$_GET['OrderHead'];
+        if(isset($_POST['change_status'])) {
+            $status = $_POST['new_status'];
+            $ids = implode(', ', array_keys($_POST['id']));
+            $sql = "update OrderHead set status='$status' where id in ($ids)";
+            echo Yii::app()->db->createCommand($sql)->execute();
+            $model->status = null;
+        }
 
-		$this->render('admin',array(
+//        $output = fopen('file.csv', 'w');
+//        fputcsv($output, array('Column 1', 'Column 2', 'Column 3'), ';');
+//        fputcsv($output, array('aaa', 'bbbb 2', 'cccc 3'), ';');
+//        fclose($output);
+
+        $this->render('admin',array(
 			'model'=>$model,
 		));
 	}
+
+    public function actionExport()
+    {
+        $criteria = new CDbCriteria();
+        $sufix = array();
+        if(isset($_GET['status'])) {
+            $criteria->compare('t.status', $_GET['status'], false);
+            $sufix[] = Yii::t('backend', $_GET['status']);
+        }
+        if(isset($_GET['from_date'])) {
+            $criteria->addCondition('DATEDIFF(t.date, "'.$_GET['from_date'].'") >= 0' );
+            $sufix[] = 'from_'.$_GET['from_date'];
+        }
+        if(isset($_GET['to_date'])) {
+            $criteria->addCondition('DATEDIFF(t.date, "'.$_GET['to_date'].'") <= 0' );
+            $sufix[] = 'to_'.$_GET['to_date'];
+        }
+        $fileName = 'orders_'.implode('_', $sufix).'.csv';
+        $models = OrderHead::model()->with(array('count'))->findAll($criteria);
+        header('Content-type: text/csv; charset=windows-1251');
+        header('Content-Disposition: attachment; filename="'.$fileName.'"');
+        $output = fopen('php://output', 'w');
+        fwrite($output,b"\xEF\xBB\xBF" ) ; // to force utf-8 encoding
+        fputcsv($output, array('ID', 'Имя и Фамилия', 'E-mail', 'Телефон', 'Адрес', 'Город', 'Область', 'Кол-во фото', 'Сумма', 'Статус', 'Дата'), ';');
+        foreach($models as $model)
+            fputcsv($output, array($model->id, $model->name, $model->email, $model->phone, $model->address, $model->city, $model->region, $model->count, $model->price.' грн.', Yii::t('backend', $model->status), $model->date), ';');
+        fclose($output);
+        die();
+    }
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

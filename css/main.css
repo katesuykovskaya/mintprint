@@ -837,7 +837,7 @@ footer li a {
     display: inline-block;
     /* display: inherit; */
 
-    width: 104px;
+    width: 120px;
     margin-bottom: 20px;
     padding-right: 21px;
 }
@@ -1338,6 +1338,8 @@ div.slide img {
     background: white;
     padding: 10px 10px 30px;
     font-weight: bold;
+    max-width: 300px;
+    text-align: center;
 }
 .edit-image-text {
     width: 300px;
@@ -1351,6 +1353,11 @@ div.slide img {
 }
 .edit-image-text li {
 
+}
+.print-button.disabled {
+    color: grey;
+    
+    background-color: #35D7DD;
 }
     /* ==========================================================================
    Helper classes

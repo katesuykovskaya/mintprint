@@ -22,7 +22,6 @@ class OrderController extends Controller
     public function actionSavePhoto() {
         $idOrder = Yii::app()->session['id_order'];
         Yii::import('application.backend.components.ZHtml');
-//        try {
             $image = OrderTemp::model()->findByAttributes(array(
                 'id'=>$_POST['id'],
                 'session_id'=>Yii::app()->session->sessionID
@@ -36,42 +35,31 @@ class OrderController extends Controller
             } else
                 $tempPath = str_replace("http://".$_SERVER['SERVER_NAME'], Yii::getPathOfAlias('webroot'), $image['img_url']);
 
-//            $saved = Yii::app()->easyImage->thumbSrcOf($tempPath, array(
-//                "savePath"=>Yii::getPathOfAlias("webroot")."/uploads/Order/".$idOrder."",
-////                "save"=>ZHtml::randomString(32),
-//                "quality" => 80,
-//                'crop'=>array(
-//                    'width'=>$image['img_width'],
-//                    'height'=>$image['img_height'],
-//                    'offset_x'=> $image['img_x'],
-//                    'offset_y'=>$image['img_y']
-//                ),
-//            ));
             $path_parts = pathinfo($tempPath);
 
         $dateFolder = Yii::getPathOfAlias("webroot")."/uploads/Order/".date("d-m-Y")."/";
         if(!file_exists($dateFolder))
             mkdir($dateFolder, 0777, true);
         $orderFolder = $dateFolder.$idOrder."/";
-        $file = $orderFolder.$path_parts['filename'].'.'.$path_parts['extension'];
+        $position = OrderBody::model()->countByAttributes(array('id_order'=>$idOrder)) + 1;
+        $fileName = $position.'-'.$image['img_count'].'.'.$path_parts['extension'];
+        $file = $orderFolder.$fileName;
         if(!file_exists($orderFolder))
             mkdir($orderFolder, 0777);
             $crop = new EasyImage($tempPath);
             $crop->crop($image['img_width'], $image['img_height'], $image['img_x'], $image['img_y']);
             $crop->save($file, 80);
-//            $saved = Yii::getPathOfAlias("webroot")."/uploads/Order/".$idOrder."/".$path_parts['filename'].'.'.$path_parts['extension'];
 
             if($image['type'] == 'social')
                 unlink($tempPath);
-//        } catch(Exception $e) {
-//            die(json_encode(array('res'=>false)));
-//        }
         $this->CreatePolaroid($file, strtolower($path_parts['extension']));
 
         $model = new OrderBody;
-        $model->path = str_replace(Yii::getPathOfAlias('webroot'), "", $file);
         $model->count = $image['img_count'];
+
+        $model->path = str_replace(Yii::getPathOfAlias('webroot'), "", $file);
         $model->id_order = $idOrder;
+        $model->position = $position;
         $res = $model->save();
         if($res)
             $image->delete();

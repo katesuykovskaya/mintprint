@@ -13,6 +13,12 @@
         <li><span class="divider">/</span><?=Yii::t('backend','Календарь заказов')?></li>
     </ul>
 </div>
+<form method="get" class="form">
+    <?=ZHtml::enumDropDownList($model, 'status', array('prompt'=>'Все', 'name'=>'status', 'options'=>array($_GET['status']=>array('selected'=>true))))?>
+    <div class="buttons"><?=CHtml::submitButton('Поиск', array('class'=>'btn'))?></div>
+</form>
+<hr/>
+<h2>Статус: <?php echo !empty($_GET['status']) ? Yii::t('backend', $_GET['status']) : 'Все'?></h2>
 <ul class="span6">
 <?php $this->widget('zii.widgets.CListView', array(
     'dataProvider'=>$dataProvider,

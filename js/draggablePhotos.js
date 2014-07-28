@@ -27,6 +27,10 @@ $(document).ready(function(){
         }
     });
 
+    $('.go-print').on('click', function(e){
+        if($(this).hasClass('disabled')) e.preventDefault();
+    });
+
     //add all photo
     $('.addAllPhoto').click(function(){
         $(".all-photos-thumbs > div:not(div.full):gt(2)").remove();
@@ -152,7 +156,7 @@ function getImgSize(imgSrc){
 }
 
 function SendAjax(img) {
-
+    $('.go-print').addClass('disabled');
     $.ajax({
         url: '/order/orderTemp/create',
         type: 'post',
@@ -166,6 +170,7 @@ function SendAjax(img) {
             $('.scroll-box').jScrollPane();
             try {
                 var result = $.parseJSON(response);
+                $('.go-print').removeClass('disabled');
                 if(!result.res) {
                     if(typeof result.reason != 'undefined')
                         alert(result.reason);

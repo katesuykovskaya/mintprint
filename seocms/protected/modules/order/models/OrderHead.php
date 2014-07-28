@@ -68,7 +68,7 @@ class OrderHead extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-            'body'=>array(self::HAS_MANY, 'OrderBody', 'id_order'),
+            'body'=>array(self::HAS_MANY, 'OrderBody', 'id_order', 'order'=>'position ASC'),
             'count'=>array(self::STAT, 'OrderBody', 'id_order')
 		);
 	}
@@ -149,6 +149,10 @@ class OrderHead extends CActiveRecord
         $criteria->compare('status',$this->status);
         $criteria->compare('date', $this->date);
         $criteria->compare('index', $this->index);
+        if(isset($_GET['from_date']))
+            $criteria->addCondition('DATEDIFF(t.date, "'.$_GET['from_date'].'") >= 0' );
+        if(isset($_GET['to_date']))
+            $criteria->addCondition('DATEDIFF(t.date, "'.$_GET['to_date'].'") <= 0' );
         if($this->photoCount)
         {
             $criteria->having = "`count` = {$this->photoCount}";

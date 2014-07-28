@@ -91,12 +91,22 @@
 
 <div class="wrapper-photos">
     <?php
-    foreach($model->body as $key=>$item){
-        echo '<img src="/uploads/Order/thumb/'.$model->id."/".$item['id'].'.'. substr(strrchr($item['path'], '.'), 1).'" />';
-    }
+    foreach($model->body as $key=>$item):
+        $path = "/uploads/Order/thumb/$model->id/$item->id.".substr(strrchr($item['path'], '.'), 1);
+        ?>
+        <div>
+            <img src="<?=$path?>" title="<?=$path?>" />
+            <div>
+                <span>№<?=$item->position?></span>&nbsp;-&nbsp;
+                <strong><?=$item->position?>&nbsp;шт</strong>
+            </div>
+
+        </div>
+
+    <?php endforeach
     ?>
     <form method="post" >
-        <input type="submit" name="download" value="Download photos">
+        <input class="btn btn-primary" type="submit" name="download" value="Скачать архив">
     </form>
 </div>
 

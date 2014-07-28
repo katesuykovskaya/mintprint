@@ -50,7 +50,13 @@
     left: 276px;
 }
 .wrapper-photos img{
-    margin: 5px;
+    /* margin: 5px; */
+    display: block;
+}
+.wrapper-photos > div {
+    width: 100px;
+    
+    display: inline-block;
 }
 input[type="submit"].link {
     color: #0088cc;
@@ -59,4 +65,31 @@ input[type="submit"].link {
     text-decoration: underline;
     background-color: transparent;
     box-shadow: none;
+}
+.date-range-wrap {
+    width: 300px;
+    display: inline-block;
+}
+.overflow-hidden {
+    overflow: hidden;
+}
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+.select-all {
+    position: relative;
+    top: 40px;
+}
+.reset-filters {
+    float: right;
+}
+.export-link {
+    position: relative;
+    
+    top: 214px;
+    font-size: 16px;
+    font-weight: bold;
 }

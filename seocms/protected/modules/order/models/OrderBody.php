@@ -8,6 +8,7 @@
  * @property integer $id_order
  * @property string $path
  * @property integer $count
+ * @property integer $position
  */
 class OrderBody extends CActiveRecord
 {

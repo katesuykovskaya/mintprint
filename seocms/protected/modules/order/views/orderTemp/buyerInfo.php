@@ -42,7 +42,7 @@
                 <sup><?=$config['currency']?></sup>
             </div>
             <p class="grey-text">
-                Через неделю фотографии пришлют по указанному адресу. Задавайте вопросы по телефону <?=Yii::t('frontend', 'phone')?>
+                Через неделю фотографии пришлют по указанному адресу. Если возникли вопросы пишите на наш e-mail: <a href="mailto:<?=Yii::t('frontend', 'email')?>"><?=Yii::t('frontend', 'email')?></a>
             </p>
             <a class="back-button" href="javascript: window.history.back();">назад</a>
         </div>

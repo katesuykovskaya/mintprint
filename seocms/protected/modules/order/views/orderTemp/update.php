@@ -14,7 +14,7 @@ Yii::app()->clientScript->registerCssFile('/js_plugins/cropper/cropper.css');
         <div class="left edit-image-text">
             <p>Как редактировать:</p>
             <ul>
-                <li>уменьш или увеличь выделенную область</li>
+                <li>уменьши или увеличь выделенную область</li>
                 <li>наведи выделенную область на нужный фрагмент</li>
             </ul>
         </div>

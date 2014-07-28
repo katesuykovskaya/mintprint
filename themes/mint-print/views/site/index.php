@@ -16,7 +16,7 @@ Yii::app()->clientScript->registerScriptFile('/js/draggablePhotos.js');
             <div id="priceWrap" class="relative">
                 <span id="price"><?=$sum?></span><sup>грн.</sup>
             </div>
-            <a class="print-button" href="<?=Yii::app()->createUrl('order/orderTemp/basket')?>">печатать их</a>
+            <a class="go-print print-button" href="<?=Yii::app()->createUrl('order/orderTemp/basket')?>">печатать их</a>
         </div>
         <div class="left scroll-box-cont">
             <div class="scroll-box">
