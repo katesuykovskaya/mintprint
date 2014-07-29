@@ -901,7 +901,8 @@ footer li a {
 #totalPrice {
     font-size: 36px;
 }
-.img-count {
+.img-count,
+.img-count-form {
     display: inline-block;
 }
 .buyer-info-form {

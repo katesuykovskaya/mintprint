@@ -367,7 +367,7 @@ class OrderController extends Controller
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['OrderHead']))
 			$model->attributes=$_GET['OrderHead'];
-        if(isset($_POST['change_status'])) {
+        if(isset($_POST['change_status']) && !empty($_POST['id'])) {
             $status = $_POST['new_status'];
             $ids = implode(', ', array_keys($_POST['id']));
             $sql = "update OrderHead set status='$status' where id in ($ids)";

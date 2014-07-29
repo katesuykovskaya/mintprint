@@ -135,7 +135,7 @@ class OrderHead extends CActiveRecord
         $criteria->select = 't.*, COUNT(OrderBody.id) AS `count`';
         $criteria->join = "INNER JOIN `OrderBody` ON `t`.`id` = `OrderBody`.`id_order`";
         $criteria->group = 't.id';
-		$criteria->compare('id',$this->id);
+		$criteria->compare('t.id',$this->id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('phone',$this->phone,true);

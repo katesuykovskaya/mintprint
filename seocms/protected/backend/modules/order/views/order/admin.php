@@ -73,9 +73,11 @@
 <?php echo CHtml::submitButton('Поиск', array('class'=>'btn')); ?>
 <hr/>
 <?php $this->endWidget(); ?>
-
+<div>
+    <a class="select-all btn" href="#">Выбрать все</a>
+    <?=CHtml::link('Сбросить фильтры', Yii::app()->createUrl('/backend/order/order/admin'), array('class'=>'btn reset-filters'))?>
+</div>
 <?php
-ob_start();
  $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 	'id'=>'order-head-grid',
      'type'=>'striped bordered',
@@ -86,7 +88,7 @@ ob_start();
 	'columns'=>array(
         array(
             'type'=>'raw',
-            'value'=>'CHtml::checkBox("id[$data->id]", false, array("class"=>"change-status"))',
+            'value'=>'CHtml::checkBox("id[$data->id]", false, array("class"=>"change-status", "value"=>$data->id))',
         ),
 		'id',
 		'name',
@@ -125,27 +127,25 @@ ob_start();
 		),
 	),
 ));
-$cgrigview = ob_get_clean();
 ?>
-<?php $form=$this->beginWidget('CActiveForm', array(
-    'id'=>'change-status-form',
-    'method'=>'post',
-)); ?>
 <h4>Изменить статус:</h4>
-<?php echo ZHtml::enumDropDownList($model, 'status', array('name'=>'new_status'))?>
-<div><?=CHtml::submitButton('Сохранить', array('class'=>'btn btn-success', 'name'=>'change_status'))?></div>
-<div>
-    <a class="select-all btn" href="#">Выбрать все</a>
-    <?=CHtml::link('Сбросить фильтры', Yii::app()->createUrl('/backend/order/order/admin'), array('class'=>'btn reset-filters'))?>
-</div>
+<form class="change-status-form" method="post">
+    <?php echo ZHtml::enumDropDownList($model, 'status', array('name'=>'new_status'))?>
+    <div><?=CHtml::submitButton('Сохранить', array('class'=>'btn btn-success', 'name'=>'change_status', 'id'=>'change_status'))?></div>
+</form>
 
-<?=$cgrigview?>
-<?php $this->endWidget();?>
 <script>
     $(document).ready(function(){
         $('.select-all').on('click', function(e){
             e.preventDefault();
             $('.change-status').prop('checked', true);
+        });
+
+        $('.change-status-form').submit(function(e){
+            var ids = $('.change-status:checked');
+            for(var i=0;i<ids.length; i++) {
+                 $('<input type="hidden">').attr('name', ids.eq(i).attr('name')).val(ids.eq(i).val()).appendTo($(this));
+            }
         });
     });
 </script>
