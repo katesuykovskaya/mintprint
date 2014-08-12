@@ -54,20 +54,28 @@ class Fb {
         }
     }
 
-    public function getAlbums($token) {
+    public function getAlbums($token, array $params = array()) {
         $fb = new Guzzle\Http\StaticClient();
-        $apiUrl = 'https://graph.facebook.com/me/albums';
-        $req = $fb::get($apiUrl.'?&access_token='.$token);
-        $data = $req->json();
-        foreach($data['data'] as $key=>$val) {
+        if(empty($params)) {
+            $apiUrl = 'https://graph.facebook.com/me/albums';
+            $req = $fb::get($apiUrl.'?&access_token='.$token);
+            $data = $req->json();
+            foreach($data['data'] as $key=>$val) {
 //            echo $val['cover_photo'].'<br>';fgfdgfgfgdfg
-            $url = 'https://graph.facebook.com/'.$val['cover_photo'];
-            $req = $fb::get($url.'?&access_token='.$token);
-            $cover = array();
-            $cover = $req->json();
-            $data['data'][$key]['thumb_src'] = end($cover['images'])['source'];
+                $url = 'https://graph.facebook.com/'.$val['cover_photo'];
+                $req = $fb::get($url.'?&access_token='.$token);
+                $cover = array();
+                $cover = $req->json();
+                $data['data'][$key]['thumb_src'] = end($cover['images'])['source'];
+            }
+            return $data['data'];
         }
-        return $data['data'];
+        else {
+            $apiUrl = 'https://graph.facebook.com/'.$params['album_ids'];
+            $req = $fb::get($apiUrl.'?&access_token='.$token);
+            $data = $req->json();
+            return array($data);
+        }
     }
 
     public function getPhotosFromAlbum($id, $token) {

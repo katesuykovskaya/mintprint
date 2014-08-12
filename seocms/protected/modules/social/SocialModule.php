@@ -11,7 +11,7 @@ class SocialModule extends CWebModule
 
 //        $this->config = include(dirname(__FILE__).'/config/config3.php');
         //photo-service.home
-        $this->config = include(dirname(__FILE__).'/config/config.php');
+        $this->config = include(dirname(__FILE__).'/config/config_mintprintcomua.php');
 
 		// import the module-level models and components
 		$this->setImport(array(

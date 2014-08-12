@@ -29,7 +29,7 @@ echo CHtml::link('Sort',  Yii::app()->createUrl($url, array(
     'auth'  => $_GET['auth'],
     $album_config['album_id']       => $_REQUEST[$album_config['album_id']],
     'rev'   => isset($_REQUEST['rev']) ? (int)(!$_REQUEST['rev']) : 1,
-//    'page'  => isset($_REQUEST['page']) ? (int)$_REQUEST['page'] : 1,
+    'page'  => isset($_REQUEST['page']) ? (int)$_REQUEST['page'] : 1,
     'offset'    => ($currentPage - 1) * $album_config['page_size'],
     'limit'     => $album_config['page_size'],
     'provider'  => $provider,
@@ -94,7 +94,7 @@ $len = count($photos);
 for($i = 0; $i < $len; $i++) {
 //    echo $photos[$i]['src'];
 
-    echo CHtml::link(CHtml::image($photos[$i][$photo_config['thumbnail']],$photos[$i]['text'], array(
+    echo CHtml::link(CHtml::image($photos[$i][$photo_config['thumbnail']],'', array(
             'data-original'=>empty($photos[$i][$photo_config['original']])?$photos[$i][$photo_config['originalSecond']]: $photos[$i][$photo_config['original']]
         )).'<div class="add-photo">+<span>добавить</span></div>', '#', array(
         'class'=>'image-wrap',

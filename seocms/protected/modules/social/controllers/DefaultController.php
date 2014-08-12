@@ -59,7 +59,6 @@ class DefaultController extends Controller
             $token = Yii::app()->session[$provider.'_token'];
             $data = $auth->getPhotosFromAlbum($_GET[$config['album_id']], $token);
             $album = $auth->getAlbums($token, array('album_ids' => $_GET[$config['album_id']]))[0];
-//            $this->layout = false;
             $this->renderPartial('application.modules.social.widgets.views.photos', array(
                 'photos'=>$data,
                 'provider'=>$provider,
