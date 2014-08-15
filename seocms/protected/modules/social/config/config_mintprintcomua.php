@@ -75,7 +75,7 @@ return [
         'auth'=>[
             'client_id' => '1490682084479558',
             'client_secret' => '26b103623cec4483b764061706fe4758',
-//            'scope' => 'user_photos',
+            'scope' => 'user_photos',
             'redirect_uri' => 'http://mintprint.com.ua/social/default/auth?authprovider=fb'
 
         ],

@@ -88,7 +88,7 @@
                         location.href = _this.attr('href');
                     else {
                         $.fancybox({
-                            content: '<p class="basket-warning">Пожалуйста, внимательно проверьте введенные Вами данные. Если у Вас возникли вопросы, напишите на элетронный адрес <a href="mailto:print@mintprint.com.ua">print@mintprint.com.ua</a></p>'
+                            content: '<p class="basket-warning">просьба пересмотреть Ваш заказ. Минимальный заказ 20 грн.</a></p>'
                         });
                     }
                 }
