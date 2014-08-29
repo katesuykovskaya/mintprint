@@ -122,7 +122,7 @@ class News extends CActiveRecord
                 $lang = new NewsTranslate;
                 $lang->t_id = $this->id;
                 $lang->t_language = $language['langcode'];
-
+//                CVarDumper::dump($lang->attributes, 3, 1);
                 foreach($this->translateAttributes as $field) {
                     if($field['label']==='t_url') {
                         $phrase = isset($_POST['NewsTranslate']['t_url'][$language['langcode']])
@@ -143,6 +143,7 @@ class News extends CActiveRecord
                             : null;
                     }
                 }
+//                die(CVarDumper::dump($lang->attributes, 3, 1));
                 $lang->save(false);
             }
         } else {
@@ -164,11 +165,16 @@ class News extends CActiveRecord
                 foreach($this->translateAttributes as $field) {
                     if($field['label'] === 't_imgmeta'){
                         $lang->t_imgmeta = serialize($_POST['NewsTranslate']['imgmeta']);
-                    } elseif ($field['label'] !== 't_url') {
+                    }
+                    elseif($field['label'] == 't_createdate' || $field['label'] == 't_duedate') {
+                        $lang->{$field['label']} = Yii::app()->dateFormatter->format('yyyy-MM-dd', $_POST['NewsTranslate'][$field['label']][$language['langcode']]);
+                    }
+                    elseif ($field['label'] !== 't_url') {
                         $lang->$field['label'] = isset($_POST['NewsTranslate'][$field['label']][$language['langcode']])
                             ? $_POST['NewsTranslate'][$field['label']][$language['langcode']]
                             : rand(0,102400);
-                    } else {
+                    }
+                    else {
                         $model = NewsTranslate::model()->findByAttributes(['t_url'=>$_POST['NewsTranslate']['t_url'][$language['langcode']]],'t_id!=:id',[':id'=>$this->id]);
                         $lang->t_url = (empty($model))
                             ? $_POST['NewsTranslate']['t_url'][$language['langcode']]
@@ -176,7 +182,7 @@ class News extends CActiveRecord
                     }
                 }
 
-                $lang->t_createdate = ($_POST['NewsTranslate']['t_createdate'][$language['langcode']] === '0000-00-00 00:00:00') ? null : $_POST['NewsTranslate']['t_createdate'][$language['langcode']];
+//                $lang->t_createdate = ($_POST['NewsTranslate']['t_createdate'][$language['langcode']] === '0000-00-00 00:00:00') ? null : $_POST['NewsTranslate']['t_createdate'][$language['langcode']];
                 strtotime($lang->t_duedate);
                 $lang->save(false);
             }
@@ -244,6 +250,7 @@ class News extends CActiveRecord
                     't_createdate'=>array(
                         'label'=>'t_createdate',
                         'fieldType'=>'datePicker',
+                        'dateFormat'=>'Y-m-d H:i',
 //                        'value'=>'',
                         'htmlOptions'=>array(
                             'class'=>'input-xxlarge date'
@@ -252,6 +259,7 @@ class News extends CActiveRecord
                     't_duedate'=>array(
                         'label'=>'t_duedate',
                         'fieldType'=>'datePicker',
+                        'dateFormat'=>'Y-m-d H:i',
 //                        'value'=>date('d.m.Y', strtotime('+1 month')),
                         'htmlOptions'=>array(
                             'class'=>'input-xxlarge date'

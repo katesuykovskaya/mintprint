@@ -34,14 +34,19 @@ $(document).ready(function(){
     //add all photo
     $('.addAllPhoto').click(function(){
         $(".all-photos-thumbs > div:not(div.full):gt(2)").remove();
-
-        $('.tab:visible img').each(function(index){
+        var photos = $('.tab:visible .not-album img');
+        console.log(photos.length);
+        if(photos.length == 0) {
+            console.log('hhhh');
+            alert("Фото отсутствуют. Обратите внимание, что Добавить все фото можно только из альбома");
+        }
+        else {
+            photos.each(function(index){
             var img = $(this).clone();
             SendAjax(img);
             var newImg = createPhoto(img);
             $('.all-photos-thumbs').prepend(newImg);
-        });
-
+        });}
     });
 
     //add one photo

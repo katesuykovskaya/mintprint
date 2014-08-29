@@ -123,6 +123,7 @@ class NewsController extends Controller
                             'value'=>isset($field['value']) ? $field['value'] : date('d.m.Y'),
                             'options'=>array(
                                 'showAnim'=>'slide',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                                'dateFormat'=>'yy-mm-dd',
                             ),
                             'htmlOptions'=>array(
                                 'style'=>''

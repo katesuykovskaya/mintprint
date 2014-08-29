@@ -2,11 +2,12 @@
 /**
  * Created by PhpStorm.
  * User: Kate
- * Date: 07.08.14
- * Time: 12:10
- */ $code = (isset($_GET['code'])) ? $_GET['code'] : null;
+ * Date: 03.06.14
+ * Time: 16:51
+ */
+$code = (isset($_GET['code'])) ? $_GET['code'] : null;
 $scenario = (isset($_GET['scenario'])) ? $_GET['scenario'] : null;
-//$server = $_SERVER['']
+
 return [
     'scenario'=>[
         'auth'=>['socialAuth'],
@@ -16,24 +17,23 @@ return [
     'vk'=>[
         'authUrl'=>'http://oauth.vk.com/authorize',
         'auth'=>[
-            'client_id' => '4495283',
+            'client_id' => '4382088',
             'response_type'=>'code',
             'scope'=>'photos',
-            'redirect_uri' => 'http://mintprint.com.ua/social/default/auth?authprovider=vk',
+            'redirect_uri' => 'http://mint-print.seotm.biz/social/default/auth?authprovider=vk',
             'v'=>'5.16'
 
         ],
         'tokenUrl'=>'https://oauth.vk.com/access_token',
         'token'=>[
-            'client_id' => '4495283',
-            'client_secret' => 'esBtVNQZOnGJJF93eqKE',
+            // http://mint-print.seotm.biz
+            'client_id'=>'4382088',
+            'client_secret' => 'BijBNOVApjLsGb83KlAq',
             'response_type'=>'code',
             'scope'=>'photos',
-            'redirect_uri' => 'http://mintprint.com.ua/social/default/auth?authprovider=vk',
+            'redirect_uri' => 'http://mint-print.seotm.biz/social/default/auth?authprovider=vk',
             'code'=>$code,
         ],
-        'logoutUrl'=>'https://login.vk.com/?act=openapi&oauth=1&aid=4495283&location=mintprint.com.ua&do_logout=1&token=46ea7cd7e1fdbcd277c6270bdb8c3c3e3225204140309d7570fadc8129668248116e6719a37e096097e67',
-//        'logoutUrl'=>'https://api.vk.com/oauth/logout?client_id=4495283',//&token='.Yii::app()->session['vk_token'].'&redirect_uri=http://'.$_SERVER['SERVER_NAME'].'/site/index',
         'albums'=>array(
             'title'         => 'title',
             'thumb_src'     => 'thumb_src',
@@ -52,21 +52,21 @@ return [
         'authUrl'=>'https://api.instagram.com/oauth/authorize/',
         'auth'=>[
             //photo-service.home
-            'client_id' => '9e0b0122226944678c2d77fe144b9dae',
+//            'client_id' => 'c3a5d2a20bd7484e8260dfdc9fc295b4',
+            // mint-print.seotm.biz
+            'client_id'=>'ae8b424720a64f278e31849ebcdac957',
             'response_type'=>'code',
-            'redirect_uri' => 'http://mintprint.com.ua/social/default/auth?authprovider=instagram',
+            'redirect_uri' => 'http://mint-print.seotm.biz/social/default/auth?authprovider=instagram',
 
         ],
         'tokenUrl'=>'https://api.instagram.com/oauth/access_token',
         'token'=>[
-            //photo-service.home
-            'client_id' => '9e0b0122226944678c2d77fe144b9dae',
-            'client_secret'=>'8b5681bab0fa4a339dd7fd1f7d472017',
+            'client_id' => 'ae8b424720a64f278e31849ebcdac957',
+            'client_secret'=>'dcb38e4984404cbc94b0aaaab6bd01c2',
             'grant_type'=> 'authorization_code',
-            'redirect_uri' => 'http://mintprint.com.ua/social/default/auth?authprovider=instagram',
+            'redirect_uri' => 'http://mint-print.seotm.biz/social/default/auth?authprovider=instagram',
             'code'=>$code,
         ],
-        'logoutUrl'=>'https://instagram.com/accounts/logout/',
         'photos'=>array(
             'original' => 'standard_resolution',
             'originalSecond' => 'standard_resolution',
@@ -76,21 +76,30 @@ return [
     'fb'=>[
         'authUrl'=>'https://www.facebook.com/dialog/oauth',
         'auth'=>[
-            'client_id' => '1490682084479558',
-            'client_secret' => '26b103623cec4483b764061706fe4758',
+//            'client_id' => '1490682084479558',
+//            'client_secret' => '26b103623cec4483b764061706fe4758',
+//            'client_id' => '769552843084826',
+//            'client_secret'=>'457272200ac7b556e97820808861fb93',
+            'client_id'=>'1455599068050624',
+            'client_secret'=>'b42ea220f188ea12c219822e7b79f5fe',
             'scope' => 'user_photos',
-            'redirect_uri' => 'http://mintprint.com.ua/social/default/auth?authprovider=fb'
+            'redirect_uri' => 'http://'.$_SERVER['SERVER_NAME'].'/social/default/auth?authprovider=fb'
 
         ],
         'tokenUrl'=>'https://graph.facebook.com/oauth/access_token',
         'token'=>[
             //kate
-            'client_id' => '1490682084479558',
-            'client_secret'=>'26b103623cec4483b764061706fe4758',
-            'redirect_uri' => 'http://mintprint.com.ua/social/default/auth?authprovider=fb',
+//            'client_id' => '1490682084479558',
+//            'client_secret'=>'26b103623cec4483b764061706fe4758',
+            //alexandr
+//            'client_id' => '769552843084826',
+//            'client_secret'=>'457272200ac7b556e97820808861fb93',
+            'client_id'=>'1455599068050624',
+            'client_secret'=>'b42ea220f188ea12c219822e7b79f5fe',
+            'redirect_uri' => 'http://'.$_SERVER['SERVER_NAME'].'/social/default/auth?authprovider=fb',
             'code'=>$code,
         ],
-        'logoutUrl'=>'http://www.facebook.com/logout.php?next=http://'.$_SERVER['SERVER_NAME'].'/site/index&access_token='.Yii::app()->session['fb_token'],
+        'logoutUrl'=>'http://m.facebook.com/logout.php?confirm=1&next=http://'.$_SERVER['SERVER_NAME'].'/site/index',
         'albums'=>array(
             'title'         => 'name',
             'thumb_src'     => 'thumb_src',
@@ -98,11 +107,6 @@ return [
             'album_ids'     =>'id',
             'album_size'    =>'count',
             'page_size'     => 20
-        ),
-        'photos'=>array(
-            'original' => 'src_big',
-            'originalSecond' => 'src_big',
-            'thumbnail' => 'src'
         )
     ],
     'google'=>[

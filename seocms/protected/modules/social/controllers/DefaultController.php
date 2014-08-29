@@ -63,8 +63,7 @@ class DefaultController extends Controller
                 'photos'=>$data,
                 'provider'=>$provider,
                 'album'=>$album,
-                'album_config'=>$config,
-                'photo_config'=>$this->module->config[$provider]['photos'],
+                'config'=>$this->module->config[$provider],
             ));
         }
     }
@@ -81,7 +80,8 @@ class DefaultController extends Controller
         $req = $ins::get($_POST['url']);
         $nextPhotos = $req->json();
         $this->renderPartial('application.modules.social.widgets.views._instagramPhotos', array(
-            'photos'=>$nextPhotos
+            'photos'=>$nextPhotos,
+            'config'=>$this->module->config['instagram'],
         ));
     }
 

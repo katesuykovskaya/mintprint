@@ -33,6 +33,7 @@ return [
             'redirect_uri' => 'http://photo-service.home/social/default/auth?authprovider=vk',
             'code'=>$code,
         ],
+//        'logoutUrl'=>'',
         'albums'=>array(
             'title'         => 'title',
             'thumb_src'     => 'thumb_src',
@@ -93,6 +94,7 @@ return [
             'redirect_uri' => 'http://photo-service.home/social/default/auth?authprovider=fb',
             'code'=>$code,
         ],
+        'logoutUrl'=>'http://m.facebook.com/logout.php?confirm=1&next=http://'.$_SERVER['SERVER_NAME'].'/site/index',
         'albums'=>array(
             'title'         => 'name',
             'thumb_src'     => 'thumb_src',

@@ -123,12 +123,15 @@ class OrderTempController extends Controller
      * Step 3
      */
     public function actionConfirm() {
+
         $photos = OrderTemp::model()->findAllByAttributes(array(
             'session_id'=>Yii::app()->session->sessionID
         ));
+
         $orderForm = new OrderForm;
         $order = Yii::app()->session['OrderHead'];
         $config = $this->module->config;
+
         $this->render('confirmOrder', array(
             'orderForm'=>$orderForm,
             'order'=>$order,

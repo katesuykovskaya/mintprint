@@ -20,6 +20,7 @@ class SiteController extends Controller
     }
 
 	public function actionIndex() {
+        Yii::app()->clientScript->registerScriptFile('/js/socialLogout.js');
         if(isset($_GET['token']) && isset($_GET['auth'])) {
             Yii::app()->session[$_GET['auth'].'_token'] = $_GET['token'];
         }
@@ -31,9 +32,85 @@ class SiteController extends Controller
         ));
 	}
 
+    public function actionLogout()
+    {
+        if(isset($_GET['provider']))
+        {
+            $provider = $_GET['provider'];
+            if(isset(Yii::app()->session[$provider.'_token']))
+            {
+                Yii::app()->session[$provider.'_old_token'] = Yii::app()->session[$provider.'_token'];
+                Yii::app()->session[$provider.'_token'] = null;
+                die(json_encode(array("response"=>true)));
+            }
+            die(json_encode(array("response"=>false)));
+        }
+        die(json_encode(array("response"=>false)));
+    }
+
     public function actionHome() {
         $this->layout = '//layouts/home';
-        $this->render('home');
+
+
+        if(!empty($_POST))
+        {
+            $signature = 'tWOkSixhuvwFo4A4FCx8iOvZemvqYLQASD6OJnAu';
+            if(isset($_POST['signature']))
+                $insig = $_POST['signature'];
+            else
+                $insig = null;//'Or+eoT3wbcIuUZ30VsYO76YaTo8=';
+
+            if(isset($_POST['operation_xml']))
+                $resp = base64_decode($_POST['operation_xml']);
+            else
+                $resp = null;
+
+            $gensig = base64_encode(sha1($signature . $resp . $signature, 1));
+
+            if ($insig == $gensig)
+            {
+                $amount = $this->parseTag($resp, 'amount');
+                $status = $this->parseTag($resp, 'status');
+                $description = $this->parseTag($resp, 'description');
+                //Почемуто слетает кодировка в ответе поэтому нужно сделать такую конвертацию чтобы получить на выходе UTF-8
+                $description = @iconv('utf-8','ISO-8859-1',$description);
+                $transaction_id = $this->parseTag($resp, 'transaction_id');
+                $pay_way = $this->parseTag($resp, 'pay_way');
+
+
+                $msgLiqPay =  '<span id="message" class="success">
+
+                    <b>' . $description . '<br />' .
+                    '<b>'.$this->multi['STATUS'].':</b> ' .$status . '<br />'.
+                    '<b>Id транзакции:</b> ' . $transaction_id . '<br />'.
+                    '<b>Сума:</b> ' . $amount.'<br>
+
+                </span>';
+                $idorder = explode('№', $description);
+
+                Yii::import('application.modules.order.models.OrderHead');
+
+                $model = OrderHead::model()->findByPk($idorder[1]);
+                $model->status = 'ready';
+                $model->save();
+
+            }
+        }
+
+        if(empty($msgLiqPay))
+            $msgLiqPay = null;
+
+        $this->render('home', array('msgLiqPay' => $msgLiqPay));
+    }
+
+    public function parseTag($rs, $tag)
+    {
+        $rs = str_replace("\n", "", str_replace("\r", "", $rs));
+        $tags = '<' . $tag . '>';
+        $tage = '</' . $tag;
+        $start = strpos($rs, $tags) + strlen($tags);
+        $end = strpos($rs, $tage);
+        return substr($rs, $start, ($end - $start));
     }
 
     public function actionEdit() {

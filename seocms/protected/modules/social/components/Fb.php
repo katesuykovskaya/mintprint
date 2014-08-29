@@ -60,14 +60,20 @@ class Fb {
             $apiUrl = 'https://graph.facebook.com/me/albums';
             $req = $fb::get($apiUrl.'?&access_token='.$token);
             $data = $req->json();
+
             foreach($data['data'] as $key=>$val) {
-//            echo $val['cover_photo'].'<br>';fgfdgfgfgdfg
-                $url = 'https://graph.facebook.com/'.$val['cover_photo'];
+//            echo $val['cover_photo'].'<br>';
+
+                $url = 'https://graph.facebook.com/'.$val['id'].'/photos';
                 $req = $fb::get($url.'?&access_token='.$token);
                 $cover = array();
                 $cover = $req->json();
-                $data['data'][$key]['thumb_src'] = end($cover['images'])['source'];
+                if(empty($cover['data'][0]['images']))
+                    $cover['data'][0]['images'] = array();
+
+                $data['data'][$key]['thumb_src'] = end($cover['data'][0]['images'])['source'];
             }
+
             return $data['data'];
         }
         else {

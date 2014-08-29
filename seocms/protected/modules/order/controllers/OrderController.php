@@ -119,6 +119,7 @@ class OrderController extends Controller
         $this->SendAdminEmail($body, $model->id);
         $this->renderPartial('result', array(
             'id'=>$id,
+            'amount'=>$model->price
         ));
     }
 

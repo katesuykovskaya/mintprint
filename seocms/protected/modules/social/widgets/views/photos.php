@@ -7,14 +7,23 @@
  * @var $album array
  * @var $album_config array
  */
-//echo CVarDumper::dump($photos, 7, true);
+//echo CVarDumper::dump($photos, 7, true)
+$album_config = $config['albums'];
+$photo_config = $config['photos'];
 $pageSize = $album_config['page_size'];
 $url = '/social/default/photosFromAlbum';
 $albumsUrl = '/social/default/albums';
 $currentPage = (isset($_GET['offset']) && $_GET['offset'] != 0) ? ($_GET['offset'] / $pageSize) + 1 : 1;
 $albumSize = $album[$album_config['album_size']];
 
+
+
 //breadcrumbs
+echo CHtml::openTag('div', array('class'=>'logout-wrap'));
+echo CHtml::link('Выйти', Yii::app()->urlManager->createUrl('site/logout', array('provider'=>$provider)), array(
+    'class'=>'logout',
+    'data-logout-url'=>$config['logoutUrl']));
+echo CHtml::closeTag('div');
 echo CHtml::openTag('div', array('id'=>$provider.'Breabcrumbs'));
 echo CHtml::link('Альбомы', $albumsUrl,
     array(
@@ -97,7 +106,7 @@ for($i = 0; $i < $len; $i++) {
     echo CHtml::link(CHtml::image($photos[$i][$photo_config['thumbnail']],'', array(
             'data-original'=>empty($photos[$i][$photo_config['original']])?$photos[$i][$photo_config['originalSecond']]: $photos[$i][$photo_config['original']]
         )).'<div class="add-photo">+<span>добавить</span></div>', '#', array(
-        'class'=>'image-wrap',
+        'class'=>'image-wrap not-album',
     ));
 
 }

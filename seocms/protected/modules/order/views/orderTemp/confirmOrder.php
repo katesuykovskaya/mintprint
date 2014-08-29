@@ -69,7 +69,7 @@
                         </td>
                         <td>
                             <?=CHtml::activeLabel($orderForm, 'delivery')?>
-                            <?=CHtml::textField('', Yii::t('frontend', $order['delivery']), array('disabled'=>true, 'class'=>'input-disabled-text'))?>
+                            <?=CHtml::textField('', Yii::t('frontend', ''), array('disabled'=>true, 'class'=>'input-disabled-text'))?>
                         </td>
                     </tr>
                     <tr>
@@ -88,8 +88,8 @@
                             <?=CHtml::textField('', $order['region'], array('disabled'=>true, 'class'=>'input-disabled-text'))?>
                         </td>
                         <td>
-                            <?=CHtml::activeLabel($orderForm, $order['delivery'] == 'newPost' ? 'newPostAddress' : 'index')?>
-                            <?=CHtml::textField('', $order['delivery'] == 'newPost' ? $order['newPostAddress'] : $order['index'], array('disabled'=>true, 'class'=>'input-disabled-text'))?>
+                            <?=CHtml::activeLabel($orderForm,  'index')?>
+                            <?=CHtml::textField('', $order['index'], array('disabled'=>true, 'class'=>'input-disabled-text'))?>
                         </td>
                     </tr>
                 </table>
@@ -170,6 +170,9 @@
                                                     location.href="/";
                                                 }
                                             });
+                                            $('#confirm-liqpay').on('click', function(){
+                                                $( "#fomfLiqPay" ).submit();
+                                            })
                                         }
                                     });
                                     $('#message').addClass('success');

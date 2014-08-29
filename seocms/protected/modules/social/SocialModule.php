@@ -9,8 +9,10 @@ class SocialModule extends CWebModule
 		// this method is called when the module is being created
 		// you may place code here to customize the module or the application
 
-//        $this->config = include(dirname(__FILE__).'/config/config3.php');
+//        $this->config = include(dirname(__FILE__).'/config/config_seotmbiz.php');
         //photo-service.home
+//        $this->config = include(dirname(__FILE__).'/config/config.php');
+        //mintprint.com.ua
         $this->config = include(dirname(__FILE__).'/config/config_mintprintcomua.php');
 
 		// import the module-level models and components

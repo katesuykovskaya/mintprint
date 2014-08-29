@@ -27,7 +27,9 @@ class SocialPhotoWidget extends CWidget {
         if($provider == 'instagram') {
             $photos = $auth->getPhotos($token);
             $this->render('instagramPhotos', array(
-                    'photos'=>$photos)
+                    'photos'=>$photos,
+                    'config'=>$this->config[$provider],
+                )
             );
         }
         else {

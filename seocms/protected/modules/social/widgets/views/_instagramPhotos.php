@@ -5,10 +5,8 @@
  * Date: 26.05.14
  * Time: 17:30
  */
-if($photos !== null):
-?>
-
-    <?php $data = $photos['data'];
+if($photos !== null)://
+$data = $photos['data'];
     foreach($data as $val): ?>
         <a class="image-wrap">
             <img src="<?=$val['images']['thumbnail']['url']?>" data-original="<?=$val['images']['standard_resolution']['url']?>"/>
