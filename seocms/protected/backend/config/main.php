@@ -2,7 +2,7 @@
 Yii::setPathOfAlias('backend', dirname(dirname(__FILE__)));
 return CMap::mergeArray(
 (require dirname(dirname(__FILE__))."/../common/config/main.php"), array(
-'name'=>'Fitness City',
+'name'=>$_SERVER['SERVER_NAME'],
 'sourceLanguage'=>'ru',
 'language'=>'ru',
 'theme'=>'unicorn',

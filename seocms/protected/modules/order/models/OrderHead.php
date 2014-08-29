@@ -16,7 +16,8 @@
  * @property integer $sign
  * @property integer $price
  * @property integer $date
- * @property strinf $index
+ * @property string $index
+ * @property string status
  */
 class OrderHead extends CActiveRecord
 {
@@ -69,7 +70,8 @@ class OrderHead extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
             'body'=>array(self::HAS_MANY, 'OrderBody', 'id_order', 'order'=>'position ASC'),
-            'count'=>array(self::STAT, 'OrderBody', 'id_order')
+            'count'=>array(self::STAT, 'OrderBody', 'id_order'),
+            'certificate'=>array(self::HAS_ONE, 'Certificate', 'id_order'),
 		);
 	}
 

@@ -67,6 +67,7 @@ return [
             'redirect_uri' => 'http://mint-print.seotm.biz/social/default/auth?authprovider=instagram',
             'code'=>$code,
         ],
+        'logoutUrl'=>'https://instagram.com/accounts/logout/',
         'photos'=>array(
             'original' => 'standard_resolution',
             'originalSecond' => 'standard_resolution',
@@ -99,7 +100,7 @@ return [
             'redirect_uri' => 'http://'.$_SERVER['SERVER_NAME'].'/social/default/auth?authprovider=fb',
             'code'=>$code,
         ],
-        'logoutUrl'=>'http://m.facebook.com/logout.php?confirm=1&next=http://'.$_SERVER['SERVER_NAME'].'/site/index',
+        'logoutUrl'=>'http://www.facebook.com/logout.php?next=http://'.$_SERVER['SERVER_NAME'].'/site/index&access_token='.Yii::app()->session['fb_token'],
         'albums'=>array(
             'title'         => 'name',
             'thumb_src'     => 'thumb_src',

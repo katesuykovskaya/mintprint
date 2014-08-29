@@ -14,7 +14,7 @@
     </ul>
 </div>
 <form method="get" class="form">
-    <?=ZHtml::enumDropDownList($model, 'status', array('prompt'=>'Все', 'name'=>'status', 'options'=>array($_GET['status']=>array('selected'=>true))))?>
+    <?=ZHtml::enumDropDownList($model, 'status', array('prompt'=>'Все', 'name'=>'status', 'options'=>isset($_GET['status']) ? array($_GET['status']=>array('selected'=>true)) : array()))?>
     <div class="buttons"><?=CHtml::submitButton('Поиск', array('class'=>'btn'))?></div>
 </form>
 <hr/>

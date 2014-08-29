@@ -151,6 +151,14 @@ class OrderTempController extends Controller
         $orderFormModel->delivery = 'post';
         $config = $this->module->config;
 
+        if(isset($_POST['certificate']))
+        {
+            $sql = "select count(*) from Certificate where code = '".$_POST['certificate']."' and DATEDIFF(due_date, NOW()) >= 0";
+            $count = Yii::app()->db->createCommand($sql)->queryScalar();
+            if($count > 0)
+                Yii::app()->session['certificate'] = $_POST['certificate'];
+        }
+
         if(isset($_POST['OrderForm'])) {
             $orderFormModel->attributes = $_POST['OrderForm'];
             if($orderFormModel->validate()) {
@@ -183,6 +191,16 @@ class OrderTempController extends Controller
         }
         else
             throw new CHttpException(403,'The requested page does not exist.');
+    }
+
+    public function actionCheckCertificate()
+    {
+        if(Yii::app()->request->isAjaxRequest)
+        {
+            Yii::import('application.backend.modules.order.models.Certificate');
+            $count = Certificate::model()->count('code = :code and DATEDIFF(NOW(), due_date) < 1', array(':code'=>$_POST['code']));
+            die($count);
+        }
     }
 
     public function actionClear()

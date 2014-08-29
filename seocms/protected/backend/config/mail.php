@@ -14,7 +14,7 @@
   'adminEmail' => 'kate.s@seotm.com',
   'mailGroup' => 
   array (
-    0 => '',
+    0 => 'kate.s@seotm.com',
   ),
   'mailheader' => 
   array (

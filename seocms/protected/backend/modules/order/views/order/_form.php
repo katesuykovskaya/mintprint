@@ -51,17 +51,11 @@
 		<?php echo $form->error($model,'region'); ?>
 	</div>
 
-	<div>
-		<?php echo $form->labelEx($model,'delivery'); ?>
+<!--	<div>-->
+<!--		--><?php //echo $form->labelEx($model,'delivery'); ?>
 		<?php echo $form->textField($model,'delivery',array('size'=>7,'maxlength'=>7)); ?>
-		<?php echo $form->error($model,'delivery'); ?>
-	</div>
-
-	<div>
-		<?php echo $form->labelEx($model,'newPostAddress'); ?>
-		<?php echo $form->textField($model,'newPostAddress',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'newPostAddress'); ?>
-	</div>
+<!--		--><?php //echo $form->error($model,'delivery'); ?>
+<!--	</div>-->
 
     <div>
         <?php echo $form->labelEx($model,'status'); ?>

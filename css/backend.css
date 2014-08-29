@@ -88,8 +88,14 @@ input[type="submit"].link {
 }
 .export-link {
     position: relative;
-    
     top: 214px;
     font-size: 16px;
     font-weight: bold;
+}
+.text-right {
+    text-align: right;
+}
+.export-cer {
+    position: relative;
+    top: 50px;
 }

@@ -61,12 +61,19 @@
                 </div>
             <?php endforeach?>
         <div class="overflow-hidden total-price-wrap">
-            <p class="total-word"><?=Yii::t('frontend', 'Итого')?></p>
+            <p class="total-word"><?=Yii::t('frontend', 'Итого')?>:</p>
             <p class="total-price"><span id="totalPrice"><?=OrderTemp::CollectPrice($config['price'])?></span>&nbsp;<?=$config['currency']?></p>
+        </div>
+        <div>
+            <a href="#" id="iUseCertificate">Я использую сертификат</a>
+            <div class="show-cer-input">
+                <p><?=CHtml::label('Введите код из сертификата', 'certificate')?></p>
+                <?=CHtml::textField('certificate', '', array('id'=>'certificate'))?>
+            </div>
         </div>
         <div class="overflow-hidden">
             <a class="back-button" href="javascript: window.history.go(-1);"><?=Yii::t('frontend', 'Назад')?></a>
-            <a href="<?=Yii::app()->createUrl('order/orderTemp/buyerInfo')?>" class="continue-button"><?=Yii::t('frontend', 'Следующий шаг')?></a>
+            <a href="<?=Yii::app()->createUrl('order/orderTemp/buyerInfo')?>" class="continue-button"><?=Yii::t('frontend', 'Следующий шаг')?><a/>
         </div>
     </div>
     <?php endif; ?>
@@ -75,24 +82,54 @@
 <script type="text/javascript" src="/js/vendor/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
 <script>
     $(document).ready(function(){
+        $(document).on('click', '#iUseCertificate', function(e){
+            e.preventDefault();
+            $('.show-cer-input').show('slow');
+        });
         $(document).on('click', '.continue-button:not(.disabled)', function(e){
+//        $(document).on('submit', '#certificate-form', function(e){
             e.preventDefault();
             var _this = $(this);
             _this.addClass('disabled');
-            $.ajax({
-                type: "post",
-                url: "/order/orderTemp/count",
-                success: function(response) {
-                    _this.removeClass('disabled');
-                    if(parseInt(response) == 1)
-                        location.href = _this.attr('href');
-                    else {
-                        $.fancybox({
-                            content: '<p class="basket-warning">просьба пересмотреть Ваш заказ. Минимальный заказ 20 грн.</a></p>'
-                        });
+            if($('#certificate').val()) {
+                $.ajax({
+                    type: "post",
+                    url: "/order/orderTemp/checkCertificate",
+                    data: { code: $('#certificate').val() },
+                    success: function(response) {
+                        if(response == "1") {
+                            var form = $('<form>')
+                                .css('display', 'none')
+                                .attr('method', 'post')
+                                .attr('action', _this.attr('href'))
+                                .append($('#certificate').clone());
+                            $('body').append(form);
+                            form.submit();
+                        }
+                        else
+                            $.fancybox({
+                                content: '<p class="basket-warning">Указанный код неверный либо просрочен</p>'
+                            });
                     }
-                }
-            });
+                });
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: "/order/orderTemp/count",
+                    success: function(response) {
+                        _this.removeClass('disabled');
+                        if(parseInt(response) == 1)
+                            //location.href = _this.attr('href');
+                            _this.trigger('click');
+                        else {
+                            $.fancybox({
+                                content: '<p class="basket-warning">просьба пересмотреть Ваш заказ. Минимальный заказ 20 грн. Если Вы используете сертификат, укажите код из сертификата.</a></p>'
+                            });
+                        }
+                    }
+                });
+            }
+
         });
         $(document).on('change', '.img-count', function(e){
             e.preventDefault();

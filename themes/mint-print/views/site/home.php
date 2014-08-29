@@ -1,4 +1,11 @@
+
+
+
 <div class="header-and-content-wrap home-page">
+    <?php
+    if(!empty($msgLiqPay))
+        echo $msgLiqPay;
+    ?>
     <header>
         <div class="header-wrap">
             <?php $this->widget('application.backend.modules.menugen.widgets.FrontMenu',array('menuName'=>'меню в head'))?>

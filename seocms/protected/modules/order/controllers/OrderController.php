@@ -13,7 +13,11 @@ class OrderController extends Controller
         $model->attributes = Yii::app()->session['OrderHead'];
         $model->price = OrderTemp::CollectPrice($this->module->config['price']);
         $model->date = date("Y-m-d");
+        if(!empty(Yii::app()->session['certificate']))
+            $model->status = 'certificate';
         if($model->save(false)) {
+            $sql = "update Certificate set id_order = $model->id where code = '".Yii::app()->session['certificate']."'";
+            Yii::app()->db->createCommand($sql)->execute();
             Yii::app()->session['id_order'] = $model->id;
             die(json_encode(array('res'=>true, 'id_order'=>$model->id)));
         }

@@ -849,15 +849,18 @@ footer li a {
     
 }
 .total-word {
-    float: left;
+    /* float: left; */
     font-weight: 900;
     text-transform: capitalize;
-    line-height: 54px;
+    line-height: 51px;
+    display: inline-block;
 }
 .total-price {
-    float: right;
+    /* float: right; */
     font-weight: bold;
     color: red;
+    display: inline-block;
+    margin-left: 15px;
 }
 .green-button,
 .back-button {
@@ -896,6 +899,7 @@ footer li a {
     font-size: 16px;
     font-family: PoiretOne;
     text-transform: uppercase;
+    /* height: 35px; */
 }
 .continue-button.disabled {
     background: #1aced4;
@@ -1384,7 +1388,19 @@ div.slide img {
 }
 .vk-tab .logout {
     background-color: #35A0BE;
-
+}
+.show-cer-input {
+    display: none;
+}
+.text-right {
+    text-align: right;
+}
+.logout-all {
+    display: inline-block;
+    background-color: #18BCC2;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 11px;
 }
     /* ==========================================================================
    Helper classes

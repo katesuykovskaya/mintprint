@@ -7,6 +7,9 @@
  * @var $this SocialPhotoWidget
  */
 ?>
+<!--<div class="text-right">-->
+<!--    <a class="logout-all" href="--><?//=Yii::app()->createUrl('site/logoutAll')?><!--">Выйти</a>-->
+<!--</div>-->
 <div class="social-widget" id="socialWidget">
     <ul class="tabs-head">
         <li><a class="ins" href="#tabs-1"><span>инстаграм</span></a></li>

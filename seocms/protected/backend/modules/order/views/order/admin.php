@@ -110,7 +110,7 @@
        'status' => array(
            'value'=>'Yii::t("backend",$data->status)',
            'name'=>'status',
-           'filter'=>CHtml::activeDropDownList($model,'status', array('new'=>Yii::t("backend","new"),'ready'=>Yii::t("backend","ready"),'shipped'=>Yii::t("backend","shipped"),'delete'=>Yii::t("backend","delete")),array('prompt'=>Yii::t('backend','Выберите статус'))),
+           'filter'=>ZHtml::enumDropDownList($model, 'status', array('prompt'=>Yii::t('backend','Выберите статус'))),
         ),
         'date',
 		array(

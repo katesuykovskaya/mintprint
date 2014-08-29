@@ -35,9 +35,7 @@ $(document).ready(function(){
     $('.addAllPhoto').click(function(){
         $(".all-photos-thumbs > div:not(div.full):gt(2)").remove();
         var photos = $('.tab:visible .not-album img');
-        console.log(photos.length);
         if(photos.length == 0) {
-            console.log('hhhh');
             alert("Фото отсутствуют. Обратите внимание, что Добавить все фото можно только из альбома");
         }
         else {
