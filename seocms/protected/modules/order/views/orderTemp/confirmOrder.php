@@ -97,12 +97,15 @@
 
             </div>
             <div class="basket-cost final">
-                <p class="green-text">Распечатать ваши замечательные фотографии</p>
+                <?php if(empty(Yii::app()->session['certificate'])):?><p class="green-text">Распечатать ваши замечательные фотографии</p>
                 <p class="grey-text">будут стоить - </p>
                 <div id="priceWrap" class="relative">
                     <span><?=OrderTemp::CollectPrice($config['price'])?></span>
                     <sup><?=$config['currency']?></sup>
                 </div>
+                <?php else:?>
+                    <p class="green-text">Вы используете сертификат</p>
+                <?php endif;?>
             </div>
             <?=CHtml::link("Печатать их", '#', array(
                 'id' => 'confirm',

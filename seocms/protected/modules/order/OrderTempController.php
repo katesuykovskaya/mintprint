@@ -124,44 +124,19 @@ class OrderTempController extends Controller
      */
     public function actionConfirm() {
 
-
         $photos = OrderTemp::model()->findAllByAttributes(array(
             'session_id'=>Yii::app()->session->sessionID
         ));
-
-
-
 
         $orderForm = new OrderForm;
         $order = Yii::app()->session['OrderHead'];
         $config = $this->module->config;
 
-
-        if(!empty($_POST))
-        {
-//            mail("sidorenko.a@seotm.com", "My Subject", print_r($_POST, true));
-            $status = $_POST['status'];
-            if($status == 'success'){
-                $description = $_POST['description'];
-
-                $idorder = explode('№', $description);
-
-                Yii::import('application.modules.order.models.OrderHead');
-
-                $model = OrderHead::model()->findByPk($idorder[1]);
-                $model->status = 'ready';
-                $model->save();
-            }
-
-            die();
-
-        }
-
         $this->render('confirmOrder', array(
             'orderForm'=>$orderForm,
             'order'=>$order,
             'photos'=>$photos,
-            'config'=>$config,
+            'config'=>$config
         ));
     }
 

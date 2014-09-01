@@ -849,18 +849,15 @@ footer li a {
     
 }
 .total-word {
-    /* float: left; */
+    float: left;
     font-weight: 900;
     text-transform: capitalize;
-    line-height: 51px;
-    display: inline-block;
+    line-height: 54px;
 }
 .total-price {
-    /* float: right; */
+    float: right;
     font-weight: bold;
     color: red;
-    display: inline-block;
-    margin-left: 15px;
 }
 .green-button,
 .back-button {
@@ -899,7 +896,6 @@ footer li a {
     font-size: 16px;
     font-family: PoiretOne;
     text-transform: uppercase;
-    /* height: 35px; */
 }
 .continue-button.disabled {
     background: #1aced4;
@@ -1094,6 +1090,20 @@ footer li a {
     border: 2px solid green;
     color: rgb(3, 68, 3);
     background: rgb(178, 252, 178);
+}
+.success-post{
+    display: inline-block;
+    padding: 5px;
+    border: 2px solid green;
+    color: rgb(3, 68, 3);
+    background: rgb(178, 252, 178);
+    top: 82px;
+    bottom: auto;
+    /* background: white; */
+    position: absolute;
+    width: 170px;
+    min-height: 20px;
+    right: 0px;
 }
 .confirm-info .basket-cost {
     display: inline-block;
@@ -1327,7 +1337,7 @@ div.slide img {
 }
 #thumbs a {
     /* height: 100px; */
-    
+
     line-height: 120px;
     width: 95px;
 }
@@ -1364,7 +1374,7 @@ div.slide img {
 }
 .print-button.disabled {
     color: grey;
-    
+
     background-color: #35D7DD;
 }
 .logout-wrap {
@@ -1388,19 +1398,10 @@ div.slide img {
 }
 .vk-tab .logout {
     background-color: #35A0BE;
+
 }
 .show-cer-input {
     display: none;
-}
-.text-right {
-    text-align: right;
-}
-.logout-all {
-    display: inline-block;
-    background-color: #18BCC2;
-    color: white;
-    padding: 4px 10px;
-    border-radius: 11px;
 }
     /* ==========================================================================
    Helper classes

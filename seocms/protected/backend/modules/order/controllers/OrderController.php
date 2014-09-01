@@ -58,8 +58,8 @@ class OrderController extends Controller
             $date = $_POST['date'];
             $error = "";
             $condition = array('date'=>$date);
-            if(isset($_GET['status']))
-                $condition['status'] = $_GET['status'];
+            if(isset($_GET['Search']['status']))
+                $condition['status'] = $_GET['Search']['status'];
             $models = OrderHead::model()->with('body')->findAllByAttributes($condition);
             $zip = new ZipArchive();
             $zip_name = $date.".zip";
@@ -100,21 +100,31 @@ class OrderController extends Controller
                 die();
         }
         $criteria = new CDbCriteria(array(
-            'select'=>'date, count(*) as photoCount',
+            'select'=>'date, count(*)  as photoCount',
             'group'=>'date'
         ));
-        if(isset($_GET['status']))
-            $criteria->compare('t.status', $_GET['status'], false);
+        if(isset($_GET['Search'])) {
+            if($_GET['Search']['status'])
+                $criteria->compare('t.status', $_GET['Search']['status'], false);
+            $criteria->addCondition('DATEDIFF(t.date, "'.$_GET['Search']['from_date'].'") >= 0');
+            $criteria->addCondition('DATEDIFF("'.$_GET['Search']['to_date'].'", t.date) >= 0');
+        }
+
+        $params = array();
+        if(isset($_GET['Search']['status'])) $params['Search']['status'] = $_GET['Search']['status'];
+        if(isset($_GET['Search']['from_date'])) $params['Search']['from_date'] = $_GET['Search']['from_date'];
+        if(isset($_GET['Search']['to_date'])) $params['Search']['to_date'] = $_GET['Search']['to_date'];
+        if(isset($_GET['page'])) $params['page'] = $_GET['page'];
+
         $dataProvider = new CActiveDataProvider('OrderHead', array(
             'criteria'=>$criteria,
             'pagination'=>array(
                 'route'=>Yii::app()->createUrl('/backend/order/order/calendar', array('language'=>Yii::app()->language)),
                 'pageSize'=>30,
                 'pageVar'=>'page',
-                'params'=> isset($_GET['page']) ? array('page'=>urlencode($_GET['page'])) : array()
+                'params'=> $params,
             )
         ));
-
         $model = new OrderHead;
         $this->render('calendar', array(
             'dataProvider'=>$dataProvider,

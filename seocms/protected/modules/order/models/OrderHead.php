@@ -22,6 +22,8 @@
 class OrderHead extends CActiveRecord
 {
     public $photoCount;
+    public $dd1;
+    public $dd2;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
