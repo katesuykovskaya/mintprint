@@ -223,8 +223,18 @@ class OrderTempController extends Controller
         if(Yii::app()->request->isAjaxRequest)
         {
             Yii::import('application.backend.modules.order.models.Certificate');
-            $count = Certificate::model()->count('code = :code and DATEDIFF(NOW(), due_date) < 1', array(':code'=>$_POST['code']));
-            die($count);
+            $model = Certificate::model()->find('code = :code and DATEDIFF(NOW(), due_date) < 1', array(':code'=>$_POST['code']));
+            $res = array('res'=>true);
+            if(empty($model)){
+                $res['res'] = false;
+                $res['reason'] = 'Указанный код неверный либо просрочен';
+            }
+            $config = require(Yii::getPathOfAlias('application.modules.order.config.config').'.php');
+            if(OrderTemp::CollectPrice($config['price']) > $model->limit) {
+                $res['res'] = false;
+                $res['reason'] = 'Вы превысили лимит заказа в '.$model->limit.' '.$config['currency'];
+            }
+            die(json_encode($res));
         }
     }
 

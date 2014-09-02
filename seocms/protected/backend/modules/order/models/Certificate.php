@@ -9,6 +9,7 @@
  * @property integer $id_order
  * @property string $create_date
  * @property string $due_date
+ * @property integer $limit
  */
 class Certificate extends CActiveRecord
 {
@@ -39,11 +40,11 @@ class Certificate extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('code, create_date, due_date', 'required'),
-			array('code, id_order', 'numerical', 'integerOnly'=>true),
+			array('code, create_date, due_date, limit', 'required'),
+			array('code, id_order, limit', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, code, id_order, create_date, due_date, status', 'safe', 'on'=>'search'),
+			array('id, code, id_order, create_date, due_date, status, limit', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -70,6 +71,7 @@ class Certificate extends CActiveRecord
 			'id_order' => 'Id Заказа',
 			'create_date' => 'Дата Создания',
 			'due_date' => 'Дата Истечения',
+            'limit'=>'Ограничение по сумме заказа'
 		);
 	}
 
@@ -89,6 +91,7 @@ class Certificate extends CActiveRecord
 		$criteria->compare('id_order',$this->id_order);
 		$criteria->compare('create_date',$this->create_date,true);
 		$criteria->compare('due_date',$this->due_date,true);
+        $criteria->compare('`limit`',$this->limit, false);
 
         if($this->status)
         {
@@ -115,6 +118,7 @@ class Certificate extends CActiveRecord
         if(!empty($_GET['Certificate']['create_date'])) $params['Certificate']['create_date'] = $_GET['Certificate']['create_date'];
         if(!empty($_GET['Certificate']['due_date'])) $params['Certificate']['due_date'] = $_GET['Certificate']['due_date'];
         if(!empty($_GET['Certificate']['status'])) $params['Certificate']['status'] = $_GET['Certificate']['status'];
+        if(!empty($_GET['Certificate']['limit'])) $params['Certificate']['limit'] = $_GET['Certificate']['limit'];
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

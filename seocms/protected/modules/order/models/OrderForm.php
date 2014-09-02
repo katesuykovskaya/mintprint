@@ -66,8 +66,14 @@ class OrderForm extends CFormModel {
 
     public function moreThen20($attribute, $params) {
         $config = require Yii::getPathOfAlias('application.modules.order.config.config').'.php';
+        Yii::import('application.backend.modules.order.models.Certificate');
         $sum = OrderTemp::CollectPrice($config['price']);
         if(empty(Yii::app()->session['certificate']) && $sum < 20)
             $this->addError('price', 'Минимальная сумма - 20 грн.');
+        if(!empty(Yii::app()->session['certificate']) ) {
+            $certificate = Certificate::model()->findByAttributes(array('code'=>Yii::app()->session['certificate']));
+            if($sum > $certificate->limit)
+                $this->addError('price', 'Максимальная сумма с использованием сертификата - '.$certificate->limit.' грн.');
+        }
     }
 }

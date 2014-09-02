@@ -97,19 +97,26 @@
                     url: "/order/orderTemp/checkCertificate",
                     data: { code: $('#certificate').val() },
                     success: function(response) {
-                        if(response == "1") {
-                            var form = $('<form>')
-                                .css('display', 'none')
-                                .attr('method', 'post')
-                                .attr('action', _this.attr('href'))
-                                .append($('#certificate').clone());
-                            $('body').append(form);
-                            form.submit();
+                        try {
+                            var res = $.parseJSON(response);
+                            if(res.res) {
+                                var form = $('<form>')
+                                    .css('display', 'none')
+                                    .attr('method', 'post')
+                                    .attr('action', _this.attr('href'))
+                                    .append($('#certificate').clone());
+                                $('body').append(form);
+                                form.submit();
+                            }
+                            else
+                                $.fancybox({
+                                    content: '<p class="basket-warning">'+res.reason+'</p>',
+                                    onClosed: fancyClose
+                                });
                         }
-                        else
-                            $.fancybox({
-                                content: '<p class="basket-warning">Указанный код неверный либо просрочен</p>'
-                            });
+                        catch(e) {
+
+                        }
                     }
                 });
             } else {
@@ -123,7 +130,8 @@
                             _this.trigger('click');
                         else {
                             $.fancybox({
-                                content: '<p class="basket-warning">просьба пересмотреть Ваш заказ. Минимальный заказ 20 грн. Если Вы используете сертификат, укажите код из сертификата.</a></p>'
+                                content: '<p class="basket-warning">просьба пересмотреть Ваш заказ. Минимальный заказ 20 грн. Если Вы используете сертификат, укажите код из сертификата.</a></p>',
+                                onClosed: fancyClose
                             });
                         }
                     }
@@ -142,6 +150,11 @@
             $('.continue-button').addClass('disabled');
             changeCount($(this).find('.img-count').eq(0));
         });
+
+        function fancyClose()
+        {
+            $('.continue-button').removeClass('disabled');
+        }
 
         function changeCount(_this) {
             var form = _this.closest('form');

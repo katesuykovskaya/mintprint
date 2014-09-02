@@ -64,6 +64,11 @@
         ?>
 		<?php echo $form->error($model,'due_date'); ?>
 	</div>
+    <div>
+        <?=$form->labelEx($model, 'limit')?>
+        <?=$form->textField($model, 'limit')?>
+        <?=$form->error($model, 'limit')?>
+    </div>
 
 	<div class=" buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array('class'=>'btn')); ?>

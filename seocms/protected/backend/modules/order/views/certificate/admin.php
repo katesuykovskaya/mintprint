@@ -36,6 +36,13 @@ Yii::app()->clientScript->registerCssFile('/css/backend.css');
 </div>
 <div>
     <?php
+    echo $form->labelEx($generate, 'limit');
+    echo $form->textField($generate, 'limit');
+    echo $form->error($generate, 'limit');
+    ?>
+</div>
+<div>
+    <?php
     echo $form->labelEx($generate, 'due_date');
     $this->widget('zii.widgets.jui.CJuiDatePicker',array(
         'model'=>$generate,
@@ -88,6 +95,7 @@ Yii::app()->clientScript->registerCssFile('/css/backend.css');
                     'overdue'=>'Прострочен',
                 ), array('prompt'=>'Все')),
         ),
+        'limit',
 		array(
 			'class'=>'CButtonColumn',
             'template'=>'{update}{delete}',

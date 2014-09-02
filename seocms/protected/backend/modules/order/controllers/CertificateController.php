@@ -59,7 +59,7 @@ class CertificateController extends Controller
 		{
 			$model->attributes=$_POST['Certificate'];
 			if($model->save())
-				$this->redirect('backend/order/certificate/admin');
+				$this->redirect('/backend/order/certificate/admin');
 		}
 
 		$this->render('update',array(
@@ -123,6 +123,7 @@ class CertificateController extends Controller
                     $cer->code = ZHtml::randomNumber();
                     $cer->due_date = $model->due_date;
                     $cer->create_date = date('Y-m-d');
+                    $cer->limit = $model->limit;
                     $currentResult = $cer->save();
                     if($currentResult) $count++;
                     $res &= $currentResult;
