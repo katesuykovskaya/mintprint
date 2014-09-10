@@ -97,6 +97,7 @@
 		'address',
 		'city',
         'region',
+        'index',
         'photoCount'=>array(
           'value'=>'$data->count?$data->count:""',
           'name'=>'photoCount',

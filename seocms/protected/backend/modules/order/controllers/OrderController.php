@@ -57,10 +57,14 @@ class OrderController extends Controller
             Yii::import('application.backend.components.ZHtml');
             $date = $_POST['date'];
             $error = "";
-            $condition = array('date'=>$date);
-            if(isset($_GET['Search']['status']))
-                $condition['status'] = $_GET['Search']['status'];
-            $models = OrderHead::model()->with('body')->findAllByAttributes($condition);
+//            $condition = array('date'=>$date);
+
+            $criteria = new CDbCriteria;
+            if(!empty($_GET['Search']['status']))
+                $criteria->compare('t.status', $_GET['Search']['status'], false);
+            $criteria->compare('t.date', $_POST['date']);
+
+            $models = OrderHead::model()->with('body')->findAll($criteria);
             $zip = new ZipArchive();
             $zip_name = $date.".zip";
             if($zip->open($zip_name, ZIPARCHIVE::CREATE)!==TRUE)
@@ -417,9 +421,9 @@ class OrderController extends Controller
         header('Content-Disposition: attachment; filename="'.$fileName.'"');
         $output = fopen('php://output', 'w');
         fwrite($output,b"\xEF\xBB\xBF" ) ; // to force utf-8 encoding
-        fputcsv($output, array('ID', 'Имя и Фамилия', 'E-mail', 'Телефон', 'Адрес', 'Город', 'Область', 'Кол-во фото', 'Сумма', 'Статус', 'Дата'), ';');
+        fputcsv($output, array('ID', 'Имя и Фамилия', 'E-mail', 'Телефон', 'Адрес', 'Город', 'Область', 'Индекс', 'Кол-во фото', 'Сумма', 'Статус', 'Дата'), ';');
         foreach($models as $model)
-            fputcsv($output, array($model->id, $model->name, $model->email, $model->phone, $model->address, $model->city, $model->region, $model->count, $model->price.' грн.', Yii::t('backend', $model->status), $model->date), ';');
+            fputcsv($output, array($model->id, $model->name, $model->email, $model->phone, $model->address, $model->city, $model->region, $model->index, $model->count, $model->price.' грн.', Yii::t('backend', $model->status), $model->date), ';');
         fclose($output);
         die();
     }

@@ -159,11 +159,11 @@ class CertificateController extends Controller
     public function actionExport()
     {
         $criteria = new CDbCriteria;
-        $criteria->compare('code', $_GET['code'], true);
-        $criteria->compare('id_order', $_GET['id_order']);
-        $criteria->compare('create_date', $_GET['create_date']);
-        $criteria->compare('due_date', $_GET['due_date']);
-        if($_GET['status'])
+        if(isset($_GET['code'])) $criteria->compare('code', $_GET['code'], true);
+        if(isset($_GET['id_order'])) $criteria->compare('id_order', $_GET['id_order']);
+        if(isset($_GET['create_date'])) $criteria->compare('create_date', $_GET['create_date']);
+        if(isset($_GET['create_date'])) $criteria->compare('due_date', $_GET['due_date']);
+        if(isset($_GET['status']))
         {
             switch($_GET['status'])
             {

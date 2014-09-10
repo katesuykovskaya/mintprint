@@ -162,7 +162,11 @@ class OrderHead extends CActiveRecord
             $criteria->having = "`count` = {$this->photoCount}";
         }
 
-
+        $pagination = array();
+        if(isset($_GET['page'])) $pagination['page'] = $_GET['page'];
+        if(isset($_GET['from_date'])) $pagination['from_date'] = $_GET['from_date'];
+        if(isset($_GET['to_date'])) $pagination['to_date'] = $_GET['to_date'];
+        if(isset($_GET['OrderHead'])) $pagination['OrderHead'] = $_GET['OrderHead'];
 
 
 		return new CActiveDataProvider($this, array(
@@ -180,7 +184,7 @@ class OrderHead extends CActiveRecord
                 'pageSize'=>20,
                 'route'=>Yii::app()->createUrl('backend/order/order/admin'),
                 'pageVar'=>'page',
-                'params'=>isset($_GET['page']) ? array('page'=>$_GET['page']): array()
+                'params'=>$pagination,
             )
 		));
 	}
